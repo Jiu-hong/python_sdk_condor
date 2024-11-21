@@ -41,7 +41,6 @@ class DeployHeader:
         return (s_account, s_time_now, s_ttl, s_gas_price, s_body_hash, s_dependencies, s_chain_name)
 
     def byteHash(self):
-
         header_bytes = self.serialize()
         h = blake2b(digest_size=32)
         s_account = bytes.fromhex(header_bytes[0])

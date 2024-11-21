@@ -12,6 +12,61 @@ from name_arg import NamedArg
 # amount should be decimal motes
 
 
+class ExecutableDeployItems:
+    pass
+
+
+class ModuleBytes(ExecutableDeployItems):
+    def __init__(self, modulebytes_hex, runtime_args) -> None:
+        self.modulebytes_hex = modulebytes_hex
+        self.runtime_args = runtime_args
+
+    def serialize(self):
+        executable_deploy_tag = "00"
+        modulebytes_hex = self.modulebytes_hex
+        name_args = NamedArg(self.runtime_args).__serialize__()
+        return executable_deploy_tag + modulebytes_hex + name_args
+
+
+class StoredContractByHash(ExecutableDeployItems):
+    def __init__(self, contract_hash_hex, entrypoint, runtime_args) -> None:
+        self.contract_hash_hex = contract_hash_hex
+        self.entrypoint = entrypoint
+        self.runtime_args = runtime_args
+
+    def serialize(self):
+        executable_deploy_tag = "01"
+        entrypoint = CLString(entrypoint).serialize()
+        name_args = NamedArg(self.runtime_args).__serialize__()
+        result = executable_deploy_tag + self.contract_hash_hex + \
+            entrypoint + name_args
+        return result
+
+
+class DeployBody:
+    def __init__(self, name_arg, payment, session):
+        self.name_arg = name_arg
+        self.payment = payment
+        self.session = session
+        if isinstance(self.name_args, NamedArg):
+            raise
+        if isinstance(self.payment, Payment):
+            raise
+        if isinstance(self.session, Session):
+            raise
+
+    def serialize(self):
+        serialize(self.payment)
+        serialize(self.session)
+
+    def hash_body(self):
+        h = blake2b(digest_size=32)
+        payment_bytes = self.serialize(self.payment)
+        session_bytes = self.serialize(self.session)
+        h.update(payment_bytes + session_bytes)
+        return h.hexdigest()
+
+
 def serialize_payment(amount):
     ModuleBytesTag = '00'
     # # modulebytes 0 -> '00000000'

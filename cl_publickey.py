@@ -1,10 +1,10 @@
 import re
 
-from cl_baseType import CLType
+from cl_baseType import CLAtomic, CLType
 from cl_util import deep_value_v2
 
 
-class CLPublicKey(CLType):
+class CLPublicKey(CLType, CLAtomic):
     tag = 22
 
     def serialize(self):

@@ -10,3 +10,10 @@ class CLType:
 
     def value(self):
         return cl_util.deep_value_v2(self)
+
+    def cl_type(self):
+        return cl_util.deep_type_v2(self)
+
+
+class CLAtomic():
+    pass

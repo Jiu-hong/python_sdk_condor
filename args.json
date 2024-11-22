@@ -1,0 +1,72 @@
+{
+    "args": [
+        [
+            "recipient",
+            {
+                "cl_type": "Key",
+                "bytes": "00d9758b25962f4cba82ba0047389af97a70acb7df43b391f9ffb293801bea5061",
+                "parsed": {
+                    "Account": "account-hash-d9758b25962f4cba82ba0047389af97a70acb7df43b391f9ffb293801bea5061"
+                }
+            }
+        ],
+        [
+            "token_ids",
+            {
+                "cl_type": {
+                    "Option": {
+                        "List": "String"
+                    }
+                },
+                "bytes": "0101000000060000006f72616e6765",
+                "parsed": [
+                    "orange"
+                ]
+            }
+        ],
+        [
+            "token_metas",
+            {
+                "cl_type": {
+                    "List": {
+                        "Map": {
+                            "key": "String",
+                            "value": "String"
+                        }
+                    }
+                },
+                "bytes": "01000000010000000300000069636505000000637265616d",
+                "parsed": [
+                    [
+                        {
+                            "key": "ice",
+                            "value": "cream"
+                        }
+                    ]
+                ]
+            }
+        ],
+        [
+            "token_commissions",
+            {
+                "cl_type": {
+                    "List": {
+                        "Map": {
+                            "key": "String",
+                            "value": "String"
+                        }
+                    }
+                },
+                "bytes": "01000000010000000300000069636505000000637265616d",
+                "parsed": [
+                    [
+                        {
+                            "key": "ice",
+                            "value": "cream"
+                        }
+                    ]
+                ]
+            }
+        ]
+    ]
+}

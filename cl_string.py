@@ -1,8 +1,8 @@
-from cl_baseType import CLType
+from cl_baseType import CLAtomic, CLType
 from cl_util import deep_v2
 
 
-class CLString(CLType):
+class CLString(CLType, CLAtomic):
     tag = 10
 
     def serialize(self):

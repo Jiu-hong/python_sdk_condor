@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from hashlib import blake2b
 from time import time
 from cl_number import CLU64
@@ -24,6 +24,25 @@ class DeployHeader:
         self.body_hash = body_hash
         self.dependencies = dependencies
         self.chain_name = chain_name
+
+    def json_value(self):
+        #         "account": "010068920746ecf5870e18911ee1fc5db975e0e97fffcbbf52f5045ad6c9838d2f",
+        # "timestamp": "2024-11-17T12:20:47.253Z",
+        # "ttl": "30m",
+        # "gas_price": 1,
+        # "body_hash": "e86794b787f6c4d269e4b3fec08fd54477e8d3429bd61ec22ac7f104a7899de3",
+        # "dependencies": [],
+        # "chain_name": "casper-test"
+        json_value = {"account": {self.account},
+                      "timestamp": datetime.now(timezone.utc).replace(
+            tzinfo=None).isoformat(timespec='milliseconds')+"Z",
+            "ttl": self.ttl+'m',
+            "gas_price": self.gas_price,
+            "body_hash": self.body_hash,
+            "dependencies": [],
+            "chain_name": self.chain_name
+        }
+        return json_value
 
     def serialize(self):
         s_account = CLPublicKey(self.account).serialize()

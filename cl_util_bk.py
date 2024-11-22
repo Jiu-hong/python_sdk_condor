@@ -1,3 +1,4 @@
+
 # v1
 from result import Err, Ok
 # from cl_baseType import CLType # this causes circular
@@ -57,23 +58,26 @@ def deep_value_v2(self):
     return result
 
 
-def deep_v2(data):
+def deep_type_v2(data):
     result = ""
     if isinstance(data, cl_baseType.CLType):
-        result = f'"{data.__class__.__name__}":{deep_v2(data.data)})'
+        result = f'{data.__class__.__name__}({deep_v2(data.data)})'
     elif isinstance(data, list | tuple):
         result = [
-            f'"{x.__class__.__name__}":{deep_v2(x.data)}' for x in data]
+            f'{x.__class__.__name__}:{deep_v2(x.data)}' for x in data]
         # remove single quote for list members
         result = f"[{', '.join(result)}]"
 
     elif isinstance(data, Ok | Err):
-        result = f'"{data.__class__.__name__}":{deep_v2(data.value)}'
+        result = f'{data.__class__.__name__}:{deep_v2(data.value)}'
     else:
         if isinstance(data, int | str):
-            # quote string
-            result = f'"{data}"'
+            if isinstance(data, int):
+                result = data
+            else:
+                # quote string
+                result = f'"{data}"'
         else:
             # result = f'{data.__class__.__name__}({deep_v2(data.data)})'
             raise  # incorrect types
-    return result.replace('[', '{').replace(']', '}')
+    return result

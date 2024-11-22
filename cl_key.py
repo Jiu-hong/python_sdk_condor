@@ -1,8 +1,8 @@
 
-from cl_baseType import CLType
+from cl_baseType import CLAtomic, CLType
 
 
-class CLKey(CLType):
+class CLKey(CLType, CLAtomic):
     tag = 11
 
     def serialize(self):

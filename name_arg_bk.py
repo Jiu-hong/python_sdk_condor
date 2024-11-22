@@ -29,12 +29,10 @@ class NamedArg:
             len(self.args)).ljust(8, '0')
         return list_length + inner_serialize
 
-    def deploy_value(self):
-        for name, value in self.args.items()
 
-        #     amount: CLValueBuilder.u256(123),
-        # owner: CLValueBuilder.u256(456),
-        # recipient: CLValueBuilder.string("hello")
+#     amount: CLValueBuilder.u256(123),
+# owner: CLValueBuilder.u256(456),
+# recipient: CLValueBuilder.string("hello")
 a = NamedArg({"amount": CLU256(123), "owner": CLU256(
     456), 'recipient': CLString("hello")})
 print(a.__serialize__())

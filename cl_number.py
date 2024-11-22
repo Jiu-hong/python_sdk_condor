@@ -2,12 +2,12 @@
 
 
 from time import time
-from cl_baseType import CLType
+from cl_baseType import CLAtomic, CLType
 from cl_exceptions import ExceptionCLNumber, ExceptionExceedMaxValue, ExceptionInvalidBoolValue
 from cl_util import deep_v2
 
 
-class CLNumber(CLType):
+class CLNumber(CLType, CLAtomic):
     def __init__(self, data):
 
         # is data isn't int or string, return None
@@ -26,7 +26,7 @@ class CLNumber(CLType):
         return self.data
 
 
-class CLBool(CLType):
+class CLBool(CLType, CLAtomic):
     tag = 0
 
     def serialize(self):

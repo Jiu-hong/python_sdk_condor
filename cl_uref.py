@@ -1,8 +1,8 @@
-from cl_baseType import CLType
+from cl_baseType import CLAtomic, CLType
 from cl_util import deep_v2
 
 
-class CLURef(CLType):
+class CLURef(CLType, CLAtomic):
     tag = 12
 
     def serialize(self):

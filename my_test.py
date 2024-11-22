@@ -48,8 +48,11 @@
 
 import json
 
+from cl_key import CLKey
 from cl_list import CLList
-from cl_number import CLU32
+from cl_map import CLMap
+from cl_number import CLU256, CLU32
+from cl_option import CLOption
 from cl_string import CLString
 from cl_tuple import CLTuple2
 # from cl_util import deep_type_v2
@@ -82,12 +85,84 @@ with open("./args.json") as f:
 #     print(k, v)
 # print(b["recipient"])
 
-c = CLList([CLTuple2((CLU32(1), CLString("Hello, World!"))),
-           CLString("world"), CLString("nihao"), CLList([CLString("nihao1"), CLString("nihao2")])])
+# c = CLList([CLTuple2((CLU32(1), CLString("Hello, World!"))),
+#            CLString("world"), CLString("nihao"), CLList([CLString("nihao1"), CLString("nihao2")])])
 
-print(c.cl_type())
+# c = CLList([CLTuple2((CLU32(1), CLString("Hello, World!"))), CLTuple2((CLU32(1), CLString("Hello, World!"))),
+#             ])
+
+# print(c.cl_type())
 # a = {"CLTuple2": {"CLU32": "1", "CLString": "Hello, World!"}, "CLString": "world",
 #      "CLString": "nihao", "CLList": {"CLString": "nihao1", "CLString": "nihao2"}}
 # print(a)
 # print(json.dumps(a))
 # print("deep_type_v2=>", json.dumps(a))
+
+# {"CLList ": {"CLTuple2 ": {"CLU32 ", "CLString "}, "CLTuple2 ": {"CLU32 ", "CLString "}}}
+
+# b = CLList([CLTuple2((CLOption(CLU32(1)), CLString("Hello, World!"))), CLTuple2((CLOption(CLU32(1)), CLString("Hello, World!"))),
+#             ])
+# # print("here1=>", json.dumps(b.cl_type()))
+
+# c = b.cl_type()
+# print("here4=>", c)
+# print("type c=>", type(c))
+# # print("here3=>", json.dumps(c))
+# print("here9> ", json.loads(c))
+# print("b here => ", b.cl_type())
+# a = {CLList: {CLTuple2: ['{CLOption:CLU32}', 'CLString']}}
+# a_should_be = {"CLList": {"CLTuple2": [{"CLOption": "CLU32"}, "CLString"]}}
+# print(type(a_should_be))
+# print(json.dumps(a_should_be))
+# print(type(json.dumps(a_should_be)))
+# c = {"CLList": {"CLTuple2": [{"CLOption": "CLU32"}, "CLString"]}}
+# print(json.dumps(c))
+# a = {"CLList": {"CLTuple2": [{"CLOption": "CLU32"}, "CLString"]}}
+# print("type a=>", type(a))
+# print("here2=>", json.dumps(a))
+# # 2 {"CLList":{"CLTuple2":['{"CLOption":"CLU32"}', '"CLString"']}}
+# =======
+# const hexString =
+#     "010e31a03ea026a8e375653573e0120c8cb96699e6c9721ae1ea98f896e6576ac3";
+# const hash = CLPublicKey.fromHex(hexString).toAccountHash();
+
+# const accounthash = new CLAccountHash(hash);
+# const recipient = new CLKey(accounthash);
+
+# const a = new CLString("orange");
+# const myList = new CLList([a]);
+# const token_ids = new CLOption(Some(myList));
+
+# const myKey = new CLString("ice");
+# const myVal = new CLString("cream");
+# const temp = new CLMap([[myKey, myVal]]);
+# const token_metas = new CLList([temp]);
+# const token_commissions = new CLList([temp]);
+# const desk = new CLList([new CLU256(123), new CLU256(34)])
+# const tuple2_value = new CLTuple2([new CLU256(123), new CLString("ice")])
+
+# recipient: recipient,
+recipient = CLKey(
+    "account-hash-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20")
+print("recipient", recipient.cl_type())
+# token_ids: token_ids,
+token_ids = CLOption(CLList([CLString("Hello, World!")]))
+print("token_ids:", token_ids.cl_type())
+# token_metas: token_metas,
+token_metas = CLList([CLMap([(CLString("ice"), CLString("Cream")), (CLString(
+    1), CLString("Cream"))])])
+a = token_metas.cl_type()
+print("token_metas", a)
+# # token_commissions: token_commissions,
+# token_commissions = token_metas
+# # desk,
+# desk = CLList([CLU256(123), CLU256(34)])
+# print("desk:", desk.cl_type())
+# # tuple2_value
+
+# tuple2_value = CLTuple2((CLU256(123), CLString("ice")))
+# print("tuple2_value:", tuple2_value.cl_type())
+print("type:", type(a))
+b = json.loads(a)
+print(json.loads(a))
+print(b['CLList'])

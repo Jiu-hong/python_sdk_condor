@@ -57,23 +57,23 @@ def deep_value_v2(self):
     return result
 
 
-def deep_v2(data):
+def deep_type_v2(data):
     result = ""
-    if isinstance(data, cl_baseType.CLType):
-        result = f'"{data.__class__.__name__}":{deep_v2(data.data)})'
-    elif isinstance(data, list | tuple):
-        result = [
-            f'"{x.__class__.__name__}":{deep_v2(x.data)}' for x in data]
-        # remove single quote for list members
-        result = f"[{', '.join(result)}]"
-
+    if isinstance(data, cl_baseType.CLAtomic):
+        result = f'"{data.__class__.__name__}"'
+    elif isinstance(data, cl_baseType.CLType):
+        result = f'{{"{data.__class__.__name__}":{deep_type_v2(data.data)}}}'
+        # print("result here 1=> ", f'{data.__class__.__name__}')
+    elif isinstance(data, tuple):
+        result = [deep_type_v2(x) for x in data]
+        result = '[' + ', '.join(result) + ']'
+    elif isinstance(data, list):
+        result = deep_type_v2(data[0])
+        # result = f"[{', '.join(result)}]"
     elif isinstance(data, Ok | Err):
-        result = f'"{data.__class__.__name__}":{deep_v2(data.value)}'
+        result = f'{{"{data.__class__.__name__}":{deep_type_v2(data.value)}}}'
+        # print("result here 2=> ", f'{data.__class__.__name__}')
     else:
-        if isinstance(data, int | str):
-            # quote string
-            result = f'"{data}"'
-        else:
-            # result = f'{data.__class__.__name__}({deep_v2(data.data)})'
-            raise  # incorrect types
-    return result.replace('[', '{').replace(']', '}')
+        raise  # incorrect types
+
+    return result

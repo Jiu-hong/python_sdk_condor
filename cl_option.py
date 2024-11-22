@@ -9,6 +9,11 @@ from cl_util import deep_value_v2
 class CLOption(CLType):
     tag = 13
 
+    def __init__(self, data) -> None:
+        super().__init__(data)
+        if not isinstance(self.data, CLType):
+            raise
+
     def serialize(self):
         if self.data == None:
             return '00'
@@ -26,10 +31,10 @@ class CLOption(CLType):
         return bytes_len_hex + content + tag
 
 
-a = CLOption(CLList([CLTuple2((CLU32(1), CLString("Hello, World!"))),
-                    CLString("world"), CLString("nihao")]))
-print(a.value())
-print(a)
+# a = CLOption(CLList([CLTuple2((CLU32(1), CLString("Hello, World!"))),
+#                     CLString("world"), CLString("nihao")]))
+# print(a.value())
+# print(a)
 # a = CLOption(CLU32(10))
 # print(a.value())
 # print(a)
@@ -46,7 +51,7 @@ print(a)
 # c = CLOption(None)
 # print(c)
 # # print(c.serialize())
-a = CLOption(CLU32(10))
-print(a)
-print(a.serialize())
-print(a.value())
+# a = CLOption(CLU32(10))
+# print(a)
+# print(a.serialize())
+# print(a.value())

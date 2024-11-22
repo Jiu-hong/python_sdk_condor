@@ -4,7 +4,6 @@
 from time import time
 from cl_baseType import CLAtomic, CLType
 from cl_exceptions import ExceptionCLNumber, ExceptionExceedMaxValue, ExceptionInvalidBoolValue
-from cl_util import deep_v2
 
 
 class CLNumber(CLType, CLAtomic):

@@ -1,9 +1,14 @@
 
+from cl_baseType import CLType
 from cl_number import *
 from cl_string import CLString
 
 
 class CLTupleBase(CLType):
+    def __init__(self, data) -> None:
+        super().__init__(data)
+        if not isinstance(self.data, tuple):
+            raise
 
     def serialize(self):
         new_data = ""
@@ -53,20 +58,20 @@ class CLTuple3(CLTupleBase):
         super().__init__(data)
 
 
-a = CLTuple3((CLString("Hello, World!"), CLBool(
-    'true'), CLTuple2((CLU32(1), CLString("Hello, World!")))))
-print(a)
-print(a.value())
-a = CLTuple2((CLU32(1), CLString("hello")))
-print(a)
-print(a.value())
+# a = CLTuple3((CLString("Hello, World!"), CLBool(
+#     'true'), CLTuple2((CLU32(1), CLString("Hello, World!")))))
+# print(a)
+# print(a.value())
+# a = CLTuple2((CLU32(1), CLString("hello")))
+# print(a)
+# print(a.value())
 
-a = CLTuple3((CLU32(1), CLString("hello"), CLU64(1)))
-print(a)
-print(a.value())
-a = CLTuple3((CLU32(1), CLString("Hello, World!"), CLBool("true")))
-print(a.serialize())
-print(a)
+# a = CLTuple3((CLU32(1), CLString("hello"), CLU64(1)))
+# print(a)
+# print(a.value())
+# a = CLTuple3((CLU32(1), CLString("Hello, World!"), CLBool("true")))
+# print(a.serialize())
+# print(a)
 # print(a.serialize())
 # # todo
 # a = CLTuple2(())

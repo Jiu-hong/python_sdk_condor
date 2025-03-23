@@ -15,5 +15,9 @@ class CLType:
         return cl_util.deep_type_v2(self)
 
 
-class CLAtomic():
+class CLAtomic:
+    pass
+
+
+class CLMapBase:
     pass

@@ -26,7 +26,9 @@ def deep_v2(data):
             f'{x.__class__.__name__}({deep_v2(x.data)})' for x in data]
         # remove single quote for list members
         result = f"[{', '.join(result)}]"
-
+    elif isinstance(data, dict):
+        result = "{"+f'{deep_v2(list(data.keys())[0])}: {
+            deep_v2(list(data.values())[0])}' + "}"
     elif isinstance(data, Ok | Err):
         result = f'{data.__class__.__name__}({deep_v2(data.value)})'
     else:
@@ -46,10 +48,16 @@ def deep_value_v2(self):
     result = ""
     if isinstance(self, int | str):
         result = self
+        if isinstance(self, str):
+            result = f'"{self}"'
     elif isinstance(self, tuple | list):
         result = [deep_value_v2(x) for x in self]
         if isinstance(self, tuple):
             result = tuple(result)
+
+    elif isinstance(self, dict):
+        result = "{"+f'"key": {deep_value_v2(list(self.keys())[0])}, "value": {
+            deep_value_v2(list(self.values())[0])}' + "}"
     elif isinstance(self, Ok | Err):
         result = deep_value_v2(self.value)
     else:
@@ -59,6 +67,9 @@ def deep_value_v2(self):
 
 def deep_type_v2(data):
     result = ""
+    # print("data type=>", type(data))
+    # print("data=>", data)
+
     if isinstance(data, cl_baseType.CLAtomic):
         result = f'"{data.__class__.__name__}"'
     elif isinstance(data, cl_baseType.CLType):
@@ -68,7 +79,11 @@ def deep_type_v2(data):
         result = [deep_type_v2(x) for x in data]
         result = '[' + ', '.join(result) + ']'
     elif isinstance(data, list):
+        # print("data[0]", data[0])
         result = deep_type_v2(data[0])
+    elif isinstance(data, dict):
+        result = "{"+f'"key": {deep_type_v2(list(data.keys())[0])}, "value": {
+            deep_type_v2(list(data.values())[0])}' + "}"
         # result = f"[{', '.join(result)}]"
     elif isinstance(data, Ok | Err):
         result = f'{{"{data.__class__.__name__}":{deep_type_v2(data.value)}}}'

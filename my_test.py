@@ -51,7 +51,7 @@ import json
 from cl_key import CLKey
 from cl_list import CLList
 from cl_map import CLMap
-from cl_number import CLU256, CLU32
+from cl_number import CLU256, CLU32, CLU8
 from cl_option import CLOption
 from cl_string import CLString
 from cl_tuple import CLTuple2
@@ -121,6 +121,8 @@ with open("./args.json") as f:
 # print("type a=>", type(a))
 # print("here2=>", json.dumps(a))
 # # 2 {"CLList":{"CLTuple2":['{"CLOption":"CLU32"}', '"CLString"']}}
+# a = CLMap({CLU8(3): CLString("Jim"), CLU8(3): CLString("Jim")})
+# b = a.cl_type()
 # =======
 # const hexString =
 #     "010e31a03ea026a8e375653573e0120c8cb96699e6c9721ae1ea98f896e6576ac3";
@@ -141,28 +143,54 @@ with open("./args.json") as f:
 # const desk = new CLList([new CLU256(123), new CLU256(34)])
 # const tuple2_value = new CLTuple2([new CLU256(123), new CLString("ice")])
 
-# recipient: recipient,
+# # recipient: recipient,
 recipient = CLKey(
     "account-hash-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20")
-print("recipient", recipient.cl_type())
-# token_ids: token_ids,
+print("recipient=> str:", recipient)
+print("recipient => cltype", recipient.cl_type())
+print("recipient => value", recipient.value())  # todo
+# # token_ids: token_ids,
 token_ids = CLOption(CLList([CLString("Hello, World!")]))
-print("token_ids:", token_ids.cl_type())
-# token_metas: token_metas,
-token_metas = CLList([CLMap([(CLString("ice"), CLString("Cream")), (CLString(
-    1), CLString("Cream"))])])
-a = token_metas.cl_type()
-print("token_metas", a)
+print("token_ids => str:", token_ids)
+print("token_ids => cltype:", token_ids.cl_type())
+print("token_ids => value:", token_ids.value())
+# # token_metas: token_metas,
+
+# const myKey = new CLString("ice");
+# const myVal = new CLString("cream");
+# const temp = new CLMap([[myKey, myVal]]);
+# const token_metas = new CLList([temp]);
+
+my_words = CLMap({CLU8(3): CLString("Jim"), CLU8(
+    2): CLString("Jack"), CLU8(4): CLString("Jane"), CLU8(1): CLString("Jill")})
+print("my_words=>str", my_words)
+print("my_words=>type", my_words.cl_type())
+print("my_words=>value", my_words.value())
+
+token_metas = CLList([CLMap({CLString("hello"): CLString("cream")})])
+print("token_metas str=>", token_metas)
+print("token_metas_cl_type=>", token_metas.cl_type())
+print("token_metas serialize=>", token_metas.serialize())
+print("token_metas value=>", token_metas.value())  # todo
+for x in token_metas.value():
+    print("x->", x)
 # # token_commissions: token_commissions,
 # token_commissions = token_metas
 # # desk,
-# desk = CLList([CLU256(123), CLU256(34)])
-# print("desk:", desk.cl_type())
+desk = CLList([CLU256(123), CLU256(34)])
+print("desk str=>", desk)
+print("desk cl_type:", desk.cl_type())
+print("desk cl_value:", desk.value())
 # # tuple2_value
 
-# tuple2_value = CLTuple2((CLU256(123), CLString("ice")))
-# print("tuple2_value:", tuple2_value.cl_type())
-print("type:", type(a))
-b = json.loads(a)
-print(json.loads(a))
-print(b['CLList'])
+tuple2_value = CLTuple2((CLU256(123), CLString("ice")))
+print("tuple2_value str=>:", tuple2_value)
+print("tuple2_value cltype=>:", tuple2_value.cl_type())
+print("tuple2_value value=>:", tuple2_value.value())
+print("")
+# print("type:", type(a))
+# b = json.loads(a)
+# print(json.loads(a))
+# print(b['CLList'])
+n = ['{"key": hello, "value": cream}']
+print(json.dumps(n))

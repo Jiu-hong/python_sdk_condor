@@ -1,5 +1,5 @@
 
-from cl_baseType import CLType
+from cl_baseType import CLMapBase, CLType
 from cl_number import *
 from cl_string import CLString
 

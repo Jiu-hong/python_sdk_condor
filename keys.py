@@ -1,7 +1,9 @@
 # Ed25519
+import base64
 from cryptography.hazmat.primitives.asymmetric import ed25519, rsa
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.serialization import load_pem_public_key, load_pem_private_key
+from cryptography.hazmat.primitives.asymmetric import ed25519
 private_key = ed25519.Ed25519PrivateKey.generate()
 
 a = ed25519.Ed25519PrivateKey.from_private_bytes(bytes.fromhex(
@@ -41,7 +43,7 @@ loaded_public_key = ed25519.Ed25519PublicKey.from_public_bytes(public_bytes)
 
 def key_from_pemfile():
     pem_content = '''-----BEGIN PRIVATE KEY-----
-MC4CAQAwBQYDK2VwBCIEIJC47X71fZp700jh531/LV2BugQSxd1/s9cEKQz3742X
+MC4CAQAwBQYDK2VwBCIEIKvQ1YlCTlFoEMpfBNWrmCNFFmeizVFKhwxGtjSWHatE
 -----END PRIVATE KEY-----'''
 
     # expect 01054015b0d822d8e127f2a3d508fe9d68757e5c7b3c5d3b78d42df70af9c0adbd
@@ -61,8 +63,61 @@ MC4CAQAwBQYDK2VwBCIEIJC47X71fZp700jh531/LV2BugQSxd1/s9cEKQz3742X
     )
     print("public_bytes:", public_bytes.hex())
     signature = privateKey.sign(
-        bytes.fromhex("6ca0f9d59827b45920a43937a044949d3bfe67f08c9b740375f1816ff9785c0e"))
+        bytes.fromhex("dbe8401b2c4022c9c5cd920047ec743d37cbf0601855777c30763860955eb0e5"))
     print('01'+signature.hex())
+    sk = ed25519.Ed25519PrivateKey.from_private_bytes(privateKey)
+
+    signature = sk.sign(bytes.fromhex(
+        "dbe8401b2c4022c9c5cd920047ec743d37cbf0601855777c30763860955eb0e5"))
+    print("signature is ", signature)
 
 
-key_from_pemfile()
+_PVK_LENGTH = 32
+
+
+def get_pvk_from_pem_file(fpath: str) -> bytes:
+    """Returns an ED25519 private key decoded from a PEM file.
+
+    :param fpath: Path to a PEM file.
+    :returns: A private key.
+
+    """
+    # Open pem file.
+    with open(fpath, "r") as fstream:
+        as_pem = fstream.readlines()
+
+    # Decode bytes.
+    pvk_b64 = [i for i in as_pem if i and not i.startswith("-----")][0].strip()
+    pvk = base64.b64decode(pvk_b64)
+
+    return len(pvk) % _PVK_LENGTH == 0 and pvk[:_PVK_LENGTH] or pvk[-_PVK_LENGTH:]
+
+
+def get_signature_from_pem_file(msg: bytes, fpath: str) -> bytes:
+    """Returns an ED25519 digital signature of data signed from a private key PEM file.
+
+    :param msg: A bunch of bytes to be signed.
+    :param fpath: PEM file path.
+    :returns: A digital signature.
+
+    """
+    return get_signature(msg, get_pvk_from_pem_file(fpath))
+
+
+def get_signature(msg: bytes, pvk: bytes) -> bytes:
+    """Returns an ED25519 digital signature of data signed from a private key PEM file.
+
+    :param msg: A bunch of bytes to be signed.
+    :param pvk: A private key derived from a generated key pair.
+    :returns: A digital signature.
+
+    """
+    sk = ed25519.Ed25519PrivateKey.from_private_bytes(pvk)
+
+    return sk.sign(msg)
+
+
+# key_from_pemfile()
+sig = get_signature_from_pem_file(bytes.fromhex(
+    "2fffea947c2aeaa70a7953af70917e58da259fb5e61d931829f55eebb82a74d2"), "secret_key.pem")
+print("sig is:", '01'+sig.hex())

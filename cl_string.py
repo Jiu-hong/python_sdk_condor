@@ -10,14 +10,13 @@ class CLString(CLType, CLAtomic):
         # bytes length: '0x{:02x}'.format(integer) => 2 ->'0x02'
         bytes_len_hex = '{:02x}'.format(
             int(len(content) / 2)).ljust(8, '0')
-        return bytes_len_hex+content
+        return bytes.fromhex(bytes_len_hex+content)
 
     def value(self):
         return self.data
 
     def cl_value(self):
-
-        content = self.serialize()
+        content = self.serialize().hex()
         bytes_len_hex = '{:02x}'.format(
             int(len(content) / 2)).ljust(8, '0')
         tag = '{:02x}'.format(self.tag)

@@ -11,19 +11,19 @@ class CLOption(CLType):
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        if not isinstance(self.data, CLType):
-            raise
+        if self.data is not None and not isinstance(self.data, CLType):
+            raise ("what is wrong")
 
     def serialize(self):
         if self.data == None:
-            return '00'
+            return int(0).to_bytes()
         else:
             # remove '0x'
-            return '01'+self.data.serialize()
+            return int(1).to_bytes()+self.data.serialize()
 
     def cl_value(self):
 
-        content = self.serialize()
+        content = self.serialize().hex()
         bytes_len_hex = '{:02x}'.format(
             int(len(content) / 2)).ljust(8, '0')
         tag = '{:02x}'.format(self.tag)
@@ -48,8 +48,8 @@ class CLOption(CLType):
 # print(d)
 # print(d.serialize())
 # # print(b.serialize())
-# c = CLOption(None)
-# print(c)
+c = CLOption(None)
+print(c.serialize())
 # # print(c.serialize())
 # a = CLOption(CLU32(10))
 # print(a)

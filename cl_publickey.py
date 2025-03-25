@@ -15,11 +15,11 @@ class CLPublicKey(CLType, CLAtomic):
         if not isinstance(result, re.Match):
             # incorrect publickey should be 01xxx(64length) or 02xxx(66length)
             raise
-        return self.data
+        return bytes.fromhex(self.data)
 
     def cl_value(self):
 
-        content = self.serialize()
+        content = self.serialize().hex()
         bytes_len_hex = '{:02x}'.format(
             int(len(content) / 2)).ljust(8, '0')
         tag = '{:02x}'.format(self.tag)
@@ -31,7 +31,7 @@ a = CLPublicKey(
     "0119bf44096984cdfe8541bac167dc3b96c85086aa30b6b6cb0c5c38ad703166e1")
 print(a.serialize())
 print(a)
-print(a.value())
+print(a.cl_value())
 # (01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})
 # re.compile("(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})")
 # p = re.compile("(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})")

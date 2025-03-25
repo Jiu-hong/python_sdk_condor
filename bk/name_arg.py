@@ -15,9 +15,10 @@ from cl_string import CLString
 
 class NamedArg:
     def __init__(self, args):
+        print("args:", args)
         self.args = args
 
-    def __serialize__(self):
+    def serialize(self):
         inner_serialize = ''
         print(self.args)
         for name, value in self.args.items():
@@ -29,15 +30,27 @@ class NamedArg:
             len(self.args)).ljust(8, '0')
         return list_length + inner_serialize
 
-    def deploy_value(self):
-        for name, value in self.args.items()
+    def to_json(self):
+        args_list = []
+        for name, value in self.args.items():
+            name_arg_dict = {}
+            name_arg_dict[name] = {
+                "cl_type": value.cl_type(), "bytes": value.serialize(), "parsed": value.value()}
+            args_list.append(name_arg_dict)
+        result = {}
+        result["args"] = {"Named": args_list}
+        return result
+
+        # def deploy_value(self):
+        #     for name, value in self.args.items()
 
         #     amount: CLValueBuilder.u256(123),
         # owner: CLValueBuilder.u256(456),
         # recipient: CLValueBuilder.string("hello")
 a = NamedArg({"amount": CLU256(123), "owner": CLU256(
     456), 'recipient': CLString("hello")})
-print(a.__serialize__())
+print(a.serialize())
+# 0300000006000000616d6f756e74200000007b0000000000000000000000000000000000000000000000000000000000000007050000006f776e657220000000c8010000000000000000000000000000000000000000000000000000000000000709000000726563697069656e74090000000500000068656c6c6f0a
 # expect 0300000006000000616d6f756e7402000000017b07050000006f776e65720300000002c8010709000000726563697069656e74090000000500000068656c6c6f0a
 # actual 0300000006000000616d6f756e7402000000017b07050000006f776e65720300000002c8010709000000726563697069656e74090000000500000068656c6c6f0a
 #   RuntimeArgs.fromMap({
@@ -55,7 +68,7 @@ print(a.__serialize__())
 # const ACCOUNT_PUBKEYS = new CLList([pk1, pk2]);
 # expect 01000000 03000000 706b7346000000 02000000 01d0ee8f3827c8b28817e5d3a02a8041b6c488e5880dab0d56d904f3f3356fcd9c 012108a170b4e14ddc9b3d7872779d07f5c9d3268fe5f5363f9e10c4af1880e5ae 0e16
 # actual 0100000003000000706b73460000000200000001d0ee8f3827c8b28817e5d3a02a8041b6c488e5880dab0d56d904f3f3356fcd9c012108a170b4e14ddc9b3d7872779d07f5c9d3268fe5f5363f9e10c4af1880e5ae0e
-a = NamedArg({"pks": CLList([CLPublicKey(
-    "01d0ee8f3827c8b28817e5d3a02a8041b6c488e5880dab0d56d904f3f3356fcd9c"), CLPublicKey(
-    "012108a170b4e14ddc9b3d7872779d07f5c9d3268fe5f5363f9e10c4af1880e5ae")])})
-print(a.__serialize__())
+# a = NamedArg({"pks": CLList([CLPublicKey(
+#     "01d0ee8f3827c8b28817e5d3a02a8041b6c488e5880dab0d56d904f3f3356fcd9c"), CLPublicKey(
+#     "012108a170b4e14ddc9b3d7872779d07f5c9d3268fe5f5363f9e10c4af1880e5ae")])})
+# print(a.__serialize__())

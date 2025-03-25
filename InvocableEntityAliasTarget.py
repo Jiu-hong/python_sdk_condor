@@ -1,0 +1,25 @@
+from cl_number import CLU32, CLU8
+from cl_option import CLOption
+from table import CalltableSerialization
+
+
+class InvocableEntityAliasTarget:
+    def __init__(self, package_hash, version=None):
+        pass
+
+    def to_bytes(self):
+        pass
+
+    def to_json(self):
+        pass
+
+# By contract name
+# c77cea12d795be628541d8d548ebcd2df6127bdb0ccaebb9809b252c611c005c
+        # "target": {
+        #     "Stored": {
+        #         "id": {
+        #             "ByName": "apple_contract"
+        #         },
+        #         "runtime": "VmCasperV1"
+        #     }
+        # }

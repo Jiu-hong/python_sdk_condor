@@ -1,5 +1,8 @@
+import json
 from ByPackageHashInvocationTarget import ByPackageHashInvocationTarget
 from ByPackageNameInvocationTarget import ByPackageNameInvocationTarget
+from InvocableEntityAliasTarget import InvocableEntityAliasTarget
+from InvocableEntityTarget import InvocableEntityTarget
 from cl_number import CLU32, CLU8
 from cl_option import CLOption
 from cl_string import CLString
@@ -35,32 +38,50 @@ class TransactionInvocationTarget:
                 return ByPackageNameInvocationTarget(
                     self.invocation_target[1], self.invocation_target[2]).to_bytes()
 
-    def serialize(self):
+# ok
+    def to_json(self):
+        target = {}
+        result = {}
         match self.invocation_target[0]:
             case "InvocableEntity":
-                return CLU8(0).serialize() + self.invocation_target[1]
+                target = InvocableEntityTarget(
+                    self.invocation_target[1]).to_json()
+
             case "InvocableEntityAlias":
-                return CLU8(1).serialize() + CLString(self.invocation_target[1]).serialize()
+                target = InvocableEntityAliasTarget(
+                    self.invocation_target[1]).to_json()
+
             case "Package":
-                version = CLOption(None)
-                return ByPackageHashInvocationTarget(
-                    self.invocation_target[1], version)
+                target = ByPackageHashInvocationTarget(
+                    self.invocation_target[1], self.invocation_target[2]).to_json()
 
             case "PackageAlias":
-                return CLU8(3).serialize() + CLString(self.invocation_target[1]).serialize()
+                target = ByPackageNameInvocationTarget(
+                    self.invocation_target[1], self.invocation_target[2]).to_json()
 
-    def to_json(self):
-        print("self.invocation_target is: ", self.invocation_target)
-        result = {}
-        result["Stored"] = {"runtime": "VmCasperV1",
-                            "id": {"ByPackageHash": {"addr": self.invocation_target[1]}}}
+        result["Stored"] = {
+            "id": target,
+            "runtime": "VmCasperV1"
+        }
         return result
 
+
+# stored
+        # "target": {
+        #     "Stored": {
+        #         "id": {
+        #             "ByName": "apple_contract"
+        #         },
+        #         "runtime": "VmCasperV1"
+        #     }
+        # }
 
 target = TransactionInvocationTarget(
     "InvocableEntity", "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
 a = target.to_bytes()
 print("a is ", a.hex())
+b = target.to_json()
+print("b is: ", json.dumps(b))
 
 
 # ByHash

@@ -280,8 +280,8 @@ class CLU256(CLNumber):
         return bytes_len_hex + content + tag
 
 
-# b = CLU256("1")
-# print(b.serialize())
+b = CLU256(10)
+print(b.serialize().hex())
 # b = CLU256(str(2**256+1))
 # print(b.serialize())
 # a = CLU256("2500000000")

@@ -23,7 +23,7 @@ print("e is:", e)
 base = datetime.now(timezone.utc)
 print("base", base)
 # json
-json = base.replace(
+eee = base.replace(
     tzinfo=None).isoformat(timespec='milliseconds')+"Z"
 # serialize
 serial_timestamp = base.timestamp()
@@ -77,3 +77,22 @@ print(dt2.timestamp())
 
 # c = CLU32(42).cl_value()
 # print("C is, ", c)
+
+a = {"a": 1, "b": 2}
+# a["key1"] = 1
+# a["key2"] = 2
+print(a, type(a))
+b = json.dumps(a)
+print(b, type(b))
+v = {}
+v["key1"] = 3
+v["key2"] = 4
+
+v["key0"] = a
+print(json.dumps(v))
+my_dict = {}
+my_dict["cl_type"] = "hello"
+my_dict["parsed"] = "xxxxxx"
+
+a = (1, my_dict)
+print(json.dumps(a))

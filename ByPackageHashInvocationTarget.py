@@ -1,3 +1,4 @@
+import json
 from cl_number import CLU32, CLU8
 from cl_option import CLOption
 from table import CalltableSerialization
@@ -21,7 +22,10 @@ class ByPackageHashInvocationTarget:
         return table.to_bytes()
 
     def to_json(self):
-        pass
+        result = {}
+        result["ByPackageHash"] = {
+            "addr": self.package_hash, "version": self.version}
+        return result
 
 # By package hash
 # 7ac469fbaaace9fadb60f0ca43389842ca137698de7b417cead5a213a355ed30
@@ -36,3 +40,8 @@ class ByPackageHashInvocationTarget:
         #         "runtime": "VmCasperV1"
         #     }
         # }
+
+
+a = ByPackageHashInvocationTarget(
+    "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
+print(a.to_json())

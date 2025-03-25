@@ -54,8 +54,8 @@ class CLU8(CLNumber):
             raise ExceptionExceedMaxValue(str(self.data), "CLU8")
 
 
-a = CLU8(2**9)
-print(a.new())
+# a = CLU8(2**9)
+# print(a.new())
 
 
 class CLU32(CLNumber):
@@ -86,10 +86,10 @@ class CLU64(CLNumber):
             raise ExceptionExceedMaxValue(str(self.data), "CLU64")
 
 
-x = CLU64(2*63)
-print(x.new())
-# u512
-x = 123456789101112131415
+# x = CLU64(2*63)
+# print(x.new())
+# # u512
+# x = 123456789101112131415
 # expect
 # 0x0957ff1ada959f4eb106
 
@@ -138,10 +138,10 @@ class CLU512(CLBigNumber):
             raise ExceptionExceedMaxValue(str(self.data), "CLU512")
 
 
-a = CLU512(str(2**513))
-print(a.new())
-a = CLU512(str(7))
-print(a.new())
+# a = CLU512(str(2**513))
+# print(a.new())
+# a = CLU512(str(7))
+# print(a.new())
 
 
 class CLU256(CLBigNumber):
@@ -156,7 +156,7 @@ class CLU256(CLBigNumber):
             raise ExceptionExceedMaxValue(str(self.data), "CLU256")
 
 
-b = CLU256("1")
+b = CLU256("10")
 print(b.new())
 # b = CLU256(str(2**256+1))
 # print(b.new())
@@ -178,10 +178,10 @@ class CLU128(CLBigNumber):
 
 # b = CLU128("abcd")
 # print(b.new())
-b = CLU128(2**128)
-print(b.new())
-b = CLU128(str(123456789101112131415))
-print(b.new())
+# b = CLU128(2**128)
+# print(b.new())
+# b = CLU128(str(123456789101112131415))
+# print(b.new())
 # 0b1101011000101001110100111111001010111011010000110101111111101010111
 # 0b1101011000101001110100111111001010111011010000110101111111101011000
 # 0b1101011000101001110100111111001010111011010000110101111111101010111
@@ -200,9 +200,9 @@ print(b.new())
 # a = 123456789101112131415
 # binary_string = bin(hex_integer)
 # binary_string
-'0b1001010101111111111100011010110110101001010110011111010011101011000100000110'
-"{0:0>4X}".format(int("0000010010001101", 2))
-'048D'
-"{0:0>4X}".format(int(
-    "0b1001010101111111111100011010110110101001010110011111010011101011000100000110", 2))
-'957FF1ADA959F4EB106'
+# '0b1001010101111111111100011010110110101001010110011111010011101011000100000110'
+# "{0:0>4X}".format(int("0000010010001101", 2))
+# '048D'
+# "{0:0>4X}".format(int(
+#     "0b1001010101111111111100011010110110101001010110011111010011101011000100000110", 2))
+# '957FF1ADA959F4EB106'

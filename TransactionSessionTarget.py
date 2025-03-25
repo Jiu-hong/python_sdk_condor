@@ -18,12 +18,7 @@ class TransactionSessionTarget:
             3, module_bytes_length+self.module_bytes)
         return table.to_bytes()
 
-    def serialize(self):
-        if self.is_install_upgrade:
-            return CLU8(1).serialize() + self.module_bytes
-        else:
-            return CLU8(0).serialize() + self.module_bytes
-
+# ok
     def to_json(self):
         result = {}
         result["Session"] = {"is_install_upgrade": self.is_install_upgrade,

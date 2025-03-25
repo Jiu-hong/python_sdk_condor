@@ -32,17 +32,17 @@ class TransactionTarget:
             case "session":
                 return CLU8(2).serialize() + TransactionSessionTarget(*self.kw).serialize() + TransactionRuntime().serialize()
 
+# ok
     def to_json(self):
         result = {}
         match self.target_kind:
             case "native":
                 result["target"] = "Native"
             case "stored":
-                result["target"] = {
-                    **TransactionInvocationTarget(*self.kw).to_json()}
+                result["target"] = TransactionInvocationTarget(
+                    *self.kw).to_json()
             case "session":
-                result["target"] = {"Session": {
-                    **TransactionSessionTarget(*self.kw).to_json()}}
+                result["target"] = TransactionSessionTarget(*self.kw).to_json()
 
         return result
 

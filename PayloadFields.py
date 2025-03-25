@@ -39,7 +39,7 @@ class PayloadFields:
     def to_json(self):
         result = {}
         result["fields"] = {
-            **self.args.to_json(), **self.entry_point.to_json(), **self.scheduling.to_json(), **self.target.to_json()}
+            **self.args, **self.entry_point.to_json(), **self.scheduling.to_json(), **self.target.to_json()}
         return result
 
 
@@ -49,3 +49,4 @@ target = TransactionTarget("stored", "InvocableEntity",
 entrypoint = TransactionEntryPoint("Custom", "apple")
 scheduleing = TransactionScheduling()
 payloadfields = PayloadFields(args, target, entrypoint, scheduleing)
+print("payloadfields to_json", payloadfields.to_json())

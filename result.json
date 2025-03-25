@@ -1,11 +1,15 @@
 {
-    "target": {
-        "Stored": {
-            "runtime": "VmCasperV1",
-            "id": {
-                "ByPackageHash": {
-                    "addr": "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56"
-                }
+    "fields": {
+        "entry_point": {
+            "Custom": "apple"
+        },
+        "scheduling": "Standard",
+        "target": {
+            "Stored": {
+                "id": {
+                    "ByHash": "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56"
+                },
+                "runtime": "VmCasperV1"
             }
         }
     }

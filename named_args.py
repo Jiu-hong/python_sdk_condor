@@ -1,3 +1,4 @@
+import json
 from cl_number import CLU256, CLU32
 from cl_string import CLString
 
@@ -12,9 +13,9 @@ class NamedArg:
         buffer = b''
 
         name_bytes = CLString(self.name).serialize()
-        print("name_bytes is:", name_bytes.hex())
+        # print("name_bytes is:", name_bytes.hex())
         buffer = name_bytes
-        print("buffer here is:", buffer.hex())
+        # print("buffer here is:", buffer.hex())
 
         offset += len(name_bytes)
 
@@ -23,7 +24,7 @@ class NamedArg:
         buffer = buffer + value_bytes
 
         offset += len(value_bytes)
-        print("offset is,", offset)
+        # print("offset is,", offset)
         return buffer
 
     def to_json(self):
@@ -32,7 +33,7 @@ class NamedArg:
         my_dict["bytes"] = self.value.serialize().hex()
         my_dict["parsed"] = self.value.value()
 
-        return (self.name, my_dict)  # tuple tuple[1] is dict
+        return self.name, my_dict  # tuple tuple[1] is dict
 
         # "args": {
         #     "Named": [
@@ -58,7 +59,7 @@ class NamedArg:
 
 a = NamedArg("arg1", CLU256(10))
 b = a.to_byte_with_named_arg()
-print("b is:", b.hex())
-print("json_value:", a.to_json())
+# print("b is:", b.hex())
+# print("json_value:", json.dumps(a.to_json()))
 # 0400000061726731040000002a00000004
 # 0400000061726731040000002a00000004

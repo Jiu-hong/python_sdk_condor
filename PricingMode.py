@@ -46,4 +46,4 @@ class PricingMode:
 
 pricing_mode = PricingMode("Classic", 123)
 a = pricing_mode.to_bytes()
-print("a is:", a.hex())
+# print("a is:", a.hex())

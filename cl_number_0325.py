@@ -54,6 +54,7 @@ class CLI32(CLNumber):
 
     def serialize(self):
         if CLI32.minvalue <= self.data <= CLI32.maxvalue:
+            # return (self.data).to_bytes(4, byteorder='little', signed=True).hex()
             return (self.data).to_bytes(4, byteorder='little', signed=True)
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLI32")
@@ -77,6 +78,7 @@ class CLI64(CLNumber):
 
     def serialize(self):
         if CLI64.minvalue <= self.data <= CLI64.maxvalue:
+            # return (self.data).to_bytes(8, byteorder='little', signed=True).hex()
             return (self.data).to_bytes(8, byteorder='little', signed=True)
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLI64")
@@ -99,6 +101,7 @@ class CLU8(CLNumber):
 
     def serialize(self):
         if 0 <= self.data <= CLU8.maxvalue:
+            # return (self.data).to_bytes(1, byteorder='little').hex()
             return (self.data).to_bytes(1, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU8")
@@ -111,10 +114,15 @@ class CLU8(CLNumber):
         tag = '{:02x}'.format(self.tag)
 
         return bytes_len_hex + content + tag
+
+
+# print("u8")
 # a = CLU8(2**8-1)
+# print("u8 serialize")
 # print(a.serialize())
-# print(a)
-# print(a.value())
+# # print(a)
+# print("u8 cl_value")
+# print(a.cl_value())
 
 
 class CLU16(CLNumber):
@@ -134,6 +142,7 @@ class CLU32(CLNumber):
 
     def serialize(self):
         if 0 <= self.data <= CLU32.maxvalue:
+            # return (self.data).to_bytes(4, byteorder='little').hex()
             return (self.data).to_bytes(4, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU32")
@@ -162,6 +171,7 @@ class CLU64(CLNumber):
 
     def serialize(self):
         if 0 <= self.data <= CLU64.maxvalue:
+            # return (self.data).to_bytes(8, byteorder='little').hex()
             return (self.data).to_bytes(8, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU64")
@@ -183,41 +193,51 @@ class CLU64(CLNumber):
 # print(CLU64(int(time() * 1000)).serialize())
 
 
-class CLBigNumber(CLNumber):
-    def __init__(self, data):
-        super().__init__(data)
+# class CLBigNumber(CLNumber):
+#     def __init__(self, data):
+#         super().__init__(data)
 
-        hex_string = '{:x}'.format(self.data)
-        # if the length is odd pad a zero in the left
-        if len(hex_string) % 2:
-            self.hex_string = hex_string.zfill(len(hex_string)+1)
-        else:
-            self.hex_string = hex_string
+#         hex_string = '{:x}'.format(self.data)
+#         # if the length is odd pad a zero in the left
+#         if len(hex_string) % 2:
+#             self.hex_string = hex_string.zfill(len(hex_string)+1)
+#         else:
+#             self.hex_string = hex_string
 
-        self.bytes = ""
-        self.index = int(len(self.hex_string)/2)
+#         self.bytes = ""
+#         self.index = int(len(self.hex_string)/2)
 
-        # bytes length: '{:02x}'.format(integer) => 2 ->'0x02'
-        self.bytes_len_hex = '{:02x}'.format(self.index)
+#         # bytes length: '{:02x}'.format(integer) => 2 ->'0x02'
+#         self.bytes_len_hex = '{:02x}'.format(self.index)
 
-    def serialize(self):
-        # reverse bytes
-        for _ in range(self.index, 0, -1):
-            self.index = self.index - 1
-            result = self.hex_string[self.index*2:]
-            self.hex_string = self.hex_string[:self.index*2]
-            self.bytes += result
-        return bytes.fromhex(self.bytes_len_hex+self.bytes)
+#     def serialize(self):
+#         # reverse bytes
+#         for _ in range(self.index, 0, -1):
+#             self.index = self.index - 1
+#             result = self.hex_string[self.index*2:]
+#             self.hex_string = self.hex_string[:self.index*2]
+#             self.bytes += result
+#         return self.bytes_len_hex+self.bytes
 
+# maxvalue = 2**64-1
+# tag = 5
 
-class CLU512(CLBigNumber):
+# def serialize(self):
+#     if 0 <= self.data <= CLU64.maxvalue:
+#         # return (self.data).to_bytes(8, byteorder='little').hex()
+#         return (self.data).to_bytes(8, byteorder='little')
+#     else:
+#         raise ExceptionExceedMaxValue(str(self.data), "CLU64")
+
+class CLU512(CLNumber):
     # u512 max value - class attribute
     maxvalue = 2**512-1
     tag = 8
 
     def serialize(self):
         if 0 <= self.data <= CLU512.maxvalue:
-            return super().serialize()
+            # return super().serialize()
+            return (self.data).to_bytes(64, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU512")
 
@@ -239,20 +259,19 @@ class CLU512(CLBigNumber):
 # print(a.serialize())
 
 
-class CLU256(CLBigNumber):
+class CLU256(CLNumber):
     # u256 max value - class attribute
     maxvalue = 2**256-1
     tag = 7
 
     def serialize(self):
         if 0 <= self.data <= CLU256.maxvalue:
-            return super().serialize()
+            return (self.data).to_bytes(32, byteorder='little')
         else:
             # print("number exceeded the max u512 value")
             raise ExceptionExceedMaxValue(str(self.data), "CLU256")
 
     def cl_value(self):
-
         content = self.serialize().hex()
         bytes_len_hex = '{:02x}'.format(
             int(len(content) / 2)).ljust(8, '0')
@@ -261,27 +280,25 @@ class CLU256(CLBigNumber):
         return bytes_len_hex + content + tag
 
 
-# b = CLU256("1")
-# print(b.serialize())
+b = CLU256(10)
+print(b.serialize().hex())
 # b = CLU256(str(2**256+1))
 # print(b.serialize())
 # a = CLU256("2500000000")
 # print("serialize cl_value:", a.cl_value())
 
 
-class CLU128(CLBigNumber):
+class CLU128(CLNumber):
     maxvalue = 2**128-1
     tag = 6
 
     def serialize(self):
-
         if 0 <= self.data <= CLU128.maxvalue:
-            return super().serialize()
+            return (self.data).to_bytes(16, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU128")
 
     def cl_value(self):
-
         content = self.serialize().hex()
         bytes_len_hex = '{:02x}'.format(
             int(len(content) / 2)).ljust(8, '0')
@@ -292,30 +309,6 @@ class CLU128(CLBigNumber):
 # # print(ite.serialize())
 
 
-class CLU16Big(CLBigNumber):
-    maxvalue = 2**16-1
-
-    def serialize(self):
-
-        if 0 <= self.data <= CLU16Big.maxvalue:
-            return super().serialize()
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU16Big")
-
-
-class CLU32Big(CLBigNumber):
-    maxvalue = 2**32-1
-
-    def serialize(self):
-
-        if 0 <= self.data <= CLU32Big.maxvalue:
-            return super().serialize()
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU32Big")
-
-
-a = CLU32(123)
-# print("a:", a.serialize().hex())
 # # b = CLU128("abcd")
 # # print(b.serialize())
 # b = CLU128(2**128-1)

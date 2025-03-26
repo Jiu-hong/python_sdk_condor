@@ -43,4 +43,4 @@ class ByPackageNameInvocationTarget:
 
 
 a = ByPackageNameInvocationTarget("my_hash")
-print(a.to_json())
+# print(a.to_json())

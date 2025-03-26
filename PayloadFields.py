@@ -1,15 +1,17 @@
 # to_bytes to do
 from hashlib import blake2b
+import json
 from TransactionEntryPoint import TransactionEntryPoint
 from TransactionScheduling import TransactionScheduling
 from TransactionTarget import TransactionTarget
 from cl_number import CLU16, CLU32, CLU8
 from cl_string import CLString
+from named_args import NamedArg
 
 
 class PayloadFields:
-    def __init__(self, args: list, target, entry_point, scheduleing):
-        print("args:", args)
+    def __init__(self, args: list, target: TransactionTarget, entry_point: TransactionEntryPoint, scheduleing):
+
         self.args = args
         self.target = target
         self.entry_point = entry_point
@@ -22,6 +24,9 @@ class PayloadFields:
     def to_bytes(self):
         buffer = CLU32(len(self.dict)).serialize()
         for key, value in self.dict.items():
+            # print("key:", key)
+            # print("key serialize:", key.serialize().hex())
+            # print("value: ", value.hex())
             buffer = buffer + key.serialize()  # key is CLU16
             buffer = buffer + value
         return buffer
@@ -37,9 +42,15 @@ class PayloadFields:
         return h.hexdigest()
 
     def to_json(self):
+
         result = {}
+        name_args = []
+        print("self.args types:", type(self.args))
+        for name, value in self.args.items():
+            name_args.append(NamedArg(name, value).to_json())
+
         result["fields"] = {
-            **self.args, **self.entry_point.to_json(), **self.scheduling.to_json(), **self.target.to_json()}
+            "args": {"Named": name_args}, **self.entry_point.to_json(), **self.scheduling.to_json(), **self.target.to_json()}
         return result
 
 
@@ -49,4 +60,4 @@ target = TransactionTarget("stored", "InvocableEntity",
 entrypoint = TransactionEntryPoint("Custom", "apple")
 scheduleing = TransactionScheduling()
 payloadfields = PayloadFields(args, target, entrypoint, scheduleing)
-print("payloadfields to_json", payloadfields.to_json())
+print("payloadfields to_json", json.dumps(payloadfields.to_json()))

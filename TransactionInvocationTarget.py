@@ -13,7 +13,7 @@ class TransactionInvocationTarget:
     #      "ByPackageHash", "e48c5b9631c3a2063e61826d6e52181ea5d6fe35566bf994134caa26fce16586")
     def __init__(self, *invocation_target):
         self.invocation_target = invocation_target
-        print("invocation_target is:", invocation_target)
+        # print("invocation_target is:", invocation_target)
 
     def to_bytes(self):
         match self.invocation_target[0]:
@@ -79,9 +79,9 @@ class TransactionInvocationTarget:
 target = TransactionInvocationTarget(
     "InvocableEntity", "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
 a = target.to_bytes()
-print("a is ", a.hex())
+# print("a is ", a.hex())
 b = target.to_json()
-print("b is: ", json.dumps(b))
+# print("b is: ", json.dumps(b))
 
 
 # ByHash

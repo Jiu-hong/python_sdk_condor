@@ -18,3 +18,11 @@ class TransactionRuntime:
         result = {}
         result["runtime"] = self.runtime
         return result
+
+
+a = TransactionRuntime()
+# print(a.to_bytes().hex())
+
+# expect:
+# 010000000000000000000100000000
+# 010101000100010100

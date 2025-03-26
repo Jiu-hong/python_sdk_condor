@@ -23,6 +23,7 @@ class TransactionTarget:
                 return TransactionSessionTarget(*self.kw).to_bytes()
 
     def serialize(self):
+        # print("self.kw:", self.kw)
 
         match self.target_kind:
             case "native":
@@ -49,11 +50,11 @@ class TransactionTarget:
 
 target = TransactionTarget("stored", "InvocableEntity",
                            "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
-print("target is:", target.to_bytes().hex())
+# print("target is:", target.to_bytes().hex())
 
 f = open("wasm", "r")
 module_bytes = f.read()
 target2 = TransactionTarget("session", module_bytes, True)
-print("target2 is:", target2.to_bytes().hex())
+# print("target2 is:", target2.to_bytes().hex())
 
-print("target json is:", target.to_json())
+# print("target json is:", target.to_json())

@@ -41,8 +41,8 @@ class CLResult(CLType):
 
 
 a = CLResult(Ok(CLString("Hello world!")))
-print(a.value())
-print(a)
+# print(a.value())
+# print(a)
 # print(a.serialize())
 
 b = CLResult(Err(CLOption(CLList([CLTuple2((CLU32(1), CLString("Hello, World!"))),

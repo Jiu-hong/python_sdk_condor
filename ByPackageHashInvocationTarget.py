@@ -44,4 +44,4 @@ class ByPackageHashInvocationTarget:
 
 a = ByPackageHashInvocationTarget(
     "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
-print(a.to_json())
+# print(a.to_json())

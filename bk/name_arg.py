@@ -15,12 +15,12 @@ from cl_string import CLString
 
 class NamedArg:
     def __init__(self, args):
-        print("args:", args)
+        # print("args:", args)
         self.args = args
 
     def serialize(self):
         inner_serialize = ''
-        print(self.args)
+        # print(self.args)
         for name, value in self.args.items():
             s_name = CLString(name).serialize()
             inner_serialize += s_name
@@ -49,7 +49,7 @@ class NamedArg:
         # recipient: CLValueBuilder.string("hello")
 a = NamedArg({"amount": CLU256(123), "owner": CLU256(
     456), 'recipient': CLString("hello")})
-print(a.serialize())
+# print(a.serialize())
 # 0300000006000000616d6f756e74200000007b0000000000000000000000000000000000000000000000000000000000000007050000006f776e657220000000c8010000000000000000000000000000000000000000000000000000000000000709000000726563697069656e74090000000500000068656c6c6f0a
 # expect 0300000006000000616d6f756e7402000000017b07050000006f776e65720300000002c8010709000000726563697069656e74090000000500000068656c6c6f0a
 # actual 0300000006000000616d6f756e7402000000017b07050000006f776e65720300000002c8010709000000726563697069656e74090000000500000068656c6c6f0a

@@ -87,4 +87,4 @@ chain_name = "casper-test"
 a = DeployHeader(account, timestamp, ttl, gas_price,
                  body_hash, dependencies, chain_name)
 print("hash=>")
-print(a.byteHash())
+# print(a.byteHash())

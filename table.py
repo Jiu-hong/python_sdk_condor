@@ -2,7 +2,7 @@
 #     private fields: Field[] = []
 #     private currentOffset = 0
 
-from cl_number import CLU16, CLU32
+from cl_number import CLU16, CLU32, CLU16Big, CLU32Big
 
 
 class CalltableSerialization:

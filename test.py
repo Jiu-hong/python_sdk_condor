@@ -60,8 +60,8 @@ def to_json():
 #                            2025-03-19T09:47:13.625Z
 dt = datetime.fromisoformat('2025-03-24T00:49:13.133Z').timestamp()
 print(dt)
-dt2 = datetime.now(timezone.utc)
-print(dt2.timestamp())
+# dt2 = datetime.now(timezone.utc)
+# print(dt2.timestamp())
 # mine = datetime.now(timezone.utc)
 # print(mine)
 # f = open("wasm", "r")

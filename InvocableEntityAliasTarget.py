@@ -28,4 +28,4 @@ class InvocableEntityAliasTarget:
         #     }
         # }
 a = InvocableEntityAliasTarget("apple_contract")
-print(a.to_json())
+# print(a.to_json())

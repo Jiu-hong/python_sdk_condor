@@ -25,4 +25,4 @@ class PaymentLimited:
 
 payment_limit = PaymentLimited(123, 1, True)
 a = payment_limit.to_bytes()
-print("a is:", a.hex())
+# print("a is:", a.hex())

@@ -12,7 +12,7 @@ class TransactionEntryPoint:
         table = CalltableSerialization()
         match self.entry_point:
             case "Custom":
-                table.addField(0, CLU8(0).serialize()).addField(
+                table.addField(0, CLU8(1).serialize()).addField(
                     1, CLString(self.content).serialize())
             case "Transfer":
                 table.addField(0, CLU8(1).serialize())
@@ -31,7 +31,7 @@ class TransactionEntryPoint:
             case "ChangePublicKey":
                 table.addField(0, CLU8(8).serialize())
             case "Call":
-                table.addField(0, CLU8(9).serialize())
+                table.addField(0, CLU8(0).serialize())
         return table.to_bytes()
 
     def to_json(self):
@@ -46,4 +46,4 @@ class TransactionEntryPoint:
 
 
 entrypoint = TransactionEntryPoint("Custom", "apple")
-print("entrypoint: ", entrypoint.to_bytes().hex())
+# print("entrypoint: ", entrypoint.to_bytes().hex())

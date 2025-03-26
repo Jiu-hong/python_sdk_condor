@@ -162,7 +162,7 @@ class TransactionTarget:
 
     def to_json(self):
         result = {}
-        print("self.target_kind:", self.target_kind)
+        # print("self.target_kind:", self.target_kind)
         match self.target_kind:
             case "native":
                 result["target"] = "Native"
@@ -292,7 +292,7 @@ class TransactionInvocationTarget:
     #      "ByPackageHash", "e48c5b9631c3a2063e61826d6e52181ea5d6fe35566bf994134caa26fce16586")
     def __init__(self, invocation_target):
         self.invocation_target = invocation_target
-        print("self.invocation_target: ", self.invocation_target)
+        # print("self.invocation_target: ", self.invocation_target)
 
     def serialize(self):
         match self.invocation_target[0]:
@@ -335,31 +335,31 @@ class TransactionRuntime:
 transaction_target = TransactionTarget(
     "stored", "Package", "e48c5b9631c3a2063e61826d6e52181ea5d6fe35566bf994134caa26fce16586")
 print("hello world=====")
-print(transaction_target.to_json())
-print(transaction_target.serialize())
+# print(transaction_target.to_json())
+# print(transaction_target.serialize())
 # a = TransactionV1Body()
 transaction_entry_point = TransactionEntryPoint("Custom", "apple")
-print("transaction_entry_point_to_json", transaction_entry_point.to_json())
-print("transaction_entry_point_serialize", transaction_entry_point.serialize())
+# print("transaction_entry_point_to_json", transaction_entry_point.to_json())
+# print("transaction_entry_point_serialize", transaction_entry_point.serialize())
 
 name_args = NamedArg({"amount": CLU8(2), "owner": CLU8(
     1), 'recipient': CLString("set_all")})
-print("name_args.to_json()", name_args.to_json())
-print("name_args.serialize()", name_args.serialize())
+# print("name_args.to_json()", name_args.to_json())
+# print("name_args.serialize()", name_args.serialize())
 a = TransactionV1Body(transaction_target,
                       transaction_entry_point, TransactionScheduling(), name_args)
-print("a.to_json()", a.to_json())
-print("a.serialize()", a.serialize())
+# print("a.to_json()", a.to_json())
+# print("a.serialize()", a.serialize())
 hash = a.body_hash()
-print("hash is:", hash)
+# print("hash is:", hash)
 header = TransactionV1Header(
     "integration-test", "c6b803ae07f3f4541520b75c12b519afd3949f439d60b114f4f68bea5ee66776", "Classic", "01d23f9a9f240b4bb6f2aaa4253c7c8f34b2be848f104a83d3d6b9b2f276be28fa", 123)
-print("header.to_json()", header.to_json())
-print("header.transaction_hash()", header.transaction_hash())
+# print("header.to_json()", header.to_json())
+# print("header.transaction_hash()", header.transaction_hash())
 f = open("wasm", "r")
 wasm_bytes = f.read()
 session = TransactionSessionTarget(wasm_bytes, True)
 serialize = session.serialize()
-print("serialize:", serialize)
+# print("serialize:", serialize)
 json = session.to_json()
-print("json:", json)
+# print("json:", json)

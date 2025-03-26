@@ -35,16 +35,16 @@ class CLKey(CLType, CLAtomic):
 
 a = CLKey(
     "account-hash-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20")
-print(a.serialize())
-print(a)
+# print(a.serialize())
+# print(a)
 
 b = CLKey('hash-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20')
-print(b.serialize())
-print(b)
+# print(b.serialize())
+# print(b)
 
 c = CLKey('uref-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20-005')
-print(c.serialize())
-print(c)
+# print(c.serialize())
+# print(c)
 # print(a)
 # print(a.value())
 # {

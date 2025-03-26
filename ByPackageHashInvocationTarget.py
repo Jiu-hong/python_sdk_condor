@@ -6,10 +6,13 @@ from table import CalltableSerialization
 
 class ByPackageHashInvocationTarget:
     def __init__(self, package_hash, version=None):
+        print("self.package_hash:", package_hash)
+        print("self.version:", version)
         self.package_hash = package_hash  # hex string
         self.version = version
 
     def to_bytes(self):
+        # print("self.version:", self.version)
         table = CalltableSerialization()
 
         version_bytes = b''
@@ -42,6 +45,6 @@ class ByPackageHashInvocationTarget:
         # }
 
 
-a = ByPackageHashInvocationTarget(
-    "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
-# print(a.to_json())
+# a = ByPackageHashInvocationTarget(
+#     "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
+# # print(a.to_json())

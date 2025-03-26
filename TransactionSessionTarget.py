@@ -6,14 +6,14 @@ from table import CalltableSerialization
 
 class TransactionSessionTarget:
     def __init__(self, module_bytes, is_install_upgrade=False):
-        # print("module_bytes:", module_bytes)
+
         self.module_bytes = bytes.fromhex(module_bytes)
         self.is_install_upgrade = is_install_upgrade
 
     def to_bytes(self):
         # print("self:", self.module_bytes, self.is_install_upgrade)
         module_bytes_length = CLU32(len(self.module_bytes)).serialize()
-        # print("module_bytes_length is:", module_bytes_length)
+        print("module_bytes_length is:", module_bytes_length)
         table = CalltableSerialization()
         table.addField(0, int(2).to_bytes()).addField(
             1, CLBool(self.is_install_upgrade).serialize()).addField(
@@ -32,12 +32,3 @@ class TransactionSessionTarget:
 f = open("wasm", "r")
 module_bytes = f.read()
 a = TransactionSessionTarget(module_bytes).to_bytes()
-# print("a is:", a.hex())
-
-# "target": {
-#     "Session": {
-#         "is_install_upgrade": true,
-#         "module_bytes": "",
-#         "runtime": "VmCasperV1"
-#     }
-# }

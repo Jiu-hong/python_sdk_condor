@@ -15,6 +15,7 @@ from table import CalltableSerialization
 
 class TransactionV1Payload:
     def __init__(self, args: list, transactionTarget, entrypoint, scheduling, initiatorAddr,  pricing_mode: PricingMode, chainName, ttl=30, now=datetime.now(timezone.utc)):
+        print("args in TransactionV1Payload:", args)
         self.initiatorAddr = initiatorAddr
         self.ttl = ttl
         self.pricingMode = pricing_mode
@@ -62,9 +63,6 @@ class TransactionV1Payload:
 
         # entryPointBytes
         entryPointBytes = self.fields.entry_point.to_bytes()
-        print("entrypoint:", self.fields.entry_point.entry_point)
-        print("entryPointBytes: ", entryPointBytes.hex())  # here is difference
-
         length_entryPointBytes = CLU32(
             len(entryPointBytes)).serialize()
 
@@ -125,29 +123,33 @@ class TransactionV1Payload:
 
 # args = {"arg1": CLU8(123), "arg2": CLString("Hello")}
 
-transactionTarget = TransactionTarget("stored", "InvocableEntity",
-                                      "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
+# transactionTarget = TransactionTarget("stored", "InvocableEntity",
+#                                       "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
 
 
-entrypoint = TransactionEntryPoint("Custom", "apple")
+# entrypoint = TransactionEntryPoint("Custom", "apple")
 
-scheduling = TransactionScheduling()
-initiatorAddr = "01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"
-pricing_mode = PricingMode("Classic", 20000000000000)
+# scheduling = TransactionScheduling()
+# initiatorAddr = "01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"
+# pricing_mode = PricingMode("Classic", 20000000000000)
 
-args = {}
-transactionTarget2 = TransactionTarget("session", '01', False)
-entrypoint2 = TransactionEntryPoint("Call")
-transaction_v1_payload = TransactionV1Payload(args, transactionTarget2,
-                                              entrypoint2, scheduling, initiatorAddr, pricing_mode, "casper-net-1")
+# args = {}
+# transactionTarget2 = TransactionTarget("session", '01', False)
+# entrypoint2 = TransactionEntryPoint("Call")
+# transaction_v1_payload = TransactionV1Payload(args, transactionTarget2,
+#                                               entrypoint2, scheduling, initiatorAddr, pricing_mode, "casper-net-1")
 
 
 # print("transaction_v1_payload to_json:",
 #       json.dumps(transaction_v1_payload.to_json()))
 
-bytes = transaction_v1_payload.to_bytes()
+# bytes = transaction_v1_payload.to_bytes()
 # print("bytes_transaction_v1_payload is: \n", bytes.hex())
 
 
 # actual
 # 0600000000000000000001003600000002003e000000030046000000040056000000050081000000f600000002000000000000000000010001000000220000000001bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c615d486fd09501000040771b00000000000c0000006361737065722d6e65742d310400000000000000000001000100000002000900000003000a0000000b000000000040e59c30120000010104000000000005000000000000000001003600000004000000000000000000010001000000020002000000030011000000160000000200010000000000000000000100000000010000000102000f00000001000000000000000000010000000003000f000000010000000000000000000100000000
+
+# expected target bytes:
+# 030000000000000000000100010000000200360000004500000001020000000000000000000100010000002100000000b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6010000000000000000000100000000
+# 020000000000000000000100010000002100000000b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6

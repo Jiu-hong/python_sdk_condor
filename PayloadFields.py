@@ -11,7 +11,7 @@ from named_args import NamedArg
 
 class PayloadFields:
     def __init__(self, args: list, target: TransactionTarget, entry_point: TransactionEntryPoint, scheduleing):
-
+        print("args:", args)
         self.args = args
         self.target = target
         self.entry_point = entry_point
@@ -31,8 +31,8 @@ class PayloadFields:
             buffer = buffer + value
         return buffer
 
-    def serialize(self):
-        return self.args.serialize() + self.target.serialize() + self.entry_point.serialize()+self.scheduling.serialize()
+    # def serialize(self):
+    #     return self.args.serialize() + self.target.serialize() + self.entry_point.serialize()+self.scheduling.serialize()
 
     def body_hash(self):
         body_hex = self.serialize()
@@ -48,16 +48,17 @@ class PayloadFields:
         print("self.args types:", type(self.args))
         for name, value in self.args.items():
             name_args.append(NamedArg(name, value).to_json())
+        print("name_args is:", name_args)
 
         result["fields"] = {
             "args": {"Named": name_args}, **self.entry_point.to_json(), **self.scheduling.to_json(), **self.target.to_json()}
         return result
 
 
-args = {"arg1": CLU8(123), "arg2": CLString("Hello")}
-target = TransactionTarget("stored", "InvocableEntity",
-                           "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
-entrypoint = TransactionEntryPoint("Custom", "apple")
-scheduleing = TransactionScheduling()
-payloadfields = PayloadFields(args, target, entrypoint, scheduleing)
-print("payloadfields to_json", json.dumps(payloadfields.to_json()))
+# args = {"arg1": CLU8(123), "arg2": CLString("Hello")}
+# target = TransactionTarget("stored", "InvocableEntity",
+#                            "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
+# entrypoint = TransactionEntryPoint("Custom", "apple")
+# scheduleing = TransactionScheduling()
+# payloadfields = PayloadFields(args, target, entrypoint, scheduleing)
+# print("payloadfields to_json", json.dumps(payloadfields.to_json()))

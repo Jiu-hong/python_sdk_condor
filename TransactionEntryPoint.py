@@ -11,6 +11,8 @@ class TransactionEntryPoint:
     def to_bytes(self):
         table = CalltableSerialization()
         match self.entry_point:
+            case "Call":
+                table.addField(0, CLU8(0).serialize())
             case "Custom":
                 table.addField(0, CLU8(1).serialize()).addField(
                     1, CLString(self.content).serialize())
@@ -30,8 +32,7 @@ class TransactionEntryPoint:
                 table.addField(0, CLU8(7).serialize())
             case "ChangePublicKey":
                 table.addField(0, CLU8(8).serialize())
-            case "Call":
-                table.addField(0, CLU8(0).serialize())
+
         return table.to_bytes()
 
     def to_json(self):

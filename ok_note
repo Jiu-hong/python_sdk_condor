@@ -1,0 +1,64 @@
+== ok
+transaction_hash:
+fc2115b1388f7177ea8e41ad9bf290e9f61c710c264c982bebfa9e384e99b975
+
+f = open("wasm", "r")
+module_bytes = f.read()
+scheduling = TransactionScheduling()
+initiatorAddr = "01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"
+
+args = {}
+transactionTarget2 = TransactionTarget("session", module_bytes, True)
+entrypoint2 = TransactionEntryPoint("Call")
+transaction_v1_payload = TransactionV1Payload(args, transactionTarget2,
+                                              entrypoint2, scheduling, initiatorAddr, pricing_mode, "integration-test")
+transaction = TransactionV1(transaction_v1_payload, initiatorAddr)
+print("transaction_to_json:", json.dumps(transaction.to_json()))
+==== ok
+transaction hash: f337f3b52ec14addddde9ffbdec6cbbf02f09bc474fee38d3d23b9f564d8e21d
+args = {"arg1": CLU8(123), "arg2": CLString("Hello")}
+scheduling = TransactionScheduling()
+initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
+pricing_mode = PricingMode("Classic", 200000000000)
+transactionTarget2 = TransactionTarget("session", module_bytes, True)
+entrypoint2 = TransactionEntryPoint("Call")
+transaction_v1_payload = TransactionV1Payload(args, transactionTarget2,
+                                              entrypoint2, scheduling, initiatorAddr, pricing_mode, "integration-test")
+transaction = TransactionV1(transaction_v1_payload, "secret_key.pem")
+print("transaction_to_json:", json.dumps(transaction.to_json()))
+
+=== ok
+transaction_hash:7531e9c7d7f2942c1aded7d3b9e4ed9c39537dcc9b66d84d0237d9f0cef9e1e6
+args = {}
+scheduling = TransactionScheduling()
+initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
+pricing_mode = PricingMode("Classic", 200000000000)
+target1 = TransactionTarget("stored", "InvocableEntity",
+                            "b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6")
+print("target1 to_bytes()", target1.to_bytes().hex())
+entrypoint1 = TransactionEntryPoint("Custom", "test2")
+
+payload = TransactionV1Payload(args, target1,
+                               entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
+
+transaction = TransactionV1(payload, "secret_key.pem")
+
+print("transaction_to_json:", json.dumps(transaction.to_json()))
+
+===ok
+transction: 7eb605f620e1c962d91b07ff7d573534fd0d1698f1af351fbaf8da22743f159c
+args = {}
+scheduling = TransactionScheduling()
+initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
+pricing_mode = PricingMode("Classic", 200000000000)
+target1 = TransactionTarget("stored", "Package",
+                            "40ad74eb43330f7fb496d6ea49df990e6583f51a01a7204a17a6217dbeb715d7")
+print("target1 to_bytes()", target1.to_bytes().hex())
+entrypoint1 = TransactionEntryPoint("Custom", "test2")
+
+payload = TransactionV1Payload(args, target1,
+                               entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
+
+transaction = TransactionV1(payload, "secret_key.pem")
+
+print("transaction_to_json:", json.dumps(transaction.to_json()))

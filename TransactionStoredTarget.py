@@ -1,0 +1,29 @@
+
+from TransactionInvocationTarget import TransactionInvocationTarget
+from TransactionRuntime import TransactionRuntime
+from cl_number import CLU32, CLU8, CLBool
+
+from table import CalltableSerialization
+
+
+class TransactionStoredTarget:
+    def __init__(self, *id):
+        self.id = TransactionInvocationTarget(*id)
+
+    def to_bytes(self):
+        table = CalltableSerialization()
+        table.addField(0, int(1).to_bytes()).addField(
+            1, self.id.to_bytes()).addField(
+            2, TransactionRuntime().to_bytes())
+        return table.to_bytes()
+
+# ok
+    def to_json(self):
+        result = {}
+        # result["Session"] = {"is_install_upgrade": self.is_install_upgrade,
+        #                      "module_bytes": self.module_bytes.hex(), "runtime": "VmCasperV1"}
+        result["Stored"] = {
+            **self.id.to_json(),
+            "runtime": "VmCasperV1"
+        }
+        return result

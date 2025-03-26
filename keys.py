@@ -1,6 +1,6 @@
 # Ed25519
 import base64
-from cryptography.hazmat.primitives.asymmetric import ed25519, rsa
+# from cryptography.hazmat.primitives.asymmetric import ed25519, rsa
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.serialization import load_pem_public_key, load_pem_private_key
 from cryptography.hazmat.primitives.asymmetric import ed25519
@@ -8,7 +8,7 @@ private_key = ed25519.Ed25519PrivateKey.generate()
 
 a = ed25519.Ed25519PrivateKey.from_private_bytes(bytes.fromhex(
     'a6342b0104398e84cdf61fb7b69f7c6a75fba1af895ede5540124ea1e0be7c60'))
-print("hhere a =>", a)
+
 print("private_key:", a.private_bytes_raw().hex())
 print(private_key.public_key().public_bytes_raw().hex())
 public_key = a.public_key()
@@ -121,3 +121,10 @@ def get_signature(msg: bytes, pvk: bytes) -> bytes:
 sig = get_signature_from_pem_file(bytes.fromhex(
     "2fffea947c2aeaa70a7953af70917e58da259fb5e61d931829f55eebb82a74d2"), "secret_key.pem")
 print("sig is:", '01'+sig.hex())
+
+private_key = get_pvk_from_pem_file("secret_key.pem")
+ek25519KeyPair = ed25519.Ed25519PrivateKey.from_private_bytes(private_key)
+public_key = '01' + ek25519KeyPair.public_key().public_bytes_raw().hex()
+print(public_key)
+
+# 017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5myenv

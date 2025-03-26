@@ -5,6 +5,8 @@ from cl_string import CLString
 
 class NamedArg:
     def __init__(self, name, value):
+        print("name:", name)
+        print("value:", value)
         self.name = name
         self.value = value  # CLValue
 
@@ -57,8 +59,8 @@ class NamedArg:
         # },
 
 
-a = NamedArg("arg1", CLU256(10))
-b = a.to_byte_with_named_arg()
+# a = NamedArg("arg1", CLU256(10))
+# b = a.to_byte_with_named_arg()
 # print("b is:", b.hex())
 # print("json_value:", json.dumps(a.to_json()))
 # 0400000061726731040000002a00000004

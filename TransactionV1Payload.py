@@ -38,6 +38,8 @@ class TransactionV1Payload:
             named_arg = NamedArg(name, value)
 
             arg_bytes = named_arg.to_byte_with_named_arg()
+            print("name:", name)
+            print("arg_bytes is:", arg_bytes.hex())
 
             runtimeArgsBuffer = runtimeArgsBuffer + arg_bytes
 
@@ -82,27 +84,27 @@ class TransactionV1Payload:
 
         #
         table = CalltableSerialization()
-        table.addField(0, InitiatorAddr(
-            self.initiatorAddr).to_bytes()).\
-            addField(1, CLU64(int(self.time.timestamp() * 1000)).serialize()). \
-            addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
-            addField(3, CLString(self.chainName).serialize()). \
-            addField(4, self.pricingMode.to_bytes()). \
-            addField(5, self.fields.to_bytes())
         # table.addField(0, InitiatorAddr(
         #     self.initiatorAddr).to_bytes()).\
-        #     addField(1, CLU64(int(datetime.fromisoformat('2025-03-26T03:11:48.829Z').timestamp() * 1000)).serialize()). \
+        #     addField(1, CLU64(int(self.time.timestamp() * 1000)).serialize()). \
         #     addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
         #     addField(3, CLString(self.chainName).serialize()). \
         #     addField(4, self.pricingMode.to_bytes()). \
         #     addField(5, self.fields.to_bytes())
+        table.addField(0, InitiatorAddr(
+            self.initiatorAddr).to_bytes()).\
+            addField(1, CLU64(int(datetime.fromisoformat('2025-03-26T03:11:48.829Z').timestamp() * 1000)).serialize()). \
+            addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
+            addField(3, CLString(self.chainName).serialize()). \
+            addField(4, self.pricingMode.to_bytes()). \
+            addField(5, self.fields.to_bytes())
         fields = self.fields.to_bytes()
         # print("fields are:", fields.hex())
         u = self.pricingMode.to_bytes()
         print("pricingMode is:", u.hex())
-        t = CLU64(int(datetime.fromisoformat(
-            '2025-03-26T03:11:48.829Z').timestamp() * 1000)).serialize()
-        print("time is:", t.hex())
+        # t = CLU64(int(datetime.fromisoformat(
+        #     '2025-03-26T03:11:48.829Z').timestamp() * 1000)).serialize()
+        # print("time is:", t.hex())
         return table.to_bytes()
 
     def to_json(self):
@@ -145,11 +147,3 @@ class TransactionV1Payload:
 
 # bytes = transaction_v1_payload.to_bytes()
 # print("bytes_transaction_v1_payload is: \n", bytes.hex())
-
-
-# actual
-# 0600000000000000000001003600000002003e000000030046000000040056000000050081000000f600000002000000000000000000010001000000220000000001bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c615d486fd09501000040771b00000000000c0000006361737065722d6e65742d310400000000000000000001000100000002000900000003000a0000000b000000000040e59c30120000010104000000000005000000000000000001003600000004000000000000000000010001000000020002000000030011000000160000000200010000000000000000000100000000010000000102000f00000001000000000000000000010000000003000f000000010000000000000000000100000000
-
-# expected target bytes:
-# 030000000000000000000100010000000200360000004500000001020000000000000000000100010000002100000000b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6010000000000000000000100000000
-# 020000000000000000000100010000002100000000b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6

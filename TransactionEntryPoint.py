@@ -17,21 +17,21 @@ class TransactionEntryPoint:
                 table.addField(0, CLU8(1).serialize()).addField(
                     1, CLString(self.content).serialize())
             case "Transfer":
-                table.addField(0, CLU8(1).serialize())
-            case "Add_Bid":
                 table.addField(0, CLU8(2).serialize())
-            case "Withdraw_Bid":
+            case "Add_Bid":
                 table.addField(0, CLU8(3).serialize())
-            case "Delegate":
+            case "Withdraw_Bid":
                 table.addField(0, CLU8(4).serialize())
-            case "Undelegate":
+            case "Delegate":
                 table.addField(0, CLU8(5).serialize())
-            case "Redelegate":
+            case "Undelegate":
                 table.addField(0, CLU8(6).serialize())
-            case "Activate_Bid":
+            case "Redelegate":
                 table.addField(0, CLU8(7).serialize())
-            case "ChangePublicKey":
+            case "Activate_Bid":
                 table.addField(0, CLU8(8).serialize())
+            case "ChangePublicKey":
+                table.addField(0, CLU8(9).serialize())
 
         return table.to_bytes()
 

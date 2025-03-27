@@ -1,12 +1,12 @@
 {
     "transaction": {
         "Version1": {
-            "hash": "e1bc32f293a7574b7eff783c21f4ad407bf7358ab7ec96bd6ce5088606379e63",
+            "hash": "7cc365eb3ea67861adfcf440a8d31d1591add4a6e2c901c26575efdc194e48f0",
             "payload": {
                 "initiator_addr": {
                     "PublicKey": "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
                 },
-                "timestamp": "2025-03-26T10:35:07.766Z",
+                "timestamp": "2025-03-26T14:06:00.049Z",
                 "ttl": "30m",
                 "chain_name": "integration-test",
                 "pricing_mode": {
@@ -18,26 +18,44 @@
                 },
                 "fields": {
                     "args": {
-                        "Named": []
+                        "Named": [
+                            [
+                                "amount",
+                                {
+                                    "cl_type": "U512",
+                                    "bytes": "0400f90295",
+                                    "parsed": 2500000000
+                                }
+                            ],
+                            [
+                                "target",
+                                {
+                                    "cl_type": "PublicKey",
+                                    "bytes": "01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61",
+                                    "parsed": "01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"
+                                }
+                            ],
+                            [
+                                "id",
+                                {
+                                    "cl_type": {
+                                        "Option": "U64"
+                                    },
+                                    "bytes": "010000000000000000",
+                                    "parsed": 0
+                                }
+                            ]
+                        ]
                     },
-                    "entry_point": {
-                        "Custom": "test2"
-                    },
+                    "entry_point": "Transfer",
                     "scheduling": "Standard",
-                    "target": {
-                        "Stored": {
-                            "id": {
-                                "ByName": "apple_contract"
-                            },
-                            "runtime": "VmCasperV1"
-                        }
-                    }
+                    "target": "Native"
                 }
             },
             "approvals": [
                 {
                     "signer": "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5",
-                    "signature": "017e494c721cbda4195159553b006b0a4af88aecdde024dfab0ece22d227a61f45c3309c073fa7be3c7ba4bcfaf0677cc79c17670db53f6ca6bf372667f0032c0a"
+                    "signature": "01154b646d6a2264aba661ecfe41e3a77101300442b15169797ee2abd00d8b458c401b631108becdcc2301e9dd2e78bdc5d61a0e650627b0386d1012a89915e002"
                 }
             ]
         }

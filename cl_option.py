@@ -1,6 +1,6 @@
 from cl_baseType import CLType
 from cl_list import CLList
-from cl_number import CLU32
+from cl_number import CLU32, CLU64
 from cl_string import CLString
 from cl_tuple import CLTuple2
 from cl_util import deep_value_v2
@@ -26,8 +26,15 @@ class CLOption(CLType):
         content = self.serialize().hex()
         bytes_len_hex = '{:02x}'.format(
             int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
+        # tag = '{:02x}'.format(self.tag)
 
+        def get_cl_tags(self):
+            tag = '{:02x}'.format(self.tag)
+            if hasattr(self.data, 'tag'):
+                return tag + get_cl_tags(self.data)
+            else:
+                return tag
+        tag = get_cl_tags(self)
         return bytes_len_hex + content + tag
 
 
@@ -48,10 +55,18 @@ class CLOption(CLType):
 # print(d)
 # print(d.serialize())
 # # print(b.serialize())
-c = CLOption(None)
-print(c.serialize())
+# c = CLOption(None)
+c = CLOption(CLU64(0))
+print('C:', c.cl_value())
+# print("c serial:", c.serialize().hex())
+# print(c.serialize())
 # # print(c.serialize())
 # a = CLOption(CLU32(10))
 # print(a)
 # print(a.serialize())
 # print(a.value())
+
+# expected
+# 090000000100000000000000000d05
+# actual
+# 090000000100000000000000000d

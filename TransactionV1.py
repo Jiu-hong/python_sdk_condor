@@ -6,7 +6,9 @@ from TransactionEntryPoint import TransactionEntryPoint
 from TransactionScheduling import TransactionScheduling
 from TransactionTarget import TransactionTarget
 from TransactionV1Payload import TransactionV1Payload
-from cl_number import CLU8
+from cl_number import CLU512, CLU64, CLU8
+from cl_option import CLOption
+from cl_publickey import CLPublicKey
 from cl_string import CLString
 from keys import get_pvk_from_pem_file, get_signature_from_pem_file
 
@@ -59,7 +61,9 @@ class TransactionV1:
 # transaction = TransactionV1(payload)
 # print("transaction.hash:", transaction.byteHash())
 #
+# path = "/Users/jh/mywork/contract/accountaccess/contract/target/wasm32-unknown-unknown/release/contract.wasm"
 # f = open("wasm", "r")
+# f = open(path, "r")
 # module_bytes = f.read()
 # target2 = TransactionTarget("session", module_bytes, True)
 # target1 = TransactionTarget("stored", "InvocableEntity",
@@ -78,18 +82,19 @@ class TransactionV1:
 # # print("transaction.hash:", transaction.byteHash())
 # # print("transaction_to_json:", json.dumps(transaction.to_json()))
 
-args = {}
+args = {"amount": CLU512(2500000000), "target": CLPublicKey("01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"),
+        "id": CLOption(CLU64(0))}
 scheduling = TransactionScheduling()
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 pricing_mode = PricingMode("Classic", 200000000000)
-target1 = TransactionTarget("stored", "Package",
-                            "40ad74eb43330f7fb496d6ea49df990e6583f51a01a7204a17a6217dbeb715d7")
+target1 = TransactionTarget("native")
 print("target1 to_bytes()", target1.to_bytes().hex())
-entrypoint1 = TransactionEntryPoint("Custom", "test2")
+entrypoint1 = TransactionEntryPoint("Transfer")
+print("entrypoint1 bytes is:", entrypoint1.to_bytes().hex())
 
 payload = TransactionV1Payload(args, target1,
                                entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
+print("payload bytes is:", payload.to_bytes().hex())
+# transaction = TransactionV1(payload, "secret_key.pem")
 
-transaction = TransactionV1(payload, "secret_key.pem")
-
-print("transaction_to_json:", json.dumps(transaction.to_json()))
+# print("transaction_to_json:", json.dumps(transaction.to_json()))

@@ -19,7 +19,6 @@ class TransactionTarget:
                 table.addField(0, CLU8(0).serialize())
                 return table.to_bytes()
             case "stored":
-                print("self.kw:", self.kw)
                 return TransactionStoredTarget(*self.kw).to_bytes()
             case "session":
                 return TransactionSessionTarget(*self.kw).to_bytes()

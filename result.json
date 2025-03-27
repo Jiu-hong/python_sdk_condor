@@ -1,12 +1,12 @@
 {
     "transaction": {
         "Version1": {
-            "hash": "7cc365eb3ea67861adfcf440a8d31d1591add4a6e2c901c26575efdc194e48f0",
+            "hash": "d775b45ff6987da3bb9e1940fcb0ea516e2034ccf9242cfe13c126727cf16d3d",
             "payload": {
                 "initiator_addr": {
                     "PublicKey": "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
                 },
-                "timestamp": "2025-03-26T14:06:00.049Z",
+                "timestamp": "2025-03-27T01:56:01.182Z",
                 "ttl": "30m",
                 "chain_name": "integration-test",
                 "pricing_mode": {
@@ -20,11 +20,13 @@
                     "args": {
                         "Named": [
                             [
-                                "amount",
+                                "id",
                                 {
-                                    "cl_type": "U512",
-                                    "bytes": "0400f90295",
-                                    "parsed": 2500000000
+                                    "cl_type": {
+                                        "Option": "U64"
+                                    },
+                                    "bytes": "010000000000000000",
+                                    "parsed": 0
                                 }
                             ],
                             [
@@ -36,13 +38,11 @@
                                 }
                             ],
                             [
-                                "id",
+                                "amount",
                                 {
-                                    "cl_type": {
-                                        "Option": "U64"
-                                    },
-                                    "bytes": "010000000000000000",
-                                    "parsed": 0
+                                    "cl_type": "U512",
+                                    "bytes": "0400f90295",
+                                    "parsed": 2500000000
                                 }
                             ]
                         ]
@@ -55,7 +55,7 @@
             "approvals": [
                 {
                     "signer": "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5",
-                    "signature": "01154b646d6a2264aba661ecfe41e3a77101300442b15169797ee2abd00d8b458c401b631108becdcc2301e9dd2e78bdc5d61a0e650627b0386d1012a89915e002"
+                    "signature": "0190d8fd8f20f806b1738b7c3d5d06340061b5793801e3ebc37848da91e0115d521d58c34d01cd92a66fcfe2ed9b15f90b68d42bbd69d3a5af4f528ca2b1de6901"
                 }
             ]
         }

@@ -31,7 +31,9 @@ class NamedArg:
 
     def to_json(self):
         my_dict = {}
-        my_dict["cl_type"] = self.value.cl_type()
+        print("self.value:", type(self.value))
+        # my_dict["cl_type"] = self.value.cl_type()
+        my_dict["cl_type"] = self.value.to_json()
         my_dict["bytes"] = self.value.serialize().hex()
         my_dict["parsed"] = self.value.value()
 

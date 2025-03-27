@@ -26,12 +26,16 @@ class CLPublicKey(CLType, CLAtomic):
 
         return bytes_len_hex + content + tag
 
+    def to_json(self):
+        return "PublicKey"
+
 
 a = CLPublicKey(
     "0119bf44096984cdfe8541bac167dc3b96c85086aa30b6b6cb0c5c38ad703166e1")
 # print(a.serialize())
 # print(a)
-# print(a.cl_value())
+print(a.cl_value())
+print(a.value())
 # (01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})
 # re.compile("(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})")
 # p = re.compile("(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})")

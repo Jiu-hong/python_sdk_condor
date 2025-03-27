@@ -46,6 +46,9 @@ class CLBool(CLType, CLAtomic):
 
         return bytes_len_hex + content + tag
 
+    def to_json(self):
+        return "Bool"
+
 
 class CLI32(CLNumber):
     minvalue = -2**31
@@ -66,6 +69,9 @@ class CLI32(CLNumber):
         tag = '{:02x}'.format(self.tag)
 
         return bytes_len_hex + content + tag
+
+    def to_json(self):
+        return "I32"
 # a = CLI32(-2**31)
 # print(a.serialize())
 
@@ -89,6 +95,9 @@ class CLI64(CLNumber):
         tag = '{:02x}'.format(self.tag)
 
         return bytes_len_hex + content + tag
+
+    def to_json(self):
+        return "I64"
 # a = CLI64(2**63-1)
 # print(a.serialize())
 
@@ -111,6 +120,9 @@ class CLU8(CLNumber):
         tag = '{:02x}'.format(self.tag)
 
         return bytes_len_hex + content + tag
+
+    def to_json(self):
+        return "U8"
 # a = CLU8(2**8-1)
 # print(a.serialize())
 # print(a)
@@ -126,6 +138,9 @@ class CLU16(CLNumber):
             return (self.data).to_bytes(2, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU16")
+
+    def to_json(self):
+        return "U16"
 
 
 class CLU32(CLNumber):
@@ -146,6 +161,9 @@ class CLU32(CLNumber):
         tag = '{:02x}'.format(self.tag)
 
         return bytes_len_hex + content + tag
+
+    def to_json(self):
+        return "U32"
 
 
 x = CLU32(7)
@@ -175,6 +193,8 @@ class CLU64(CLNumber):
 
         return bytes_len_hex + content + tag
 
+    def to_json(self):
+        return "U64"
 
 # x = CLU64(1603994401469)
 # print(x.serialize())
@@ -230,6 +250,8 @@ class CLU512(CLBigNumber):
 
         return bytes_len_hex + content + tag
 
+    def to_json(self):
+        return "U512"
 
 # a = CLU512("1000000000000000000000000")
 # print(a.serialize())
@@ -260,13 +282,17 @@ class CLU256(CLBigNumber):
 
         return bytes_len_hex + content + tag
 
+    def to_json(self):
+        return "U256"
 
-# b = CLU256("1")
-# print(b.serialize())
-# b = CLU256(str(2**256+1))
-# print(b.serialize())
-# a = CLU256("2500000000")
-# print("serialize cl_value:", a.cl_value())
+
+b = CLU256("1")
+print("type:", type(b))
+print(b.serialize().hex())
+b = CLU256(str(2**256-1))
+print(b.serialize().hex())
+a = CLU256("2500000000")
+print("serialize cl_value:", a.cl_value())
 
 
 class CLU128(CLBigNumber):
@@ -290,6 +316,9 @@ class CLU128(CLBigNumber):
         return bytes_len_hex + content + tag
 # # ite = CLBigNumber('123456789101112131415')
 # # print(ite.serialize())
+
+    def to_json(self):
+        return "U128"
 
 
 class CLU16Big(CLBigNumber):

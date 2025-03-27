@@ -49,7 +49,7 @@ def deep_value_v2(self):
     if isinstance(self, int | str):
         result = self
         if isinstance(self, str):
-            result = f'"{self}"'
+            result = f'{self}'
     elif isinstance(self, tuple | list):
         result = [deep_value_v2(x) for x in self]
         if isinstance(self, tuple):

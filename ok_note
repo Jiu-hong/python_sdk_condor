@@ -100,3 +100,26 @@ payload = TransactionV1Payload(args, target1,
 transaction = TransactionV1(payload, "secret_key.pem")
 
 print("transaction_to_json:", json.dumps(transaction.to_json()))
+
+=== ok "native"
+args = {"target": CLPublicKey("01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"), "amount": CLU512(2500000000),
+        "id": CLOption(CLU64(0))}
+scheduling = TransactionScheduling()
+print("scheduling to_bytes()", scheduling.to_bytes().hex())
+initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
+
+pricing_mode = PricingMode("Classic", 200000000000)
+print("pricing_mode to_bytes():", pricing_mode.to_bytes().hex())
+
+target1 = TransactionTarget("native")
+print("target1 to_bytes()", target1.to_bytes().hex())
+
+entrypoint1 = TransactionEntryPoint("Transfer")
+print("entrypoint1 bytes is:", entrypoint1.to_bytes().hex())
+
+payload = TransactionV1Payload(args, target1,
+                               entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
+# print("payload bytes is:", payload.to_bytes().hex())
+
+transaction = TransactionV1(payload, "secret_key.pem")
+print("transaction_to_json:", json.dumps(transaction.to_json()))

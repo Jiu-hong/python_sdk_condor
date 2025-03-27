@@ -84,20 +84,20 @@ class TransactionV1Payload:
 
         #
         table = CalltableSerialization()
-        # table.addField(0, InitiatorAddr(
-        #     self.initiatorAddr).to_bytes()).\
-        #     addField(1, CLU64(int(self.time.timestamp() * 1000)).serialize()). \
-        #     addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
-        #     addField(3, CLString(self.chainName).serialize()). \
-        #     addField(4, self.pricingMode.to_bytes()). \
-        #     addField(5, self.fields.to_bytes())
         table.addField(0, InitiatorAddr(
             self.initiatorAddr).to_bytes()).\
-            addField(1, CLU64(int(datetime.fromisoformat('2025-03-26T03:11:48.829Z').timestamp() * 1000)).serialize()). \
+            addField(1, CLU64(int(self.time.timestamp() * 1000)).serialize()). \
             addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
             addField(3, CLString(self.chainName).serialize()). \
             addField(4, self.pricingMode.to_bytes()). \
             addField(5, self.fields.to_bytes())
+        # table.addField(0, InitiatorAddr(
+        #     self.initiatorAddr).to_bytes()).\
+        #     addField(1, CLU64(int(datetime.fromisoformat('2025-03-26T03:11:48.829Z').timestamp() * 1000)).serialize()). \
+        #     addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
+        #     addField(3, CLString(self.chainName).serialize()). \
+        #     addField(4, self.pricingMode.to_bytes()). \
+        #     addField(5, self.fields.to_bytes())
         fields = self.fields.to_bytes()
         # print("fields are:", fields.hex())
         u = self.pricingMode.to_bytes()

@@ -56,8 +56,12 @@ def deep_value_v2(self):
             result = tuple(result)
 
     elif isinstance(self, dict):
-        result = "{"+f'"key": {deep_value_v2(list(self.keys())[0])}, "value": {
-            deep_value_v2(list(self.values())[0])}' + "}"
+        result = []
+        for key_value in self.items():
+            item = {'key': deep_value_v2(key_value[0]), 'value':
+                    deep_value_v2(key_value[1])}
+            result.append(item)
+
     elif isinstance(self, Ok | Err):
         result = deep_value_v2(self.value)
     else:
@@ -67,8 +71,6 @@ def deep_value_v2(self):
 
 def deep_type_v2(data):
     result = ""
-    # print("data type=>", type(data))
-    # print("data=>", data)
 
     if isinstance(data, cl_baseType.CLAtomic):
         result = f'"{data.__class__.__name__}"'

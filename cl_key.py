@@ -1,9 +1,10 @@
 
 from cl_baseType import CLAtomic, CLType
+from constants import TAG
 
 
 class CLKey(CLType, CLAtomic):
-    tag = 11
+    tag = TAG.CLKey.value
 
     def serialize(self):
         # match self.data:
@@ -43,6 +44,7 @@ b = CLKey('hash-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20
 # print(b)
 
 c = CLKey('uref-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20-005')
+# print(c.to_json())
 # print(c.serialize())
 # print(c)
 # print(a)

@@ -1,9 +1,9 @@
 # https://docs.python.org/3/library/stdtypes.html#bytes
 
 
-from time import time
 from cl_baseType import CLAtomic, CLType
 from cl_exceptions import ExceptionCLNumber, ExceptionExceedMaxValue, ExceptionInvalidBoolValue
+from constants import TAG
 
 
 class CLNumber(CLType, CLAtomic):
@@ -26,7 +26,7 @@ class CLNumber(CLType, CLAtomic):
 
 
 class CLBool(CLType, CLAtomic):
-    tag = 0
+    tag = TAG.CLBool.value
 
     def serialize(self):
         match self.data:
@@ -37,23 +37,15 @@ class CLBool(CLType, CLAtomic):
     def value(self):
         return self.data
 
-    def cl_value(self):
 
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return "Bool"
+a = CLBool(True)
+# print("here:", a.cl_value())
 
 
 class CLI32(CLNumber):
     minvalue = -2**31
     maxvalue = 2**31-1
-    tag = 1
+    tag = TAG.CLI32.value
 
     def serialize(self):
         if CLI32.minvalue <= self.data <= CLI32.maxvalue:
@@ -61,25 +53,17 @@ class CLI32(CLNumber):
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLI32")
 
-    def cl_value(self):
 
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return "I32"
-# a = CLI32(-2**31)
+a = CLI32(-2**31)
 # print(a.serialize())
+# print(a.to_json())
+# print(a.cl_value())
 
 
 class CLI64(CLNumber):
     minvalue = -2**63
     maxvalue = 2**63-1
-    tag = 2
+    tag = TAG.CLI64.value
 
     def serialize(self):
         if CLI64.minvalue <= self.data <= CLI64.maxvalue:
@@ -87,24 +71,14 @@ class CLI64(CLNumber):
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLI64")
 
-    def cl_value(self):
 
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return "I64"
 # a = CLI64(2**63-1)
 # print(a.serialize())
 
 
 class CLU8(CLNumber):
     maxvalue = 2**8-1
-    tag = 3
+    tag = TAG.CLU8.value
 
     def serialize(self):
         if 0 <= self.data <= CLU8.maxvalue:
@@ -112,17 +86,6 @@ class CLU8(CLNumber):
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU8")
 
-    def cl_value(self):
-
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return "U8"
 # a = CLU8(2**8-1)
 # print(a.serialize())
 # print(a)
@@ -139,31 +102,16 @@ class CLU16(CLNumber):
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU16")
 
-    def to_json(self):
-        return "U16"
-
 
 class CLU32(CLNumber):
     maxvalue = 2**32-1
-    tag = 4
+    tag = TAG.CLU32.value
 
     def serialize(self):
         if 0 <= self.data <= CLU32.maxvalue:
             return (self.data).to_bytes(4, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU32")
-
-    def cl_value(self):
-
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return "U32"
 
 
 x = CLU32(7)
@@ -176,7 +124,7 @@ x = CLU32(7)
 
 class CLU64(CLNumber):
     maxvalue = 2**64-1
-    tag = 5
+    tag = TAG.CLU64.value
 
     def serialize(self):
         if 0 <= self.data <= CLU64.maxvalue:
@@ -184,19 +132,9 @@ class CLU64(CLNumber):
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU64")
 
-    def cl_value(self):
-
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return "U64"
 
 # x = CLU64(1603994401469)
+# print(x.to_json())
 # print(x.serialize())
 # x = CLU64(int(time() * 1000))
 # print(x.serialize())
@@ -233,7 +171,7 @@ class CLBigNumber(CLNumber):
 class CLU512(CLBigNumber):
     # u512 max value - class attribute
     maxvalue = 2**512-1
-    tag = 8
+    tag = TAG.CLU512.value
 
     def serialize(self):
         if 0 <= self.data <= CLU512.maxvalue:
@@ -241,19 +179,9 @@ class CLU512(CLBigNumber):
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU512")
 
-    def cl_value(self):
-
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return "U512"
 
 # a = CLU512("1000000000000000000000000")
+# print(a.to_json())
 # print(a.serialize())
 # print(a)
 # print("cl_value:", a.cl_value())
@@ -264,7 +192,7 @@ class CLU512(CLBigNumber):
 class CLU256(CLBigNumber):
     # u256 max value - class attribute
     maxvalue = 2**256-1
-    tag = 7
+    tag = TAG.CLU256.value
 
     def serialize(self):
         if 0 <= self.data <= CLU256.maxvalue:
@@ -273,31 +201,20 @@ class CLU256(CLBigNumber):
             # print("number exceeded the max u512 value")
             raise ExceptionExceedMaxValue(str(self.data), "CLU256")
 
-    def cl_value(self):
 
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return "U256"
-
-
-b = CLU256("1")
-print("type:", type(b))
-print(b.serialize().hex())
-b = CLU256(str(2**256-1))
-print(b.serialize().hex())
-a = CLU256("2500000000")
-print("serialize cl_value:", a.cl_value())
+# b = CLU256("1")
+# print("b to_json:", b.to_json())
+# print("type:", type(b))
+# print(b.serialize().hex())
+# b = CLU256(str(2**256-1))
+# print(b.serialize().hex())
+# a = CLU256("2500000000")
+# print("serialize cl_value:", a.cl_value())
 
 
 class CLU128(CLBigNumber):
     maxvalue = 2**128-1
-    tag = 6
+    tag = TAG.CLU128.value
 
     def serialize(self):
 
@@ -306,19 +223,13 @@ class CLU128(CLBigNumber):
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU128")
 
-    def cl_value(self):
-
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
 # # ite = CLBigNumber('123456789101112131415')
 # # print(ite.serialize())
 
-    def to_json(self):
-        return "U128"
+    # def to_json(self):
+    #     return "U128"
+# a = CLU128(123)
+# print(a.to_json())
 
 
 class CLU16Big(CLBigNumber):
@@ -360,6 +271,8 @@ class Unit:
 
 # todo
 class CLByteArray:
+    tag = TAG.CLByteArray.value
+
     def __init__(self, data) -> None:
         self.data = data
 

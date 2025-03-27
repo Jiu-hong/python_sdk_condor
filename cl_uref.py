@@ -1,9 +1,10 @@
 from cl_baseType import CLAtomic, CLType
 from cl_util import deep_v2
+from constants import TAG
 
 
 class CLURef(CLType, CLAtomic):
-    tag = 12
+    tag = TAG.CLURef.value
 
     def serialize(self):
         temp = self.data.split('-')
@@ -34,7 +35,7 @@ class CLURef(CLType, CLAtomic):
 #     "bytes": "fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f07",
 #     "parsed": "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"
 # }
-a = CLURef(
-    "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007")
-print(a.serialize())
-print(a)
+# a = CLURef(
+#     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007")
+# # print(a.serialize())
+# print(a.to_json())

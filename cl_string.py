@@ -1,9 +1,10 @@
 from cl_baseType import CLAtomic, CLType
 from cl_util import deep_v2
+from constants import TAG
 
 
 class CLString(CLType, CLAtomic):
-    tag = 10
+    tag = TAG.CLString.value
 
     def serialize(self):
         content = bytearray(self.data, encoding="utf-8").hex()
@@ -15,13 +16,13 @@ class CLString(CLType, CLAtomic):
     def value(self):
         return self.data
 
-    def cl_value(self):
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
+    # def cl_value(self):
+    #     content = self.serialize().hex()
+    #     bytes_len_hex = '{:02x}'.format(
+    #         int(len(content) / 2)).ljust(8, '0')
+    #     tag = '{:02x}'.format(self.tag)
 
-        return bytes_len_hex + content + tag
+    #     return bytes_len_hex + content + tag
 
 
 a = CLString("{'name':'Outlaw's Gambit #520', 'asset': 'https://bafybeife3ljy62bcxi4zjmc5thuba7je3jqpkyhymuhrbyqwebj3jg3dnu.ipfs.w3s.link'}")
@@ -40,5 +41,6 @@ a = CLString("{'name':'Outlaw's Gambit #520', 'asset': 'https://bafybeife3ljy62b
 # 0d0000006d795f7075626c69635f6b6579
 # 0d0000006d795f7075626c69635f6b6579
 # 0d00000000
-a = CLString("pclphXwfYmCmdITj8hnh")
+# a = CLString("pclphXwfYmCmdITj8hnh")
+# print(a.to_json())
 # print(a.serialize())

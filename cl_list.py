@@ -1,12 +1,16 @@
 from cl_baseType import CLType
-from cl_number import CLU256, CLU32
+from cl_number import CLU256, CLU32, CLU64
+
+
+# from cl_option import CLOption
 from cl_string import CLString
 from cl_tuple import CLTuple2
 from cl_util import deep_value_v2
+from constants import TAG
 
 
 class CLList(CLType):
-    tag = 14
+    tag = TAG.CLList.value
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -16,37 +20,43 @@ class CLList(CLType):
         # check type if consistent
         for element in self.data[1:]:
             if type(element) != base_type:
+                print("type(element):", type(element))
                 # to do
                 # types aren't consistent for the elements
                 raise Exception  # CLListError1
 
     def serialize(self):
-        new_data = ""
+        new_data = b''
         if len(self.data) == 0:
-            return '00000000'
+            return int(0).to_bytes(4, byteorder='little')
 
         for element in self.data:
             new_data += element.serialize()
-        list_length = '{:02x}'.format(
-            int(len(self.data))).ljust(8, '0')
+        list_length = int(len(self.data)).to_bytes(4, byteorder='little')
         return list_length + new_data
 
     def sorted(self):
-        self.data.sort(key=lambda x: x.value())
+        self.data.sort(key=lambda x: x.serialize())
         return CLList(self.data)
 
-    def cl_value(self):
 
-        content = self.serialize()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
+# CLValueParser.toBytesWithType(CLValue.newCLList(CLTypeUInt32, [
+#     CLValue.newCLUInt32(1),
+#     CLValue.newCLUInt32(2),
+#     CLValue.newCLUInt32(3),
+#     CLValue.newCLUInt32(3),
+#     CLValue.newCLUInt32(3)
+# ]))
+# expected
+# 180000000500000001000000020000000300000003000000030000000e04
+# a = CLList([CLOption(CLU64(1)), CLOption(
+#     CLU64(2)), CLOption(CLU64(3)), CLOption(CLU64(3)), CLOption(CLU64(3))])
+# print("a.to_json():", a.to_json())
+# print("a.cl_value():", a.cl_value())
 
-        return bytes_len_hex + content + tag
-
-
-# a = CLList([CLU32(13), CLU32(2), CLU32(3)])
-# print(a.value())
+# expected
+# 31000000050000000101000000000000000102000000000000000103000000000000000103000000000000000103000000000000000e0d05
+# 31000000050000000101000000000000000102000000000000000103000000000000000103000000000000000103000000000000000e0d05
 # a = CLList([CLString("hello"), CLString("world"), CLString("nihao")])
 # print(a.value())
 

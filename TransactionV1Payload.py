@@ -29,6 +29,7 @@ class TransactionV1Payload:
         offset = 0
         runtimeArgsBuffer = CLU8(0).serialize()
         offset += 1
+        print("self.fields.args is:", self.fields.args)
         runtimeArgsBuffer = runtimeArgsBuffer + \
             CLU32(len(self.fields.args)).serialize()
 

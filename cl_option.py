@@ -1,13 +1,15 @@
 from cl_baseType import CLType
+# from cl_list import CLList
 from cl_list import CLList
 from cl_number import CLU32, CLU64
 from cl_string import CLString
 from cl_tuple import CLTuple2
 from cl_util import deep_value_v2
+from constants import TAG
 
 
 class CLOption(CLType):
-    tag = 13
+    tag = TAG.CLOption.value
 
     def __init__(self, data) -> None:
         super().__init__(data)
@@ -21,46 +23,43 @@ class CLOption(CLType):
             # remove '0x'
             return int(1).to_bytes()+self.data.serialize()
 
-    def cl_value(self):
 
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        # tag = '{:02x}'.format(self.tag)
-
-        def get_cl_tags(self):
-            tag = '{:02x}'.format(self.tag)
-            if hasattr(self.data, 'tag'):
-                return tag + get_cl_tags(self.data)
-            else:
-                return tag
-        tag = get_cl_tags(self)
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return {"Option": self.data.to_json()}
-
-
-        # a = CLOption(CLList([CLTuple2((CLU32(1), CLString("Hello, World!"))),
-        #                     CLString("world"), CLString("nihao")]))
-        # print(a.value())
-        # print(a)
-        # a = CLOption(CLU32(10))
-        # print(a.value())
-        # print(a)
-        # print(a)
-        # # print(a.serialize())
-        # b = CLOption(CLString("Hello, World!"))
-        # print(b)
-        # c = CLTuple2((CLU32(1), CLString("Hello, World!"), CLBool(
-        #     'true'), CLTuple2((CLU32(1), CLString("Hello, World!")))))
-        # d = CLOption(c)
-        # print(d)
-        # print(d.serialize())
-        # # print(b.serialize())
-        # c = CLOption(None)
-c = CLOption(CLU64(0))
-print('C:', c.cl_value())
+a = CLOption(CLList([CLOption(CLU32(1)), CLOption(
+    CLU32(2)), CLOption(CLU32(3)), CLOption(CLU32(3)), CLOption(CLU32(3))]))
+# print(a.value())
+# print(a.cl_value())
+# a = CLOption(CLU32(777))
+# b = CLOption(CLU32(888))
+# print(a.serialize())
+# print(b.serialize())
+# print(a.serialize() > b.serialize())
+# a = CLOption(CLU32(10))
+# print(a.value())
+# print(a)
+# print(a)
+# # print(a.serialize())
+# b = CLOption(CLString("Hello, World!"))
+# print(b)
+# c = CLTuple2((CLU32(1), CLString("Hello, World!"), CLBool(
+#     'true'), CLTuple2((CLU32(1), CLString("Hello, World!")))))
+# d = CLOption(c)
+# print(d)
+# print(d.serialize())
+# # print(b.serialize())
+# c = CLOption(None)
+# c = CLOption(CLU64(0))
+# a = CLOption(CLTuple2((CLU32(1), CLString("hello"))))
+# print('C:', c.cl_value())
+# print(a.to_json())
+# {
+# "Option": {
+#     "Tuple3": [
+#         "I32",
+#         "String",
+#         "String"
+#     ]
+# }
+# }
 # print("c serial:", c.serialize().hex())
 # print(c.serialize())
 # # print(c.serialize())

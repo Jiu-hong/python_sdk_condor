@@ -1,6 +1,7 @@
 import json
-from cl_number import CLU256, CLU32
+from cl_number import CLU256, CLU32, CLBool
 from cl_string import CLString
+from cl_tuple import CLTuple1, CLTuple2
 
 
 class NamedArg:
@@ -39,6 +40,21 @@ class NamedArg:
 
         return self.name, my_dict  # tuple tuple[1] is dict
 
+        # {
+        #     "cl_type": {
+        #         "Map": {
+        #             "key": "String",
+        #             "value": "I32"
+        #         }
+        #     },
+        #     "bytes": "01000000030000004142430a000000",
+        #     "parsed": [
+        #         {
+        #             "key": "ABC",
+        #             "value": 10
+        #         }
+        #     ]
+        # }
         # "args": {
         #     "Named": [
         #         [
@@ -61,8 +77,9 @@ class NamedArg:
         # },
 
 
-# a = NamedArg("arg1", CLU256(10))
-# b = a.to_byte_with_named_arg()
+a = NamedArg("tuple1", CLTuple1(CLBool(False),))
+# tuple1: CLValue.newCLTuple1(CLValue.newCLValueBool(false)),
+b = a.to_byte_with_named_arg()
 # print("b is:", b.hex())
 # print("json_value:", json.dumps(a.to_json()))
 # 0400000061726731040000002a00000004

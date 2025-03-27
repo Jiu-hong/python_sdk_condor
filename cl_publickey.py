@@ -2,10 +2,11 @@ import re
 
 from cl_baseType import CLAtomic, CLType
 from cl_util import deep_value_v2
+from constants import TAG, CLTypeName
 
 
 class CLPublicKey(CLType, CLAtomic):
-    tag = 22
+    tag = TAG.CLPublicKey.value
 
     def serialize(self):
         regx = "(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})"
@@ -17,25 +18,25 @@ class CLPublicKey(CLType, CLAtomic):
             raise
         return bytes.fromhex(self.data)
 
-    def cl_value(self):
+    # def cl_value(self):
 
-        content = self.serialize().hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
+    #     content = self.serialize().hex()
+    #     bytes_len_hex = '{:02x}'.format(
+    #         int(len(content) / 2)).ljust(8, '0')
+    #     tag = '{:02x}'.format(self.tag)
 
-        return bytes_len_hex + content + tag
-
-    def to_json(self):
-        return "PublicKey"
+    #     return bytes_len_hex + content + tag
 
 
 a = CLPublicKey(
     "0119bf44096984cdfe8541bac167dc3b96c85086aa30b6b6cb0c5c38ad703166e1")
+b = a.to_json()
+print("b is:", b)
+print("b is:", a.cl_value())
 # print(a.serialize())
 # print(a)
-print(a.cl_value())
-print(a.value())
+# print(a.cl_value())
+# print(a.value())
 # (01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})
 # re.compile("(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})")
 # p = re.compile("(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})")

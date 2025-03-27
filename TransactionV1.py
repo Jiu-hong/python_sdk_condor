@@ -6,7 +6,9 @@ from TransactionEntryPoint import TransactionEntryPoint
 from TransactionScheduling import TransactionScheduling
 from TransactionTarget import TransactionTarget
 from TransactionV1Payload import TransactionV1Payload
-from cl_number import CLU512, CLU64, CLU8
+from cl_list import CLList
+from cl_map import CLMap
+from cl_number import CLU32, CLU512, CLU64, CLU8
 from cl_option import CLOption
 from cl_publickey import CLPublicKey
 from cl_string import CLString
@@ -84,19 +86,25 @@ class TransactionV1:
 
 # args = {"target": CLPublicKey("01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"), "amount": CLU512(2500000000),
 #         "id": CLOption(CLU64(0))}
-args = {"id": CLOption(CLU64(0)), "target": CLPublicKey("01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"), "amount": CLU512(2500000000),
-        }
+# args = {"id": CLOption(CLU64(0)), "target": CLPublicKey("01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"), "amount": CLU512(2500000000),
+#         }
+# args = {"arg1": CLList([CLOption(CLU32(1)), CLOption(
+#     CLU32(2)), CLOption(CLU32(3)), CLOption(CLU32(3)), CLOption(CLU32(3))])}
+args = {
+    "arg1": CLMap({CLU8(3): CLString("Jim"), CLU8(
+        2): CLString("Jack"), CLU8(4): CLString("Jane"), CLU8(1): CLString("Jill")})
+}
 scheduling = TransactionScheduling()
 print("scheduling to_bytes()", scheduling.to_bytes().hex())
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 
-pricing_mode = PricingMode("Classic", 200000000000)
+pricing_mode = PricingMode("Classic", 2500000000)
 print("pricing_mode to_bytes():", pricing_mode.to_bytes().hex())
 
-target1 = TransactionTarget("native")
+target1 = TransactionTarget("stored", "InvocableEntity",
+                            "b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6")
 print("target1 to_bytes()", target1.to_bytes().hex())
-
-entrypoint1 = TransactionEntryPoint("Transfer")
+entrypoint1 = TransactionEntryPoint("Custom", "test2")
 print("entrypoint1 bytes is:", entrypoint1.to_bytes().hex())
 
 payload = TransactionV1Payload(args, target1,

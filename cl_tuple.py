@@ -2,6 +2,7 @@
 from cl_baseType import CLMapBase, CLType
 from cl_number import *
 from cl_string import CLString
+from constants import Length
 
 
 class CLTupleBase(CLType):
@@ -11,57 +12,75 @@ class CLTupleBase(CLType):
             raise
 
     def serialize(self):
-        new_data = ""
+        new_data = b''
         if not isinstance(self.data, tuple):
             raise
         for element in self.data:
             new_data += element.serialize()
         return new_data
 
-    def cl_value(self):
-
-        content = self.serialize()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
-
 
 class CLTuple1(CLTupleBase):
-    LENGTH = 1
-    tag = 18
+    tag = TAG.CLTuple1.value
 
-    def __init__(self, data):
-        if len(data) != CLTuple1.LENGTH:
+    def __init__(self, *data):
+        print("data: ", data)
+        if len(data) != Length.CLTuple1.value:
             raise
         super().__init__(data)
+
+
+# a = CLTuple1(CLBool(True))
+# print("a.to_json is:", a.to_json())
+# print("a.cl_value is:", a.cl_value())
+# expected:
+# 01000000001200
+# 01000000011200
+# 010000000112
+# tuple2(bool,string)
+# expected:
+# 0a000000 010500000048656c6c6f 13000a
+# actual
+#
 
 
 class CLTuple2(CLTupleBase):
-    LENGTH = 2
-    tag = 19
+    tag = TAG.CLTuple2.value
 
     def __init__(self, data):
-        if len(data) != CLTuple2.LENGTH:
-            raise
+        print("data:", data)
+        if len(data) != Length.CLTuple2.value:
+            print("len(data) is:", len(data))
+            raise ("length incorrect for CLTuple2")
         super().__init__(data)
+
+
+# CLValue.newCLTuple2((CLValue.newCLValueBool(true)), CLValue.newCLString("Hello")))
+# expected
+# 0a000000010500000048656c6c6f13000a
+# actual
+# 0a000000010500000048656c6c6f13000a
+# tuple2 = CLTuple2((CLBool(True), CLString("Hello")))
+# print("tuple2 to_json", tuple2.to_json())
+# print("tuple2 cl_value()", tuple2.cl_value())
 
 
 class CLTuple3(CLTupleBase):
-    LENGTH = 3
-    tag = 20
+    tag = TAG.CLTuple3.value
 
     def __init__(self, data):
-        if len(data) != CLTuple3.LENGTH:
+        if len(data) != Length.CLTuple3.value:
             raise
         super().__init__(data)
 
 
-# a = CLTuple3((CLString("Hello, World!"), CLBool(
-#     'true'), CLTuple2((CLU32(1), CLString("Hello, World!")))))
-# print(a)
-# print(a.value())
+# CLValue.newCLTuple3((CLValue.newCLValueBool(true)), CLValue.newCLString("Hello"), CLValue.newCLInt32(10))
+# expected
+# 0e000000010500000048656c6c6f0a00000014000a01
+
+a = CLTuple3((CLBool(True), CLString("Hello"), CLI32(10)))
+print(a.to_json())
+print(a.cl_value())
 # a = CLTuple2((CLU32(1), CLString("hello")))
 # print(a)
 # print(a.value())

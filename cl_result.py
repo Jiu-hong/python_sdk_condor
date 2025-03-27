@@ -7,10 +7,11 @@ from cl_option import CLOption
 from cl_string import CLString
 from cl_tuple import CLTuple2
 from cl_util import deep, deep_v2, deep_value_v2
+from constants import TAG
 
 
 class CLResult(CLType):
-    tag = 16
+    tag = TAG.CLResult.value
 
     def serialize(self):
         match self.data:
@@ -40,24 +41,24 @@ class CLResult(CLType):
 # # print(a.serialize())
 
 
-a = CLResult(Ok(CLString("Hello world!")))
+# a = CLResult(Ok(CLString("Hello world!")))
 # print(a.value())
 # print(a)
 # print(a.serialize())
 
-b = CLResult(Err(CLOption(CLList([CLTuple2((CLU32(1), CLString("Hello, World!"))),
-                                  CLString("world"), CLString("nihao")]))))
-print(b)
-print(b.value())
+# b = CLResult(Err(CLOption(CLList([CLTuple2((CLU32(1), CLString("Hello, World!"))),
+#                                   CLString("world"), CLString("nihao")]))))
+# print(b)
+# print(b.value())
 
 # -   E.g. `Ok(314u64)` serializes as `0x013a01000000000000`
 # -   E.g. `Err("Uh oh")` serializes as `0x00050000005568206f68`
-a = CLResult(Ok(CLU64(314)))
-print(a)
-print(a.serialize())
-print(a.value())
+# a = CLResult(Ok(CLU64(314)))
+# print(a)
+# print(a.serialize())
+# print(a.value())
 
-a = CLResult(Err(CLString("Uh oh")))
-print(a)
-print(a.serialize())
-print(a.value())
+# a = CLResult(Err(CLString("Uh oh")))
+# print(a)
+# print(a.serialize())
+# print(a.value())

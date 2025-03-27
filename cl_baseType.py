@@ -1,3 +1,4 @@
+from result import Err, Ok
 import cl_util
 from constants import CLTypeName
 
@@ -33,8 +34,8 @@ class CLType(object):
                 return tag + b''.join([get_cl_tags(x) for x in tuple_value])
             else:
                 return tag
-        tag = get_cl_tags(self)
 
+        tag = get_cl_tags(self)
         return (bytes_len + content + tag).hex()
 
     def to_json(self):
@@ -51,6 +52,9 @@ class CLType(object):
             elif isinstance(self.data, dict):
                 tuple_value = list(self.data.items())[0]  # tuple
                 return {json_type: {'key': get_deep_json(tuple_value[0]), 'value': get_deep_json(tuple_value[1])}}
+            # elif isinstance(self.data, Ok | Err):
+            #     # return {json_type: {'key': get_deep_json(tuple_value[0]), 'value': get_deep_json(tuple_value[1])}}
+            #     pass
             else:
                 return json_type
 
@@ -71,8 +75,4 @@ class CLType(object):
 
 
 class CLAtomic:
-    pass
-
-
-class CLMapBase:
     pass

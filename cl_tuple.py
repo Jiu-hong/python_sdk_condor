@@ -1,5 +1,5 @@
 
-from cl_baseType import CLMapBase, CLType
+from cl_baseType import CLType
 from cl_number import *
 from cl_string import CLString
 from constants import Length
@@ -42,15 +42,12 @@ class CLTuple1(CLTupleBase):
 # 0a000000 010500000048656c6c6f 13000a
 # actual
 #
-
-
 class CLTuple2(CLTupleBase):
     tag = TAG.CLTuple2.value
 
     def __init__(self, data):
         print("data:", data)
         if len(data) != Length.CLTuple2.value:
-            print("len(data) is:", len(data))
             raise ("length incorrect for CLTuple2")
         super().__init__(data)
 
@@ -78,9 +75,9 @@ class CLTuple3(CLTupleBase):
 # expected
 # 0e000000010500000048656c6c6f0a00000014000a01
 
-a = CLTuple3((CLBool(True), CLString("Hello"), CLI32(10)))
-print(a.to_json())
-print(a.cl_value())
+# a = CLTuple3((CLBool(True), CLString("Hello"), CLI32(10)))
+# print(a.to_json())
+# print(a.cl_value())
 # a = CLTuple2((CLU32(1), CLString("hello")))
 # print(a)
 # print(a.value())

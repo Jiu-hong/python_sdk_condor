@@ -1,11 +1,11 @@
 
-from cl_baseType import CLType
+from cl_baseType import CLValue
 from cl_number import *
 from cl_string import CLString
 from constants import Length
 
 
-class CLTupleBase(CLType):
+class CLTupleBase(CLValue):
     def __init__(self, data) -> None:
         super().__init__(data)
         if not isinstance(self.data, tuple):

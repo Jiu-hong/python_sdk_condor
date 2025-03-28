@@ -1,84 +1,61 @@
 from result import Err, Ok
 
-from cl_baseType import CLType
+from cl_baseType import CLValue
 from cl_list import CLList
-from cl_number import CLU32, CLU64
+from cl_map import CLMap
+from cl_number import CLU32, CLU64, CLU8
 from cl_option import CLOption
 from cl_string import CLString
 from cl_tuple import CLTuple2
-from cl_util import deep, deep_v2, deep_value_v2
-from constants import TAG, CLTypeName
+from constants import RESULTHOLDER, TAG, CLTypeName
 
 
-class CLResult(CLType):
+class CLResult(CLValue):
     tag = TAG.CLResult.value
 
-    def __init__(self, *datalist):
-        print("data: ", datalist)
-        self.ok_type = datalist[0]
-        self.err_type = datalist[1]
-        self.data = datalist[2]
+    def __init__(self, *data) -> None:
+        self.data = data
+        print("self.data:", self.data)
+        print("type of self.data:", type(self.data))
 
     def serialize(self):
-        # innerOk: CLType,
-        # innerErr: CLType,
+        # innerOk: CLValue,
+        # innerErr: CLValue,
         # value: CLValue,
         # isSuccess: boolean
 
-        match self.data:
-            case Ok(value):
-                return int(1).to_bytes(4, byteorder='little') + value.serialize()
-            case Err(value):
-                return int(0).to_bytes(4, byteorder='little') + value.serialize()
+        match self.flag:
+            case True:
+                return int(1).to_bytes(4, byteorder='little') + self.data.serialize()
+            case False:
+                return int(0).to_bytes(4, byteorder='little') + self.data.serialize()
             case _:
                 # todo
                 # it should be result type
                 raise
 
-    def to_json(self):
-        CONST = CLTypeName()
 
-        def get_deep_json(self):
-            json_type = CONST.__getattribute__(self.__class__.__name__)
-            if hasattr(self.data, 'tag'):
-                return {json_type: get_deep_json(self.data)}
-            elif isinstance(self.data, tuple):
-                return {json_type: [get_deep_json(x) for x in self.data]}
-            elif isinstance(self.data, list):
-                return {json_type: get_deep_json(self.data[0])}
-            elif isinstance(self.data, dict):
-                tuple_value = list(self.data.items())[0]  # tuple
-                return {json_type: {'key': get_deep_json(tuple_value[0]), 'value': get_deep_json(tuple_value[1])}}
-            elif isinstance(self.data, Ok | Err):
-                return {json_type: {'ok': self.ok_type, 'err': self.err_type}}
-                pass
-            else:
-                return json_type
+a = CLResult(Ok(CLOption(CLString(RESULTHOLDER()))), Err(CLString(CLU32(1))))
+b = CLResult(Ok(CLOption(CLU32(1))), Err(CLString(RESULTHOLDER())))
+c = CLTuple2((a, b))
+d = CLList([a, b])
 
-        return get_deep_json(self)
+# print(d.to_json())
 
-        # def cl_value(self):
+e = CLMap({CLU8(3): a, CLU8(
+    2): a, CLU8(4): a, CLU8(1): a})
+# print(e.to_json())
+# CONST = CLTypeName()
+# result = CLResult(CONST.CLString(CONST.CLOption),
+#                   CONST.CLU32, Ok(CLString("hello")))
+# * CLType Result<T, E> is represented as a JSON Object with exactly one entry named either "Ok" or
+#   "Err" where the Object's value is suitable to represent T or E respectively, e.g.
+#   {"name":"entry_point_name","type":{"Result":{"ok":"Bool","err":"U8"}},"value":{"Ok":true}}
+#   {"name":"entry_point_name","type":{"Result":{"ok":"Bool","err":"U8"}},"value":{"Err":1}}
+# a = CLMap({CLU8(3): CLString("Jim")})
 
-        #     content = self.serialize()
-        #     bytes_len_hex = '{:02x}'.format(
-        #         int(len(content) / 2)).ljust(8, '0')
-        #     tag = '{:02x}'.format(self.tag)
-
-        #     return bytes_len_hex + content + tag
-
-        # innerOk: CLType,
-        # innerErr: CLType,
-        # value: CLValue,
-        # isSuccess: boolean
-        # a = CLResult(Ok(CLU64(314)), Err())
-
-
-CONST = CLTypeName()
-result = CLResult(CONST.CLString(CONST.CLOption),
-                  CONST.CLU32, Ok(CLString("hello")))
-
-print(CONST.CLPublicKey)
-print("result to_json():", result.to_json())
+# print(CONST.CLPublicKey)
+# print("result to_json():", result.to_json())
 # print(a.to_json())
 # print(a.cl_value())
 # print(a.value())
@@ -87,7 +64,6 @@ print("result to_json():", result.to_json())
 # print(a.serialize())
 # # a = CLResult(CLI32(1))
 # # print(a.serialize())
-
 
 # a = CLResult(Ok(CLString("Hello world!")))
 # print(a.value())
@@ -105,8 +81,13 @@ print("result to_json():", result.to_json())
 # print(a)
 # print(a.serialize())
 # print(a.value())
+# a = CLResult(Ok(CLU64(123)), (TAG.CLMap, TAG.CLOption, TAG.CLI32))
+# a = CLResult(ok_type, err_type, value, flag)
 
+# print(a.to_json())
 # a = CLResult(Err(CLString("Uh oh")))
 # print(a)
 # print(a.serialize())
 # print(a.value())
+# a = Ok(1)
+# print("a is:", a.value)

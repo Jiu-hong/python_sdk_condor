@@ -1,11 +1,11 @@
 import re
 
-from cl_baseType import CLAtomic, CLType
+from cl_baseType import CLAtomic, CLValue
 from cl_util import deep_value_v2
 from constants import TAG, CLTypeName
 
 
-class CLPublicKey(CLType, CLAtomic):
+class CLPublicKey(CLValue, CLAtomic):
     tag = TAG.CLPublicKey.value
 
     def serialize(self):

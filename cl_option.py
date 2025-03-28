@@ -1,4 +1,4 @@
-from cl_baseType import CLType
+from cl_baseType import CLValue
 # from cl_list import CLList
 from cl_list import CLList
 from cl_number import CLU32, CLU64
@@ -8,12 +8,12 @@ from cl_util import deep_value_v2
 from constants import TAG
 
 
-class CLOption(CLType):
+class CLOption(CLValue):
     tag = TAG.CLOption.value
 
     def __init__(self, data) -> None:
         super().__init__(data)
-        if self.data is not None and not isinstance(self.data, CLType):
+        if self.data is not None and not isinstance(self.data, CLValue):
             raise ("what is wrong")
 
     def serialize(self):

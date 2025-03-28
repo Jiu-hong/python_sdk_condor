@@ -1,6 +1,6 @@
 # v1
 from result import Err, Ok
-# from cl_baseType import CLType # this causes circular
+# from cl_baseType import CLValue # this causes circular
 import cl_baseType
 
 
@@ -19,7 +19,7 @@ def deep(data):
 
 def deep_v2(data):
     result = ""
-    if isinstance(data, cl_baseType.CLType):
+    if isinstance(data, cl_baseType.CLValue):
         result = f'{data.__class__.__name__}({deep_v2(data.data)})'
     elif isinstance(data, list | tuple):
         result = [
@@ -38,6 +38,8 @@ def deep_v2(data):
             else:
                 # quote string
                 result = f'"{data}"'
+        elif isinstance(data, cl_baseType.RESULTHOLDER):
+            result = f'"{data}"'
         else:
             # result = f'{data.__class__.__name__}({deep_v2(data.data)})'
             raise  # incorrect types
@@ -74,7 +76,7 @@ def deep_type_v2(data):
 
     if isinstance(data, cl_baseType.CLAtomic):
         result = f'"{data.__class__.__name__}"'
-    elif isinstance(data, cl_baseType.CLType):
+    elif isinstance(data, cl_baseType.CLValue):
         result = f'{{"{data.__class__.__name__}":{deep_type_v2(data.data)}}}'
         # print("result here 1=> ", f'{data.__class__.__name__}')
     elif isinstance(data, tuple):

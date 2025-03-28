@@ -1,9 +1,9 @@
 
-from cl_baseType import CLAtomic, CLType
+from cl_baseType import CLAtomic, CLValue
 from constants import TAG
 
 
-class CLKey(CLType, CLAtomic):
+class CLKey(CLValue, CLAtomic):
     tag = TAG.CLKey.value
 
     def serialize(self):

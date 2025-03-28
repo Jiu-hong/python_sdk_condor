@@ -1,4 +1,4 @@
-from cl_baseType import CLType
+from cl_baseType import CLValue
 from cl_number import CLU256, CLU32, CLU64
 
 
@@ -9,7 +9,7 @@ from cl_util import deep_value_v2
 from constants import TAG
 
 
-class CLList(CLType):
+class CLList(CLValue):
     tag = TAG.CLList.value
 
     def __init__(self, data) -> None:

@@ -1,21 +1,24 @@
 # https://docs.python.org/3/library/stdtypes.html#bytes
 
 
-from cl_baseType import CLAtomic, CLType
+from cl_baseType import CLAtomic, CLValue
 from cl_exceptions import ExceptionCLNumber, ExceptionExceedMaxValue, ExceptionInvalidBoolValue
-from constants import TAG
+from cl_string import CLString
+from constants import RESULTHOLDER, TAG
 
 
-class CLNumber(CLType, CLAtomic):
+class CLNumber(CLValue, CLAtomic):
     def __init__(self, data):
 
         # is data isn't int or string, return None
         if not isinstance(data, str) and not isinstance(data, int):
-            raise ExceptionCLNumber(data)
+            if not isinstance(data, RESULTHOLDER):
+                print("type data is: ", type(data))
+                raise ExceptionCLNumber(data)
 
         # data is string but not correct decimal
         if isinstance(data, str):
-            if not data.isdecimal():
+            if not data.isdecimal() or not isinstance(data, RESULTHOLDER):
                 raise ExceptionCLNumber(data)
             else:
                 data = int(data)
@@ -25,7 +28,7 @@ class CLNumber(CLType, CLAtomic):
         return self.data
 
 
-class CLBool(CLType, CLAtomic):
+class CLBool(CLValue, CLAtomic):
     tag = TAG.CLBool.value
 
     def serialize(self):
@@ -278,3 +281,9 @@ class CLByteArray:
 
     def serialize(self):
         pass
+
+
+a = CLU32(RESULTHOLDER())
+b = CLString(RESULTHOLDER())
+# print("a:", a.to_json())
+# print("b:", b.to_json())

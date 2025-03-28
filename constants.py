@@ -1,6 +1,10 @@
 from enum import Enum
 
 
+class RESULTHOLDER():
+    pass
+
+
 class TAG(Enum):
     CLBool = 0
     CLI32 = 1
@@ -139,6 +143,6 @@ class CLTypeName(object):
         return "PublicKey"
 
 
-# CONST = CLTypeName()
+CONST = CLTypeName()
 
-# print(CONST.PublicKey)
+print(CONST.CLPublicKey)

@@ -1,5 +1,5 @@
 
-from cl_baseType import CLType
+from cl_baseType import CLValue
 import cl_list
 from cl_number import CLU8
 from cl_string import CLString
@@ -7,7 +7,7 @@ from cl_tuple import CLTuple2
 from constants import TAG
 
 
-class CLMap(CLType):
+class CLMap(CLValue):
     tag = TAG.CLMap.value
 
     def __get_list__(self):
@@ -29,4 +29,4 @@ a = CLMap({CLU8(3): CLString("Jim"), CLU8(
 # print("type=>", a.cl_type())
 # print("a", a.to_json())
 # print("clvalue:", a.cl_value())
-print("value:", a.value())
+# print("value:", a.value())

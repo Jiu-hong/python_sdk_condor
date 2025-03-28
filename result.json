@@ -1,59 +1,15 @@
 {
-    "hash": "b8a9f5f0322bd6f9271c8d48f0efbc052ba1e4dc71d808f0fddef2f292789caf",
-    "payload": {
-        "initiator_addr": {
-            "PublicKey": "01b331699e7581c196288e3183a337bd813f722c913b456a896e18e2790f7ec7c8"
-        },
-        "timestamp": "2025-03-27T09:53:33.439Z",
-        "ttl": "2h",
-        "chain_name": "casper-test",
-        "pricing_mode": {
-            "PaymentLimited": {
-                "gas_price_tolerance": 1,
-                "payment_amount": 100000000,
-                "standard_payment": true
-            }
-        },
-        "fields": {
-            "args": {
-                "Named": [
-                    [
-                        "target",
-                        {
-                            "bytes": "01ffed0444ece4f9909f4145ac9f058c0980432362f10ccdc2467d091b8a184e94",
-                            "cl_type": "PublicKey",
-                            "parsed": "01ffed0444ece4f9909f4145ac9f058c0980432362f10ccdc2467d091b8a184e94"
-                        }
-                    ],
-                    [
-                        "amount",
-                        {
-                            "bytes": "04c0ec6196",
-                            "cl_type": "U512",
-                            "parsed": "2523000000"
-                        }
-                    ],
-                    [
-                        "id",
-                        {
-                            "bytes": "00",
-                            "cl_type": {
-                                "Option": "U64"
-                            },
-                            "parsed": null
-                        }
-                    ]
-                ],
-                "entry_point": "Transfer",
-                "scheduling": "Standard",
-                "target": "Native"
+    "Map": {
+        "key": "U8",
+        "value": {
+            "Result": {
+                "ok": {
+                    "Option": "String"
+                },
+                "err": {
+                    "String": "U32"
+                }
             }
         }
-    },
-    "approvals": [
-        {
-            "signature": "0171e1311e3af612010ecf0408e474b107bea5c776939f105c5190e162886d66859273c3b5e4523593f1ba9b44f00c70c315ae31d3603ee428986fd536f9d7e909",
-            "signer": "01b331699e7581c196288e3183a337bd813f722c913b456a896e18e2790f7ec7c8"
-        }
-    ]
+    }
 }

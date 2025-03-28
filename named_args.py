@@ -1,7 +1,11 @@
 import json
+
+from result import Err, Ok
 from cl_number import CLU256, CLU32, CLBool
+from cl_result import CLResult
 from cl_string import CLString
 from cl_tuple import CLTuple1, CLTuple2
+from constants import RESULTHOLDER
 
 
 class NamedArg:
@@ -10,19 +14,19 @@ class NamedArg:
         self.value = value  # CLValue
 
     def to_byte_with_named_arg(self):
-        offset = 0
+        # offset = 0
         buffer = b''
 
         name_bytes = CLString(self.name).serialize()
         buffer = name_bytes
 
-        offset += len(name_bytes)
+        # offset += len(name_bytes)
 
         value_bytes = bytes.fromhex(self.value.cl_value())
 
         buffer = buffer + value_bytes
 
-        offset += len(value_bytes)
+        # offset += len(value_bytes)
         return buffer
 
     def to_json(self):
@@ -38,6 +42,11 @@ class NamedArg:
 a = NamedArg("tuple1", CLTuple1(CLBool(False),))
 # tuple1: CLValue.newCLTuple1(CLValue.newCLValueBool(false)),
 b = a.to_byte_with_named_arg()
+
+c = NamedArg("arg2", CLResult(
+    Ok(CLString("ABC")), Err(CLU32(RESULTHOLDER())), True))
+d = c.to_byte_with_named_arg()
+# print("d is:", d.hex())
 # print("b is:", b.hex())
 # print("json_value:", json.dumps(a.to_json()))
 # 0400000061726731040000002a00000004

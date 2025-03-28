@@ -26,6 +26,16 @@ class CLValue(object):
             if hasattr(self.data, 'tag'):
                 return tag + get_cl_tags(self.data)
             elif isinstance(self.data, tuple):
+                # if clresult type
+                if isinstance(self.data[-1], bool):
+                    # Ok value
+                    # if self.data[-1] == True:
+                    return tag + get_cl_tags(self.data[0].value) + get_cl_tags(self.data[1].value)
+                    # deep_value_v2(self[0])
+                    # if self.data[-1] == False:
+                    #     return tag
+                    # error value
+
                 return tag + b''.join([get_cl_tags(x) for x in self.data])
             elif isinstance(self.data, list):
                 return tag + get_cl_tags(self.data[0])
@@ -48,6 +58,7 @@ class CLValue(object):
             if hasattr(self.data, 'tag'):
                 return {json_type: get_deep_json(self.data)}
             elif isinstance(self.data, tuple):
+                # result type
                 if self.tag == TAG.CLResult.value:
                     return {json_type: {'ok': get_deep_json(self.data[0].value), 'err': get_deep_json(self.data[1].value)}}
                 return {json_type: [get_deep_json(x) for x in self.data]}

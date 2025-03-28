@@ -24,7 +24,6 @@ class CLTuple1(CLTupleBase):
     tag = TAG.CLTuple1.value
 
     def __init__(self, *data):
-        print("data: ", data)
         if len(data) != Length.CLTuple1.value:
             raise
         super().__init__(data)
@@ -46,7 +45,6 @@ class CLTuple2(CLTupleBase):
     tag = TAG.CLTuple2.value
 
     def __init__(self, data):
-        print("data:", data)
         if len(data) != Length.CLTuple2.value:
             raise ("length incorrect for CLTuple2")
         super().__init__(data)

@@ -14,14 +14,14 @@ c = datetime.now(timezone.utc).replace(
 # serialize
 # timestamp=time()
 # CLU64(int(self.timestamp * 1000)).serialize()
-print("c is:", c)
+# print("c is:", c)
 d = datetime.now(timezone.utc).timestamp()
-print("d is:", d)
+# print("d is:", d)
 e = time()
-print("e is:", e)
+# print("e is:", e)
 
 base = datetime.now(timezone.utc)
-print("base", base)
+# print("base", base)
 # json
 eee = base.replace(
     tzinfo=None).isoformat(timespec='milliseconds')+"Z"

@@ -46,6 +46,27 @@ def deep_v2(data):
     return result
 
 
+# def deep_value_v2(self):
+#     result = ""
+#     if isinstance(self, int | str):
+#         result = self
+#         if isinstance(self, str):
+#             result = f'{self}'
+#     elif isinstance(self, tuple | list):
+#         result = [deep_value_v2(x) for x in self]
+#         if isinstance(self, tuple):
+#             result = tuple(result)
+#     elif isinstance(self, dict):
+#         result = []
+#         for key_value in self.items():
+#             item = {'key': deep_value_v2(key_value[0]), 'value':
+#                     deep_value_v2(key_value[1])}
+#             result.append(item)
+#     elif isinstance(self, Ok | Err):
+#         result = deep_value_v2(self.value)
+#     else:
+#         result = deep_value_v2(self.data)
+#     return result
 def deep_value_v2(self):
     result = ""
     if isinstance(self, int | str):
@@ -53,17 +74,22 @@ def deep_value_v2(self):
         if isinstance(self, str):
             result = f'{self}'
     elif isinstance(self, tuple | list):
+        # check if CLResult
+        if isinstance(self, tuple) and isinstance(self[-1], bool):
+            if self[-1] == True:  # OK value
+                result = {'Ok': deep_value_v2(self[0])}
+            else:  # err value
+                result = {'Err': deep_value_v2(self[1])}
+            return result
         result = [deep_value_v2(x) for x in self]
         if isinstance(self, tuple):
             result = tuple(result)
-
     elif isinstance(self, dict):
         result = []
         for key_value in self.items():
-            item = {'key': deep_value_v2(key_value[0]), 'value':
-                    deep_value_v2(key_value[1])}
+            item = {'key': deep_value_v2(
+                key_value[0]), 'value': deep_value_v2(key_value[1])}
             result.append(item)
-
     elif isinstance(self, Ok | Err):
         result = deep_value_v2(self.value)
     else:

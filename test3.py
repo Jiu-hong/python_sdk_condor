@@ -1,3 +1,4 @@
+from result import Ok
 from cl_list import CLList
 from cl_number import CLU32
 from cl_option import CLOption
@@ -50,3 +51,5 @@ print(items[0])
 print(type(items[0]))
 # keys = a.keys()
 # print(keys[0])
+a = Ok("hello")
+print("a.value:", a.value)

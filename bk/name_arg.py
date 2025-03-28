@@ -20,7 +20,6 @@ class NamedArg:
 
     def serialize(self):
         inner_serialize = ''
-        # print(self.args)
         for name, value in self.args.items():
             s_name = CLString(name).serialize()
             inner_serialize += s_name
@@ -30,23 +29,7 @@ class NamedArg:
             len(self.args)).ljust(8, '0')
         return list_length + inner_serialize
 
-    def to_json(self):
-        args_list = []
-        for name, value in self.args.items():
-            name_arg_dict = {}
-            name_arg_dict[name] = {
-                "cl_type": value.cl_type(), "bytes": value.serialize(), "parsed": value.value()}
-            args_list.append(name_arg_dict)
-        result = {}
-        result["args"] = {"Named": args_list}
-        return result
 
-        # def deploy_value(self):
-        #     for name, value in self.args.items()
-
-        #     amount: CLValueBuilder.u256(123),
-        # owner: CLValueBuilder.u256(456),
-        # recipient: CLValueBuilder.string("hello")
 a = NamedArg({"amount": CLU256(123), "owner": CLU256(
     456), 'recipient': CLString("hello")})
 # print(a.serialize())

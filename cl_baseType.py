@@ -1,5 +1,3 @@
-from result import Err, Ok
-
 import cl_util
 from constants import TAG, CLTypeName
 
@@ -14,9 +12,6 @@ class CLValue(object):
     def value(self):
         return cl_util.deep_value_v2(self)
 
-    def cl_type(self):
-        return cl_util.deep_type_v2(self)
-
     def cl_value(self):
         content = self.serialize()
         bytes_len = int(len(content)).to_bytes(4, byteorder='little')
@@ -28,19 +23,15 @@ class CLValue(object):
             elif isinstance(self.data, tuple):
                 # if clresult type
                 if isinstance(self.data[-1], bool):
-                    # Ok value
-                    # if self.data[-1] == True:
+                    # get both ok and err tag
                     return tag + get_cl_tags(self.data[0].value) + get_cl_tags(self.data[1].value)
-                    # deep_value_v2(self[0])
-                    # if self.data[-1] == False:
-                    #     return tag
-                    # error value
-
+                # get all the tuple elements' tag
                 return tag + b''.join([get_cl_tags(x) for x in self.data])
             elif isinstance(self.data, list):
+                # get all the list elements' tag
                 return tag + get_cl_tags(self.data[0])
             elif isinstance(self.data, dict):
-                # first element in dict
+                # get first element in dict
                 tuple_value = list(self.data.items())[0]  # tuple
                 return tag + b''.join([get_cl_tags(x) for x in tuple_value])
             else:
@@ -71,19 +62,6 @@ class CLValue(object):
                 return json_type
 
         return get_deep_json(self)
-
-    # elif isinstance(data, tuple):
-    #     result = [deep_type_v2(x) for x in data]
-    #     result = '[' + ', '.join(result) + ']'
-    # elif isinstance(data, list):
-    #     # print("data[0]", data[0])
-    #     result = deep_type_v2(data[0])
-    # elif isinstance(data, dict):
-    #     result = "{"+f'"key": {deep_type_v2(list(data.keys())[0])}, "value": {
-    #         deep_type_v2(list(data.values())[0])}' + "}"
-    #     # result = f"[{', '.join(result)}]"
-    # elif isinstance(data, Ok | Err):
-    #     result = f'{{"{data.__class__.__name__}":{deep_type_v2(data.value)}}}'
 
 
 class CLAtomic:

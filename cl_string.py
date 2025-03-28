@@ -8,21 +8,12 @@ class CLString(CLValue, CLAtomic):
 
     def serialize(self):
         content = bytearray(self.data, encoding="utf-8").hex()
-        # bytes length: '0x{:02x}'.format(integer) => 2 ->'0x02'
         bytes_len_hex = '{:02x}'.format(
             int(len(content) / 2)).ljust(8, '0')
         return bytes.fromhex(bytes_len_hex+content)
 
     def value(self):
         return self.data
-
-    # def cl_value(self):
-    #     content = self.serialize().hex()
-    #     bytes_len_hex = '{:02x}'.format(
-    #         int(len(content) / 2)).ljust(8, '0')
-    #     tag = '{:02x}'.format(self.tag)
-
-    #     return bytes_len_hex + content + tag
 
 
 a = CLString("{'name':'Outlaw's Gambit #520', 'asset': 'https://bafybeife3ljy62bcxi4zjmc5thuba7je3jqpkyhymuhrbyqwebj3jg3dnu.ipfs.w3s.link'}")

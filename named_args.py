@@ -1,5 +1,3 @@
-import json
-
 from result import Err, Ok
 from cl_number import CLU256, CLU32, CLBool
 from cl_result import CLResult
@@ -14,24 +12,13 @@ class NamedArg:
         self.value = value  # CLValue
 
     def to_byte_with_named_arg(self):
-        # offset = 0
-        buffer = b''
-
         name_bytes = CLString(self.name).serialize()
-        buffer = name_bytes
-
-        # offset += len(name_bytes)
-
         value_bytes = bytes.fromhex(self.value.cl_value())
 
-        buffer = buffer + value_bytes
-
-        # offset += len(value_bytes)
-        return buffer
+        return name_bytes + value_bytes
 
     def to_json(self):
         my_dict = {}
-        print("self.value:", type(self.value))
         my_dict["cl_type"] = self.value.to_json()
         my_dict["bytes"] = self.value.serialize().hex()
         my_dict["parsed"] = self.value.value()

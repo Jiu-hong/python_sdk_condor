@@ -1,16 +1,16 @@
 from datetime import datetime, timezone
-from InitiatorAddr import InitiatorAddr
-from PayloadFields import PayloadFields
-from PricingMode import PricingMode
-from TransactionEntryPoint import TransactionEntryPoint
-from TransactionScheduling import TransactionScheduling
-from TransactionTarget import TransactionTarget
+from initiator_addr import InitiatorAddr
+from payload_fields import PayloadFields
+from pricing_mode import PricingMode
+from transaction_entry_point import TransactionEntryPoint
+from transaction_scheduling import TransactionScheduling
+from transaction_target import TransactionTarget
 from cl_number import CLU32, CLU64, CLU8
 from cl_string import CLString
 
 from constants.cons_jsonname import JsonName
-from named_args import NamedArg
-from table import CalltableSerialization
+from named_arg import NamedArg
+from call_table_serialization import CalltableSerialization
 
 JSONNAME = JsonName()
 

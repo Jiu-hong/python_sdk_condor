@@ -1,5 +1,5 @@
 from cl_number import CLU64, CLU8, CLBool
-from PaymentLimited import PaymentLimited
+from payment_limit import PaymentLimited
 
 
 class PricingMode:

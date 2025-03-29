@@ -12,18 +12,19 @@ from constants.base import TAG
 class CLList(CLValue):
     tag = TAG.CLList.value
 
-    def __init__(self, data) -> None:
-        super().__init__(data)
-        if not isinstance(self.data, list):
-            raise
-        base_type = type(self.data[0])
+    def __init__(self, data: list) -> None:
+        if not isinstance(data, list):
+            raise TypeError(
+                f"Invalid type of input: {type(data)} for CLList. Allowed value is {list}")
+        base_type = type(data[0])
         # check type if consistent
-        for element in self.data[1:]:
+        for element in data[1:]:
             if type(element) != base_type:
                 print("type(element):", type(element))
                 # to do
                 # types aren't consistent for the elements
-                raise Exception  # CLListError1
+                raise TypeError(f"types aren't consistent in the elements")
+        super().__init__(data)
 
     def serialize(self):
         new_data = b''

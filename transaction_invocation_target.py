@@ -1,14 +1,14 @@
 import json
-from ByPackageHashInvocationTarget import ByPackageHashInvocationTarget
-from ByPackageNameInvocationTarget import ByPackageNameInvocationTarget
-from InvocableEntityAliasTarget import InvocableEntityAliasTarget
-from InvocableEntityTarget import InvocableEntityTarget
+from by_package_hash_invocation_target import ByPackageHashInvocationTarget
+from by_package_name_invocation_target import ByPackageNameInvocationTarget
+from invocable_entity_alias_target import InvocableEntityAliasTarget
+from invocable_entity_target import InvocableEntityTarget
 from cl_number import CLU32, CLU8
 from cl_option import CLOption
 from cl_string import CLString
 from constants.cons_jsonname import JsonName
 from constants.const_Invocation import InvocationKind
-from table import CalltableSerialization
+from call_table_serialization import CalltableSerialization
 
 CONST = InvocationKind()
 VALID_ALLOWED_INVOCATION = (

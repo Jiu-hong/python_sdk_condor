@@ -1,12 +1,11 @@
 # to_bytes to do
 from hashlib import blake2b
-import json
-from TransactionEntryPoint import TransactionEntryPoint
-from TransactionScheduling import TransactionScheduling
-from TransactionTarget import TransactionTarget
+from transaction_entry_point import TransactionEntryPoint
+from transaction_scheduling import TransactionScheduling
+from transaction_target import TransactionTarget
 from cl_number import CLU16, CLU32, CLU8
 from cl_string import CLString
-from named_args import NamedArg
+from named_arg import NamedArg
 
 
 class PayloadFields:

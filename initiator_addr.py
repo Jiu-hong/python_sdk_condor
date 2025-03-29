@@ -1,6 +1,6 @@
 from cl_number import CLU8
 from cl_publickey import CLPublicKey
-from table import CalltableSerialization
+from call_table_serialization import CalltableSerialization
 
 
 class InitiatorAddr:

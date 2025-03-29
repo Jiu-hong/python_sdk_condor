@@ -1,5 +1,8 @@
 import cl_util
-from bk_constants import TAG, CLTypeName
+from constants.base import TAG
+from constants.cons_type import CLTypeName
+
+CONST = CLTypeName()
 
 
 class CLValue(object):
@@ -41,7 +44,6 @@ class CLValue(object):
         return (bytes_len + content + tag).hex()
 
     def to_json(self):
-        CONST = CLTypeName()
 
         def get_deep_json(self):
             json_type = CONST.__getattribute__(self.__class__.__name__)

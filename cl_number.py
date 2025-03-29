@@ -2,26 +2,16 @@
 
 
 from cl_baseType import CLAtomic, CLValue
-from cl_exceptions import ExceptionCLNumber, ExceptionExceedMaxValue, ExceptionInvalidBoolValue
+from exceptions import ExceptionCLNumber, ExceptionExceedMaxValue
 from cl_string import CLString
 from constants.base import RESULTHOLDER, TAG
 
 
 class CLNumber(CLValue, CLAtomic):
     def __init__(self, data):
-
-        # is data isn't int or string, return None
-        if not isinstance(data, str) and not isinstance(data, int):
-            if not isinstance(data, RESULTHOLDER):
-                print("type data is: ", type(data))
-                raise ExceptionCLNumber(data)
-
-        # data is string but not correct decimal
-        if isinstance(data, str):
-            if not data.isdecimal() or not isinstance(data, RESULTHOLDER):
-                raise ExceptionCLNumber(data)
-            else:
-                data = int(data)
+        if not isinstance(data, int) and not isinstance(data, RESULTHOLDER):
+            raise TypeError(
+                f"Invalid type of input: {type(data)} for CLNumber. Allowed value is {int}")
         super().__init__(data)
 
     def value(self):
@@ -31,18 +21,24 @@ class CLNumber(CLValue, CLAtomic):
 class CLBool(CLValue, CLAtomic):
     tag = TAG.CLBool.value
 
+    def __init__(self, data):
+        if not isinstance(data, bool) and not isinstance(data, RESULTHOLDER):
+            raise TypeError(
+                f"Invalid type of input: {type(data)} for CLBool. Allowed value is {bool}")
+        super().__init__(data)
+
     def serialize(self):
-        match self.data:
-            case True | False:
-                return int(self.data).to_bytes(1, byteorder='little')
-            case _: raise ExceptionInvalidBoolValue(self.data)
+        return int(self.data).to_bytes(1, byteorder='little')
 
     def value(self):
         return self.data
 
 
-a = CLBool(True)
+# a = CLBool("True")
 # print("here:", a.cl_value())
+# print(a.serialize().hex())
+# print(a.to_json())
+# print(a.cl_value())
 
 
 class CLI32(CLNumber):
@@ -57,8 +53,8 @@ class CLI32(CLNumber):
             raise ExceptionExceedMaxValue(str(self.data), "CLI32")
 
 
-a = CLI32(-2**31)
-# print(a.serialize())
+# a = CLI32("123")
+# print(a.serialize().hex())
 # print(a.to_json())
 # print(a.cl_value())
 
@@ -117,7 +113,7 @@ class CLU32(CLNumber):
             raise ExceptionExceedMaxValue(str(self.data), "CLU32")
 
 
-x = CLU32(7)
+# x = CLU32(7)
 # print("x=>", x)
 # print(x.serialize().hex())
 # # u32
@@ -144,31 +140,50 @@ class CLU64(CLNumber):
 # print(CLU64(int(time() * 1000)).serialize())
 
 
-class CLBigNumber(CLNumber):
-    def __init__(self, data):
-        super().__init__(data)
+# class CLBigNumber(CLNumber):
+#     def __init__(self, data):
+#         super().__init__(data)
 
+#         hex_string = '{:x}'.format(self.data)
+#         # if the length is odd pad a zero in the left
+#         if len(hex_string) % 2:
+#             self.hex_string = hex_string.zfill(len(hex_string)+1)
+#         else:
+#             self.hex_string = hex_string
+
+#         self.bytes = ""
+#         self.index = int(len(self.hex_string)/2)
+
+#         # bytes length: '{:02x}'.format(integer) => 2 ->'0x02'
+#         self.bytes_len_hex = '{:02x}'.format(self.index)
+
+#     def serialize(self):
+#         # reverse bytes
+#         for _ in range(self.index, 0, -1):
+#             self.index = self.index - 1
+#             result = self.hex_string[self.index*2:]
+#             self.hex_string = self.hex_string[:self.index*2]
+#             self.bytes += result
+#         return bytes.fromhex(self.bytes_len_hex+self.bytes)
+
+class CLBigNumber(CLNumber):
+
+    def serialize(self):
         hex_string = '{:x}'.format(self.data)
         # if the length is odd pad a zero in the left
         if len(hex_string) % 2:
-            self.hex_string = hex_string.zfill(len(hex_string)+1)
-        else:
-            self.hex_string = hex_string
+            hex_string = hex_string.zfill(len(hex_string)+1)
 
-        self.bytes = ""
-        self.index = int(len(self.hex_string)/2)
-
-        # bytes length: '{:02x}'.format(integer) => 2 ->'0x02'
-        self.bytes_len_hex = '{:02x}'.format(self.index)
-
-    def serialize(self):
+        m_bytes = ""
+        index = int(len(hex_string)/2)
+        bytes_len_hex = '{:02x}'.format(index)
         # reverse bytes
-        for _ in range(self.index, 0, -1):
-            self.index = self.index - 1
-            result = self.hex_string[self.index*2:]
-            self.hex_string = self.hex_string[:self.index*2]
-            self.bytes += result
-        return bytes.fromhex(self.bytes_len_hex+self.bytes)
+        for _ in range(index, 0, -1):
+            index = index - 1
+            result = hex_string[index*2:]
+            hex_string = hex_string[:index*2]
+            m_bytes += result
+        return bytes.fromhex(bytes_len_hex+m_bytes)
 
 
 class CLU512(CLBigNumber):
@@ -235,29 +250,7 @@ class CLU128(CLBigNumber):
 # print(a.to_json())
 
 
-class CLU16Big(CLBigNumber):
-    maxvalue = 2**16-1
-
-    def serialize(self):
-
-        if 0 <= self.data <= CLU16Big.maxvalue:
-            return super().serialize()
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU16Big")
-
-
-class CLU32Big(CLBigNumber):
-    maxvalue = 2**32-1
-
-    def serialize(self):
-
-        if 0 <= self.data <= CLU32Big.maxvalue:
-            return super().serialize()
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU32Big")
-
-
-a = CLU32(123)
+# a = CLU32(123)
 # print("a:", a.serialize().hex())
 # # b = CLU128("abcd")
 # # print(b.serialize())
@@ -283,7 +276,7 @@ class CLByteArray:
         pass
 
 
-a = CLU32(RESULTHOLDER())
-b = CLString(RESULTHOLDER())
+# a = CLU32(RESULTHOLDER())
+# b = CLString(RESULTHOLDER())
 # print("a:", a.to_json())
 # print("b:", b.to_json())

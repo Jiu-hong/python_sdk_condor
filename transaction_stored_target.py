@@ -1,11 +1,11 @@
 
-from TransactionInvocationTarget import TransactionInvocationTarget
-from TransactionRuntime import TransactionRuntime
+from transaction_invocation_target import TransactionInvocationTarget
+from transaction_runtime import TransactionRuntime
 from cl_number import CLU32, CLU8, CLBool
 
 from constants.cons_jsonname import JsonName
 from constants.const_runtime import RuntimeKind
-from table import CalltableSerialization
+from call_table_serialization import CalltableSerialization
 
 
 JSONNAME = JsonName()

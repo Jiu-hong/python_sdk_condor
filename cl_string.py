@@ -1,16 +1,23 @@
 from cl_baseType import CLAtomic, CLValue
-from cl_util import deep_v2
-from constants.base import TAG
+from constants.base import RESULTHOLDER, TAG
 
 
 class CLString(CLValue, CLAtomic):
     tag = TAG.CLString.value
 
+    def __init__(self, data: str) -> None:
+        if not isinstance(data, str) and not isinstance(data, RESULTHOLDER):
+            raise TypeError(
+                f"Invalid type of input: {type(data)} for CLString. Allowed value is {str}")
+
+        super().__init__(data)
+
     def serialize(self):
-        content = bytearray(self.data, encoding="utf-8").hex()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        return bytes.fromhex(bytes_len_hex+content)
+        content = bytearray(self.data, encoding="utf-8")
+        # bytes_len_hex = '{:02x}'.format(
+        #     int(len(content) / 2)).ljust(8, '0')
+        bytes_len = int(len(content)).to_bytes(4, byteorder='little')
+        return bytes_len+content
 
     def value(self):
         return self.data

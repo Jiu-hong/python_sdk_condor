@@ -1,7 +1,6 @@
-import json
 from cl_number import CLU32, CLU8
 from cl_option import CLOption
-from table import CalltableSerialization
+from call_table_serialization import CalltableSerialization
 
 
 class InvocableEntityAliasTarget:

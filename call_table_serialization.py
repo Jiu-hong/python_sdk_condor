@@ -1,8 +1,4 @@
-# export class CalltableSerialization {
-#     private fields: Field[] = []
-#     private currentOffset = 0
-
-from cl_number import CLU16, CLU32, CLU16Big, CLU32Big
+from cl_number import CLU16, CLU32
 
 
 class CalltableSerialization:

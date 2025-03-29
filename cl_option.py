@@ -11,10 +11,11 @@ from constants.base import TAG
 class CLOption(CLValue):
     tag = TAG.CLOption.value
 
-    def __init__(self, data) -> None:
+    def __init__(self, data: CLValue | None) -> None:
+        if data is not None and not isinstance(data, CLValue):
+            raise TypeError(
+                "Input type should be None or CLValue for CLOption")
         super().__init__(data)
-        if self.data is not None and not isinstance(self.data, CLValue):
-            raise ("what is wrong")
 
     def serialize(self):
         if self.data == None:

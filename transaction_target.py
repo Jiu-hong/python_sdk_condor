@@ -1,14 +1,14 @@
 
-from TransactionInvocationTarget import TransactionInvocationTarget
-from TransactionRuntime import TransactionRuntime
-from TransactionSessionTarget import TransactionSessionTarget
-from TransactionStoredTarget import TransactionStoredTarget
+from transaction_invocation_target import TransactionInvocationTarget
+from transaction_runtime import TransactionRuntime
+from transaction_session_target import TransactionSessionTarget
+from transaction_stored_target import TransactionStoredTarget
 from cl_number import CLU8
 
 
 from constants.cons_jsonname import JsonName
 from constants.cons_target import TargetKind
-from table import CalltableSerialization
+from call_table_serialization import CalltableSerialization
 
 CONST = TargetKind()
 VALID_TARGETS = (CONST.NATIVE, CONST.STORED, CONST.SESSION)

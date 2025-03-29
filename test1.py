@@ -1,6 +1,6 @@
 # const namedArg = new NamedArg("arg1", CLValue.newCLUInt32(42))
 from cl_number import CLI32, CLU32
-from named_args import NamedArg
+from named_arg import NamedArg
 
 
 named_arg = NamedArg("arg1", CLU32(42))

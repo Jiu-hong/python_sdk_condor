@@ -15,7 +15,6 @@ class CLResult(CLValue):
 
     def __init__(self, *data) -> None:
         self.data = data
-        print("self.data:", self.data)
 
     def serialize(self):
         # innerOk: CLValue,

@@ -1,5 +1,5 @@
 from cl_number import CLU64, CLU8, CLBool
-from table import CalltableSerialization
+from call_table_serialization import CalltableSerialization
 
 
 class PaymentLimited:

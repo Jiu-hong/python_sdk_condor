@@ -12,10 +12,10 @@ class CLPublicKey(CLValue, CLAtomic):
         regx = "(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})"
         pattern = re.compile(regx)
         result = pattern.fullmatch(self.data)
-        # print(result)
         if not isinstance(result, re.Match):
             # incorrect publickey should be 01xxx(64length) or 02xxx(66length)
-            raise
+            raise ValueError(
+                "publickey should be 01xxx(64 length) or 02xxx(66 length)")
         return bytes.fromhex(self.data)
 
     # def cl_value(self):

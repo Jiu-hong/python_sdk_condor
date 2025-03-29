@@ -1,7 +1,7 @@
 from cl_number import CLU8
 from constants.cons_jsonname import JsonName
 from constants.const_runtime import RuntimeKind
-from table import CalltableSerialization
+from call_table_serialization import CalltableSerialization
 
 CONST = RuntimeKind()
 VALID_ALLOWED_RUNTIME = (CONST.VMCASPERV1)

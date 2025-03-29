@@ -1,6 +1,6 @@
 from cl_number import CLU8
 from constants.cons_jsonname import JsonName
-from table import CalltableSerialization
+from call_table_serialization import CalltableSerialization
 from constants.cons_scheduling import SchedulingKind
 
 CONST = SchedulingKind()

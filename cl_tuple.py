@@ -6,15 +6,15 @@ from constants.base import Length
 
 
 class CLTupleBase(CLValue):
-    def __init__(self, data) -> None:
+    def __init__(self, data: tuple) -> None:
+        if not isinstance(data, tuple):
+            raise TypeError(
+                f"Invalid type of input: {type(data)} for CLTuple. Allowed value is {tuple}")
+
         super().__init__(data)
-        if not isinstance(self.data, tuple):
-            raise
 
     def serialize(self):
         new_data = b''
-        if not isinstance(self.data, tuple):
-            raise
         for element in self.data:
             new_data += element.serialize()
         return new_data
@@ -23,9 +23,10 @@ class CLTupleBase(CLValue):
 class CLTuple1(CLTupleBase):
     tag = TAG.CLTuple1.value
 
-    def __init__(self, *data):
+    def __init__(self, *data: tuple):
         if len(data) != Length.CLTuple1.value:
-            raise
+            raise ValueError(
+                f"Input tuple length is {len(data)}. Allowed CLTuple1 length is 1.")
         super().__init__(data)
 
 
@@ -44,9 +45,10 @@ class CLTuple1(CLTupleBase):
 class CLTuple2(CLTupleBase):
     tag = TAG.CLTuple2.value
 
-    def __init__(self, data):
+    def __init__(self, data: tuple):
         if len(data) != Length.CLTuple2.value:
-            raise ("length incorrect for CLTuple2")
+            raise ValueError(
+                f"Input tuple length is {len(data)}. Allowed CLTuple2 length is 2.")
         super().__init__(data)
 
 
@@ -63,9 +65,10 @@ class CLTuple2(CLTupleBase):
 class CLTuple3(CLTupleBase):
     tag = TAG.CLTuple3.value
 
-    def __init__(self, data):
+    def __init__(self, data: tuple):
         if len(data) != Length.CLTuple3.value:
-            raise
+            raise ValueError(
+                f"Input tuple length is {len(data)}. Allowed CLTuple3 length is 3.")
         super().__init__(data)
 
 

@@ -8,7 +8,6 @@ a = {"initiator_addr":
      {"PublicKey": "01366d77126a722e1adce6ad0bf2fbdbcdc573eb5c9c338a1097f1837f3dc4ef88"
       }},
 b = {"timestamp": "2025-03-19T09:47:13.625Z", }
-# output json
 c = datetime.now(timezone.utc).replace(
     tzinfo=None).isoformat(timespec='milliseconds')+"Z"
 # serialize

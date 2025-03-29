@@ -2,19 +2,19 @@ from hashlib import blake2b
 import json
 from cryptography.hazmat.primitives.asymmetric import ed25519
 from result import Err, Ok
-from PricingMode import PricingMode
-from TransactionEntryPoint import TransactionEntryPoint
-from TransactionScheduling import TransactionScheduling
-from TransactionTarget import TransactionTarget
-from TransactionV1Payload import TransactionV1Payload
+from pricing_mode import PricingMode
+from transaction_entry_point import TransactionEntryPoint
+from transaction_scheduling import TransactionScheduling
+from transaction_target import TransactionTarget
+from transaction_v1_payload import TransactionV1Payload
 from cl_list import CLList
 from cl_map import CLMap
-from cl_number import CLU32, CLU512, CLU64, CLU8
+from cl_number import CLU32, CLU512, CLU64, CLU8, CLBool
 from cl_option import CLOption
 from cl_publickey import CLPublicKey
 from cl_result import CLResult
 from cl_string import CLString
-from cl_tuple import CLTuple2
+from cl_tuple import CLTuple1, CLTuple2
 from constants.base import RESULTHOLDER
 from constants.cons_jsonname import JsonName
 from constants.const_prefix import AlgoKind
@@ -103,11 +103,11 @@ print("type of module_bytes:", type(module_bytes))
 #     CLU32(2)), CLOption(CLU32(3)), CLOption(CLU32(3)), CLOption(CLU32(3))])}
 arg2 = CLResult(
     Ok(CLString("ABC")), Err(CLU32(RESULTHOLDER())), True)
-a1 = CLResult(Ok(CLOption(CLTuple2((CLString("hello"), CLU64(123))))),
+a1 = CLResult(Ok(CLOption(CLTuple2((CLString("hello"), CLU512(123))))),
               Err(CLString(RESULTHOLDER())), True)
-a2 = CLResult(Ok(CLOption(CLTuple2((CLString(RESULTHOLDER()), CLU64(123))))),
+a2 = CLResult(Ok(CLOption(CLTuple2((CLString(RESULTHOLDER()), CLU512(123))))),
               Err(CLString("error Hello")), False)
-a3 = CLResult(Ok(CLOption(CLTuple2((CLString("world"), CLU64(123))))),
+a3 = CLResult(Ok(CLOption(CLTuple2((CLString("world"), CLU512(123))))),
               Err(CLString(RESULTHOLDER())), True)
 
 c = CLList([a1, a2, a3])
@@ -116,6 +116,7 @@ args = {
     #     2): CLString("Jack"), CLU8(4): CLString("Jane"), CLU8(1): CLString("Jill")}),
     "arg2": c
 }
+
 
 scheduling = TransactionScheduling()
 print("scheduling to_bytes()", scheduling.to_bytes().hex())
@@ -146,7 +147,7 @@ print("transaction_to_json:", json.dumps(transaction.to_json()))
 # 0400000061726732080000000103000000414243100a04
 # 01005f000000030000000000000000000100010000000200360000004500000001020000000000000000000100010000002100000000b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee601000000000000000000010000000002001e000000020000000000000000000100010000000a0000000105000000746573743203000f000000010000000000000000000100000000
 
-args = {}
+args = {"arg1": CLTuple2((CLString("hello"), CLBool(True)))}
 scheduling = TransactionScheduling()
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 pricing_mode = PricingMode("Classic", 200000000000)

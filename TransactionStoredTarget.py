@@ -3,7 +3,13 @@ from TransactionInvocationTarget import TransactionInvocationTarget
 from TransactionRuntime import TransactionRuntime
 from cl_number import CLU32, CLU8, CLBool
 
+from constants.cons_jsonname import JsonName
+from constants.const_runtime import RuntimeKind
 from table import CalltableSerialization
+
+
+JSONNAME = JsonName()
+RUNTIME = RuntimeKind()
 
 
 class TransactionStoredTarget:
@@ -20,10 +26,8 @@ class TransactionStoredTarget:
 # ok
     def to_json(self):
         result = {}
-        # result["Session"] = {"is_install_upgrade": self.is_install_upgrade,
-        #                      "module_bytes": self.module_bytes.hex(), "runtime": "VmCasperV1"}
-        result["Stored"] = {
+        result[JSONNAME.STORED] = {
             **self.id.to_json(),
-            "runtime": "VmCasperV1"
+            JSONNAME.RUNTIME: RUNTIME.VMCASPERV1
         }
         return result

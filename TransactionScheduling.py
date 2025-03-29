@@ -1,26 +1,36 @@
 from cl_number import CLU8
+from constants.cons_jsonname import JsonName
 from table import CalltableSerialization
+from constants.cons_scheduling import SchedulingKind
+
+CONST = SchedulingKind()
+VALID_ALLOWED_SCHEDULING = (CONST.STANDARD)
+
+JSONNAME = JsonName()
 
 
 class TransactionScheduling:
-    def __init__(self, schedule_mode="Standard"):
+    def __init__(self, schedule_mode: str = CONST.STANDARD):
+        if schedule_mode not in VALID_ALLOWED_SCHEDULING:
+            raise ValueError(
+                f"Invalid input: {schedule_mode}. Valid allowed values: {VALID_ALLOWED_SCHEDULING}")
         self.schedule_mode = schedule_mode
 
     def to_bytes(self):
         match self.schedule_mode:
-            case "Standard":
+            case CONST.STANDARD:
                 table = CalltableSerialization()
                 table.addField(0, int(0).to_bytes())
                 return table.to_bytes()
 
     def serialize(self):
         match self.schedule_mode:
-            case "Standard":
+            case CONST.STANDARD:
                 return CLU8(0).serialize()
 
     def to_json(self):
         result = {}
-        result["scheduling"] = self.schedule_mode
+        result[JSONNAME.SCHEDULING] = self.schedule_mode
         return result
 
 

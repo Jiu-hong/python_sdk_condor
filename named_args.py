@@ -3,7 +3,7 @@ from cl_number import CLU256, CLU32, CLBool
 from cl_result import CLResult
 from cl_string import CLString
 from cl_tuple import CLTuple1, CLTuple2
-from constants import RESULTHOLDER
+from constants.base import RESULTHOLDER
 
 
 class NamedArg:

@@ -1,6 +1,6 @@
 
 from cl_baseType import CLAtomic, CLValue
-from constants import TAG
+from constants.base import TAG
 
 
 class CLKey(CLValue, CLAtomic):

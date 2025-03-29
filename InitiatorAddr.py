@@ -4,7 +4,7 @@ from table import CalltableSerialization
 
 
 class InitiatorAddr:
-    def __init__(self, address):
+    def __init__(self, address: str):
         self.address = address
 
     def to_bytes(self):

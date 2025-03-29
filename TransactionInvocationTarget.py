@@ -6,64 +6,73 @@ from InvocableEntityTarget import InvocableEntityTarget
 from cl_number import CLU32, CLU8
 from cl_option import CLOption
 from cl_string import CLString
+from constants.cons_jsonname import JsonName
+from constants.const_Invocation import InvocationKind
 from table import CalltableSerialization
+
+CONST = InvocationKind()
+VALID_ALLOWED_INVOCATION = (
+    CONST.INVOCABLEENTITY, CONST.INVOCABLEENTITYALIAS, CONST.PACKAGE, CONST.PACKAGEALIAS)
+
+JSONNAME = JsonName()
 
 
 class TransactionInvocationTarget:
-    def __init__(self, *invocation_target):
-        self.invocation_target = invocation_target
-        print("invocation_target is:", invocation_target)
+    def __init__(self, invocation_kind: str, *args: str):
+        if invocation_kind not in VALID_ALLOWED_INVOCATION:
+            raise ValueError(
+                f"Invalid input: {invocation_kind}. Allowed values are: {VALID_ALLOWED_INVOCATION}")
+        self.invocation_kind = invocation_kind
+        self.args = args
 
     def to_bytes(self):
-        match self.invocation_target[0]:
-            case "InvocableEntity":
+        match self.invocation_kind:
+            case CONST.INVOCABLEENTITY:
                 table = CalltableSerialization()
                 table.addField(0, CLU8(0).serialize()).\
-                    addField(1, bytes.fromhex(self.invocation_target[1]))
+                    addField(1, bytes.fromhex(self.args[0]))
                 return table.to_bytes()
 
-            case "InvocableEntityAlias":
+            case CONST.INVOCABLEENTITYALIAS:
                 table = CalltableSerialization()
                 table.addField(0, CLU8(1).serialize()).\
                     addField(1, CLString(
-                        self.invocation_target[1]).serialize())
+                        *self.args).serialize())
                 return table.to_bytes()
 
-            case "Package":
-                print("self.invocation_target:", self.invocation_target)
+            case CONST.PACKAGE:
                 return ByPackageHashInvocationTarget(
-                    *self.invocation_target[1:]).to_bytes()
+                    *self.args).to_bytes()
 
-            case "PackageAlias":
+            case CONST.PACKAGEALIAS:
                 return ByPackageNameInvocationTarget(
-                    *self.invocation_target[1:]).to_bytes()
+                    *self.args).to_bytes()
 
-# ok
     def to_json(self):
         target = {}
         result = {}
-        match self.invocation_target[0]:
-            case "InvocableEntity":
+        match self.invocation_kind:
+            case CONST.INVOCABLEENTITY:
                 target = InvocableEntityTarget(
-                    self.invocation_target[1]).to_json()
+                    *self.args).to_json()
 
-            case "InvocableEntityAlias":
+            case CONST.INVOCABLEENTITYALIAS:
                 target = InvocableEntityAliasTarget(
-                    self.invocation_target[1]).to_json()
+                    *self.args).to_json()
 
-            case "Package":
+            case CONST.PACKAGE:
                 target = ByPackageHashInvocationTarget(
-                    *self.invocation_target[1:]).to_json()
+                    *self.args).to_json()
 
-            case "PackageAlias":
+            case CONST.PACKAGEALIAS:
                 target = ByPackageNameInvocationTarget(
-                    *self.invocation_target[1:]).to_json()
+                    *self.args).to_json()
 
         # result["Stored"] = {
         #     "id": target,
         #     "runtime": "VmCasperV1"
         # }
-        result["id"] = target
+        result[JSONNAME.ID] = target
         return result
 
 
@@ -77,8 +86,8 @@ class TransactionInvocationTarget:
         #     }
         # }
 
-# target = TransactionInvocationTarget(
-#     "InvocableEntity", "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
+target = TransactionInvocationTarget(
+    "InvocableEntity", "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
 # a = target.to_bytes()
 # # print("a is ", a.hex())
 # b = target.to_json()

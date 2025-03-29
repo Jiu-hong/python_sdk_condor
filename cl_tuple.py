@@ -2,7 +2,7 @@
 from cl_baseType import CLValue
 from cl_number import *
 from cl_string import CLString
-from constants import Length
+from constants.base import Length
 
 
 class CLTupleBase(CLValue):

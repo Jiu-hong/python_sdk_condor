@@ -4,7 +4,7 @@
 from cl_baseType import CLAtomic, CLValue
 from cl_exceptions import ExceptionCLNumber, ExceptionExceedMaxValue, ExceptionInvalidBoolValue
 from cl_string import CLString
-from constants import RESULTHOLDER, TAG
+from constants.base import RESULTHOLDER, TAG
 
 
 class CLNumber(CLValue, CLAtomic):

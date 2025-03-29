@@ -1,19 +1,24 @@
 from TransactionRuntime import TransactionRuntime
 from cl_number import CLU32, CLU8, CLBool
 
+from constants.cons_jsonname import JsonName
+from constants.const_runtime import RuntimeKind
 from table import CalltableSerialization
+
+JSONNAME = JsonName()
+
+RUNTIME = RuntimeKind()
 
 
 class TransactionSessionTarget:
-    def __init__(self, module_bytes, is_install_upgrade=False):
+    def __init__(self, module_bytes: str, is_install_upgrade: bool = False):
 
         self.module_bytes = bytes.fromhex(module_bytes)
         self.is_install_upgrade = is_install_upgrade
 
     def to_bytes(self):
-        # print("self:", self.module_bytes, self.is_install_upgrade)
+
         module_bytes_length = CLU32(len(self.module_bytes)).serialize()
-        print("module_bytes_length is:", module_bytes_length)
         table = CalltableSerialization()
         table.addField(0, int(2).to_bytes()).addField(
             1, CLBool(self.is_install_upgrade).serialize()).addField(
@@ -24,8 +29,8 @@ class TransactionSessionTarget:
 # ok
     def to_json(self):
         result = {}
-        result["Session"] = {"is_install_upgrade": self.is_install_upgrade,
-                             "module_bytes": self.module_bytes.hex(), "runtime": "VmCasperV1"}
+        result[JSONNAME.SESSION] = {JSONNAME.IS_INSTALL_UPGRADE: self.is_install_upgrade,
+                                    JSONNAME.MODULEBYTES: self.module_bytes.hex(), JSONNAME.RUNTIME: RUNTIME.VMCASPERV1}
         return result
 
 

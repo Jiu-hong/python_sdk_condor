@@ -4,47 +4,47 @@ from TransactionRuntime import TransactionRuntime
 from TransactionSessionTarget import TransactionSessionTarget
 from TransactionStoredTarget import TransactionStoredTarget
 from cl_number import CLU8
+
+
+from constants.cons_jsonname import JsonName
+from constants.cons_target import TargetKind
 from table import CalltableSerialization
+
+CONST = TargetKind()
+VALID_TARGETS = (CONST.NATIVE, CONST.STORED, CONST.SESSION)
+JSONNAME = JsonName()
 
 
 class TransactionTarget:
-    def __init__(self, target_kind, *kw):
+    def __init__(self, target_kind: str, *args):
+        if target_kind not in VALID_TARGETS:
+            raise ValueError(
+                f"Invalid input: {target_kind}. Allowed values are: {VALID_TARGETS}")
         self.target_kind = target_kind
-        self.kw = kw
+        self.args = args
 
     def to_bytes(self):
         match self.target_kind:
-            case "native":
+            case CONST.NATIVE:
                 table = CalltableSerialization()
                 table.addField(0, CLU8(0).serialize())
                 return table.to_bytes()
-            case "stored":
-                return TransactionStoredTarget(*self.kw).to_bytes()
-            case "session":
-                return TransactionSessionTarget(*self.kw).to_bytes()
+            case CONST.STORED:
+                return TransactionStoredTarget(*self.args).to_bytes()
+            case CONST.SESSION:
+                return TransactionSessionTarget(*self.args).to_bytes()
 
-    # def serialize(self):
-    #     # print("self.kw:", self.kw)
-
-    #     match self.target_kind:
-    #         case "native":
-    #             return CLU8(0).serialize()
-    #         case "stored":
-    #             return CLU8(1).serialize() + TransactionInvocationTarget(*self.kw).serialize() + TransactionRuntime().serialize()
-    #         case "session":
-    #             return CLU8(2).serialize() + TransactionSessionTarget(*self.kw).serialize() + TransactionRuntime().serialize()
-
-# ok
     def to_json(self):
         result = {}
         match self.target_kind:
-            case "native":
-                result["target"] = "Native"
-            case "stored":
-                result["target"] = TransactionStoredTarget(
-                    *self.kw).to_json()
-            case "session":
-                result["target"] = TransactionSessionTarget(*self.kw).to_json()
+            case CONST.NATIVE:
+                result[JSONNAME.TARGET] = JSONNAME.NATIVE
+            case CONST.STORED:
+                result[JSONNAME.TARGET] = TransactionStoredTarget(
+                    *self.args).to_json()
+            case CONST.SESSION:
+                result[JSONNAME.TARGET] = TransactionSessionTarget(
+                    *self.args).to_json()
 
         return result
 
@@ -59,3 +59,6 @@ class TransactionTarget:
 # print("target2 is:", target2.to_bytes().hex())
 
 # print("target json is:", target.to_json())
+# target = TransactionTarget("helo", "InvocableEntity",
+#                            "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
+# target

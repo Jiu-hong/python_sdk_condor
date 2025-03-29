@@ -1,18 +1,14 @@
-import json
 from cl_number import CLU32, CLU8
 from cl_option import CLOption
 from table import CalltableSerialization
 
 
 class ByPackageHashInvocationTarget:
-    def __init__(self, package_hash, version=None):
-        print("self.package_hash:", package_hash)
-        print("self.version:", version)
+    def __init__(self, package_hash: str, version: int = None):
         self.package_hash = package_hash  # hex string
         self.version = version
 
     def to_bytes(self):
-        # print("self.version:", self.version)
         table = CalltableSerialization()
 
         version_bytes = b''

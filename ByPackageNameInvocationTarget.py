@@ -7,7 +7,7 @@ from table import CalltableSerialization
 
 class ByPackageNameInvocationTarget:
 
-    def __init__(self, name, version=None):
+    def __init__(self, name: str, version: int = None):
         self.name = name  # string
         self.version = version
 

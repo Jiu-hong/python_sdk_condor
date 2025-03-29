@@ -15,12 +15,18 @@ from cl_publickey import CLPublicKey
 from cl_result import CLResult
 from cl_string import CLString
 from cl_tuple import CLTuple2
-from constants import RESULTHOLDER
+from constants.base import RESULTHOLDER
+from constants.cons_jsonname import JsonName
+from constants.const_prefix import AlgoKind
 from keys import get_pvk_from_pem_file, get_signature_from_pem_file
+
+JSONNAME = JsonName()
+
+PREFIX = AlgoKind()
 
 
 class TransactionV1:
-    def __init__(self, payload: TransactionV1Payload, keypath):
+    def __init__(self, payload: TransactionV1Payload, keypath: str):
         self.payload = payload
         self.keypath = keypath
 
@@ -31,24 +37,23 @@ class TransactionV1:
         return h.hexdigest()
 
     def to_json(self):
-        PREFIX_ED25519 = '01'
         transaction_hash = self.byteHash()
-        print("transaction_hash here:", transaction_hash)
-        sig = PREFIX_ED25519 + get_signature_from_pem_file(bytes.fromhex(
+        sig = PREFIX.ED25519 + get_signature_from_pem_file(bytes.fromhex(
             transaction_hash), self.keypath).hex()
         private_key = get_pvk_from_pem_file("secret_key.pem")
         ek25519KeyPair = ed25519.Ed25519PrivateKey.from_private_bytes(
             private_key)
-        signer_publickey = '01' + ek25519KeyPair.public_key().public_bytes_raw().hex()
+        signer_publickey = PREFIX.ED25519 + \
+            ek25519KeyPair.public_key().public_bytes_raw().hex()
         approval = {}
-        approval["signer"] = signer_publickey
-        approval["signature"] = sig
-        approvals = {"approvals": [approval]}
-        hash = {"hash": transaction_hash}
+        approval[JSONNAME.SIGNER] = signer_publickey
+        approval[JSONNAME.SIGNATURE] = sig
+        approvals = {JSONNAME.APPROVALS: [approval]}
+        hash = {JSONNAME.HASH: transaction_hash}
         payload = self.payload.to_json()
 
-        result = {"transaction": {
-            "Version1": {**hash, **payload, **approvals}}}
+        result = {JSONNAME.TRANSACTION: {
+            JSONNAME.VERSION1: {**hash, **payload, **approvals}}}
         return result
 
 
@@ -68,9 +73,11 @@ class TransactionV1:
 # print("transaction.hash:", transaction.byteHash())
 #
 # path = "/Users/jh/mywork/contract/accountaccess/contract/target/wasm32-unknown-unknown/release/contract.wasm"
-# f = open("wasm", "r")
+f = open("wasm", "r")
 # f = open(path, "r")
-# module_bytes = f.read()
+print("hello world==")
+module_bytes = f.read()
+print("type of module_bytes:", type(module_bytes))
 # target2 = TransactionTarget("session", module_bytes, True)
 # target1 = TransactionTarget("stored", "InvocableEntity",
 #                             "b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6")
@@ -138,3 +145,19 @@ print("transaction_to_json:", json.dumps(transaction.to_json()))
 # 0600000000000000000001003600000002003e00000003004600000004005a00000005008500000049010000020000000000000000000100010000002200000000017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f55d486fd09501000040771b000000000010000000696e746567726174696f6e2d746573740400000000000000000001000100000002000900000003000a0000000b0000000000f902950000000001010400000000001c0000000001000000
 # 0400000061726732080000000103000000414243100a04
 # 01005f000000030000000000000000000100010000000200360000004500000001020000000000000000000100010000002100000000b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee601000000000000000000010000000002001e000000020000000000000000000100010000000a0000000105000000746573743203000f000000010000000000000000000100000000
+
+args = {}
+scheduling = TransactionScheduling()
+initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
+pricing_mode = PricingMode("Classic", 200000000000)
+target1 = TransactionTarget("stored", "InvocableEntityAlias",
+                            "accesscontract")
+print("target1 to_bytes()", target1.to_bytes().hex())
+entrypoint1 = TransactionEntryPoint("Custom", "test2")
+
+payload = TransactionV1Payload(args, target1,
+                               entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
+
+transaction = TransactionV1(payload, "secret_key.pem")
+
+print("transaction_to_json1:", json.dumps(transaction.to_json()))

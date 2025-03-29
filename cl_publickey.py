@@ -2,7 +2,7 @@ import re
 
 from cl_baseType import CLAtomic, CLValue
 from cl_util import deep_value_v2
-from constants import TAG, CLTypeName
+from constants.base import TAG
 
 
 class CLPublicKey(CLValue, CLAtomic):

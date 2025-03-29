@@ -1,5 +1,5 @@
 import cl_util
-from constants import TAG, CLTypeName
+from bk_constants import TAG, CLTypeName
 
 
 class CLValue(object):

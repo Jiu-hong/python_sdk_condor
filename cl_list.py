@@ -6,7 +6,7 @@ from cl_number import CLU256, CLU32, CLU64
 from cl_string import CLString
 from cl_tuple import CLTuple2
 from cl_util import deep_value_v2
-from constants import TAG
+from constants.base import TAG
 
 
 class CLList(CLValue):

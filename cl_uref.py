@@ -1,6 +1,6 @@
 from cl_baseType import CLAtomic, CLValue
 from cl_util import deep_v2
-from constants import TAG
+from constants.base import TAG
 
 
 class CLURef(CLValue, CLAtomic):

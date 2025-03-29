@@ -1,5 +1,4 @@
 from datetime import datetime, timezone
-import json
 from InitiatorAddr import InitiatorAddr
 from PayloadFields import PayloadFields
 from PricingMode import PricingMode
@@ -9,13 +8,15 @@ from TransactionTarget import TransactionTarget
 from cl_number import CLU32, CLU64, CLU8
 from cl_string import CLString
 
+from constants.cons_jsonname import JsonName
 from named_args import NamedArg
 from table import CalltableSerialization
 
+JSONNAME = JsonName()
+
 
 class TransactionV1Payload:
-    def __init__(self, args: list, transactionTarget, entrypoint, scheduling, initiatorAddr,  pricing_mode: PricingMode, chainName, ttl=30, now=datetime.now(timezone.utc)):
-        print("args in TransactionV1Payload:", args)
+    def __init__(self, args: list, transactionTarget: TransactionTarget, entrypoint: TransactionEntryPoint, scheduling: TransactionScheduling, initiatorAddr: str,  pricing_mode: PricingMode, chainName: str, ttl=30, now=datetime.now(timezone.utc)):
         self.initiatorAddr = initiatorAddr
         self.ttl = ttl
         self.pricingMode = pricing_mode
@@ -25,26 +26,15 @@ class TransactionV1Payload:
             args, transactionTarget, entrypoint, scheduling)
 
     def to_bytes(self):
-        # runtime_arg
-        offset = 0
         runtimeArgsBuffer = CLU8(0).serialize()
-        offset += 1
-        print("self.fields.args is:", self.fields.args)
+
         runtimeArgsBuffer = runtimeArgsBuffer + \
             CLU32(len(self.fields.args)).serialize()
 
-        offset += 4
-        # print("self.fields.args.items() is: ", self.fields.args.items())
         for name, value in self.fields.args.items():
             named_arg = NamedArg(name, value)
-
             arg_bytes = named_arg.to_byte_with_named_arg()
-            print("name:", name)
-            print("arg_bytes is:", arg_bytes.hex())
-
             runtimeArgsBuffer = runtimeArgsBuffer + arg_bytes
-
-            offset += len(arg_bytes)
 
         lenth_runtimeArgsBuffer = CLU32(
             len(runtimeArgsBuffer)).serialize()
@@ -55,7 +45,6 @@ class TransactionV1Payload:
 
         # target
         targetBytes = self.fields.target.to_bytes()
-        # print("targetBytes is:", targetBytes.hex())
 
         length_targetBytes = CLU32(
             len(targetBytes)).serialize()
@@ -75,7 +64,6 @@ class TransactionV1Payload:
 
         # schedulingBytes
         schedulingBytes = self.fields.scheduling.to_bytes()
-        # print("schedulingBytes is:", schedulingBytes.hex())
 
         length_schedulingBytes = CLU32(
             len(schedulingBytes)).serialize()
@@ -99,26 +87,20 @@ class TransactionV1Payload:
         #     addField(3, CLString(self.chainName).serialize()). \
         #     addField(4, self.pricingMode.to_bytes()). \
         #     addField(5, self.fields.to_bytes())
-        fields = self.fields.to_bytes()
-        # print("fields are:", fields.hex())
-        u = self.pricingMode.to_bytes()
-        print("pricingMode is:", u.hex())
-        # t = CLU64(int(datetime.fromisoformat(
-        #     '2025-03-26T03:11:48.829Z').timestamp() * 1000)).serialize()
-        # print("time is:", t.hex())
+
         return table.to_bytes()
 
     def to_json(self):
         result = {}
         initiator_addr = InitiatorAddr(
             self.initiatorAddr).to_json()
-        timestamp = {"timestamp": self.time.replace(
+        timestamp = {JSONNAME.TIMESTAMP: self.time.replace(
             tzinfo=None).isoformat(timespec='milliseconds')+"Z"}
-        ttl = {"ttl": str(self.ttl)+'m'}
-        chain_name = {"chain_name": self.chainName}
+        ttl = {JSONNAME.TTL: str(self.ttl)+'m'}
+        chain_name = {JSONNAME.CHAIN_NAME: self.chainName}
         pricing_mode = self.pricingMode.to_json()
         fields = self.fields.to_json()
-        result["payload"] = {
+        result[JSONNAME.PAYLOAD] = {
             **initiator_addr, **timestamp, **ttl, **chain_name, **pricing_mode, **fields
         }
         return result

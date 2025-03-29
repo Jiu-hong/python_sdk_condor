@@ -4,7 +4,7 @@ import cl_list
 from cl_number import CLU8
 from cl_string import CLString
 from cl_tuple import CLTuple2
-from constants import TAG
+from constants.base import TAG
 
 
 class CLMap(CLValue):

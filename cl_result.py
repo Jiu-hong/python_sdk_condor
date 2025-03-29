@@ -7,7 +7,7 @@ from cl_number import CLU32, CLU64, CLU8, CLBool
 from cl_option import CLOption
 from cl_string import CLString
 from cl_tuple import CLTuple2
-from constants import RESULTHOLDER, TAG, CLTypeName
+from constants.base import RESULTHOLDER, TAG
 
 
 class CLResult(CLValue):
@@ -36,7 +36,7 @@ class CLResult(CLValue):
 
 
 a1 = CLResult(Ok(CLOption(CLTuple2((CLString("hello"), CLU64(123))))),
-              Err(CLString(RESULTHOLDER())), True)
+              Err(CLString("1")), True)
 print("a1 value()", a1.to_json())
 # a2 = CLResult(Ok(CLOption(CLTuple2((CLString(RESULTHOLDER()), CLU64(123))))),
 #               Err(CLString(CLString("error Hello"))), False)

@@ -1,9 +1,19 @@
 from cl_number import CLU8
+from constants.cons_jsonname import JsonName
+from constants.const_runtime import RuntimeKind
 from table import CalltableSerialization
+
+CONST = RuntimeKind()
+VALID_ALLOWED_RUNTIME = (CONST.VMCASPERV1)
+
+JSONNAME = JsonName()
 
 
 class TransactionRuntime:
-    def __init__(self, runtime="VmCasperV1"):
+    def __init__(self, runtime: str = CONST.VMCASPERV1):
+        if runtime not in VALID_ALLOWED_RUNTIME:
+            raise ValueError(
+                f"Invalid input {runtime}. Allowed values are: {VALID_ALLOWED_RUNTIME}")
         self.runtime = runtime
 
     def to_bytes(self):
@@ -16,7 +26,7 @@ class TransactionRuntime:
 
     def to_json(self):
         result = {}
-        result["runtime"] = self.runtime
+        result[JSONNAME.RUNTIME] = self.runtime
         return result
 
 

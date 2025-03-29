@@ -5,7 +5,7 @@ from table import CalltableSerialization
 
 
 class InvocableEntityAliasTarget:
-    def __init__(self, contract_name):
+    def __init__(self, contract_name: str):
         self.contract_name = contract_name
 
     def to_bytes(self):

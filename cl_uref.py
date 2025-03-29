@@ -6,25 +6,26 @@ from constants.base import TAG
 class CLURef(CLValue, CLAtomic):
     tag = TAG.CLURef.value
 
+    def __init__(self, data):
+        # self.data = data
+        temp = data.split('-')
+        if temp[0] != 'uref':
+            # prefix should be uref
+            raise ValueError(
+                f"Input prefix is {temp[0]}. Expected prefix is 'uref'.")
+        if len(temp[1]) != 64:
+            # length is incorrect
+            raise ValueError(
+                f"Input length is {len(temp[1])}. Expected length is 64")
+        if int(temp[2]) < 7 or int(temp[2]) < 0:
+            # access right should be 0-7
+            raise ValueError(
+                f"Input access right is {temp[2]}. Expected access right should be between 0-7")
+        super().__init__(data)
+
     def serialize(self):
         temp = self.data.split('-')
-        if temp[0] != 'uref':
-            raise  # prefix should be uref
-
-        if len(temp[1]) != 64:
-            raise  # length is incorrect
-        if int(temp[2]) < 7 or int(temp[2]) < 0:
-            raise  # access right should be 0-7
-        return temp[1]+'0' + str(int(temp[2]))
-
-    def cl_value(self):
-
-        content = self.serialize()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
+        return bytes.fromhex(temp[1]) + int(temp[2]).to_bytes(1, "little")
 
 
 # {

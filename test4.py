@@ -43,13 +43,10 @@ out = twos_comp(int(hex_string, 16), 256)
 print("out:", out)
 x = 123
 
-v = x.to_bytes(x.bit_length(), byteorder='little')
-print("v is:", v.hex())
-b = CLU256(123)
-print("b to_json:", b.to_json())
-print("type:", type(b))
-print(b.serialize().hex())
-c = CLU512(123)
-print("c to_json:", c.to_json())
-print("type:", type(c))
-print(c.serialize().hex())
+
+a = "fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f"
+b = bytes.fromhex(a)
+print("b is:", b.hex())
+c = int(7).to_bytes(1, "little")
+d = (b+c).hex()
+print("d is:", d)

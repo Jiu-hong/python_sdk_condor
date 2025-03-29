@@ -2,6 +2,7 @@ from hashlib import blake2b
 import json
 from cryptography.hazmat.primitives.asymmetric import ed25519
 from result import Err, Ok
+from cl_uref import CLURef
 from pricing_mode import PricingMode
 from transaction_entry_point import TransactionEntryPoint
 from transaction_scheduling import TransactionScheduling
@@ -14,7 +15,7 @@ from cl_option import CLOption
 from cl_publickey import CLPublicKey
 from cl_result import CLResult
 from cl_string import CLString
-from cl_tuple import CLTuple1, CLTuple2
+from cl_tuple import CLTuple1, CLTuple2, CLTuple3
 from constants.base import RESULTHOLDER
 from constants.cons_jsonname import JsonName
 from constants.const_prefix import AlgoKind
@@ -147,7 +148,8 @@ print("transaction_to_json:", json.dumps(transaction.to_json()))
 # 0400000061726732080000000103000000414243100a04
 # 01005f000000030000000000000000000100010000000200360000004500000001020000000000000000000100010000002100000000b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee601000000000000000000010000000002001e000000020000000000000000000100010000000a0000000105000000746573743203000f000000010000000000000000000100000000
 
-args = {"arg1": CLTuple2((CLString("hello"), CLBool(True)))}
+args = {"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
+    "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007")))}
 scheduling = TransactionScheduling()
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 pricing_mode = PricingMode("Classic", 200000000000)

@@ -14,8 +14,6 @@ class CLString(CLValue, CLAtomic):
 
     def serialize(self):
         content = bytearray(self.data, encoding="utf-8")
-        # bytes_len_hex = '{:02x}'.format(
-        #     int(len(content) / 2)).ljust(8, '0')
         bytes_len = int(len(content)).to_bytes(4, byteorder='little')
         return bytes_len+content
 

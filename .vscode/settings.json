@@ -1,0 +1,7 @@
+{
+    "python.analysis.extraPaths": [
+        "./keys",
+        "./cl_values",
+        "./packages/src"
+    ]
+}

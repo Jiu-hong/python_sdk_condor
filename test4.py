@@ -1,4 +1,4 @@
-from cl_number import CLU256, CLU512
+from python_condor import CLU256, CLU512
 
 
 def myfunc(*a: str) -> bytes:
@@ -50,3 +50,16 @@ print("b is:", b.hex())
 c = int(7).to_bytes(1, "little")
 d = (b+c).hex()
 print("d is:", d)
+
+a = [("a", 1), ("b", 2)]
+for (x, y) in a:
+    print(x, type(x))
+    print(y, type(y))
+
+a = CLU256(1)
+print("a is:", a.to_json())
+print("a is:", a.serialize())
+
+b = CLU512(2)
+print("B is:", b.to_json())
+print("b is:", b.cl_value())

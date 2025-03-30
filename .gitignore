@@ -3,3 +3,11 @@ bk
 **bk**
 wasm
 contract
+dist
+.vscode
+ok*
+note*
+*json
+output**
+*pem
+test*

@@ -1,8 +1,8 @@
+from .call_table_serialization import CalltableSerialization
 from .cl_values import CLU8, CLString
 
-from .constants import JsonName
-from .constants import EntryPointKind
-from .call_table_serialization import CalltableSerialization
+from .constants import EntryPointKind, JsonName
+
 
 ENTYPOINT = EntryPointKind()
 VALID_ALLOWD_ENTRY_POINTS = (

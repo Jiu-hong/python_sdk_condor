@@ -7,5 +7,5 @@ class SchedulingKind(object):
         return "Standard"
 
 
-CONST = SchedulingKind()
-print(CONST.STANDARD)
+# CONST = SchedulingKind()
+# print(CONST.STANDARD)

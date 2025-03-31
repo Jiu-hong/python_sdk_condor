@@ -1,8 +1,9 @@
 from .by_package_hash_invocation_target import ByPackageHashInvocationTarget
 from .by_package_name_invocation_target import ByPackageNameInvocationTarget
+from .cl_values import CLU8, CLString
 from .invocable_entity_alias_target import InvocableEntityAliasTarget
 from .invocable_entity_target import InvocableEntityTarget
-from .cl_values import CLU32, CLU8, CLOption, CLString
+
 
 from .constants import JsonName, InvocationKind
 
@@ -84,9 +85,9 @@ class TransactionInvocationTarget:
         #     }
         # }
 
-target = TransactionInvocationTarget(
-    "InvocableEntity", "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
-# a = target.to_bytes()
+# target = TransactionInvocationTarget(
+#     "InvocableEntity", "cc7a90c16cbecf53a09a8d7f76ccd2ed167da89e04d4edcca0eda2301de87b56")
+# # a = target.to_bytes()
 # # print("a is ", a.hex())
 # b = target.to_json()
 # print("b is: ", json.dumps(b))

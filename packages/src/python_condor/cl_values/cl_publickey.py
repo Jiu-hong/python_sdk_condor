@@ -1,6 +1,6 @@
 import re
 
-from .cl_baseType import CLAtomic, CLValue
+from .cl_basetype import CLAtomic, CLValue
 from ..constants import TAG
 
 
@@ -27,11 +27,11 @@ class CLPublicKey(CLValue, CLAtomic):
     #     return bytes_len_hex + content + tag
 
 
-a = CLPublicKey(
-    "0119bf44096984cdfe8541bac167dc3b96c85086aa30b6b6cb0c5c38ad703166e1")
-b = a.to_json()
-print("b is:", b)
-print("b is:", a.cl_value())
+# a = CLPublicKey(
+#     "0119bf44096984cdfe8541bac167dc3b96c85086aa30b6b6cb0c5c38ad703166e1")
+# b = a.to_json()
+# print("b is:", b)
+# print("b is:", a.cl_value())
 # print(a.serialize())
 # print(a)
 # print(a.cl_value())

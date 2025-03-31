@@ -8,6 +8,7 @@ from cryptography.hazmat.primitives.asymmetric import ed25519
 
 # Length of ED25519 private key in bytes.
 _PVK_LENGTH = 32
+
 _ED25519_PREFIX = int(1).to_bytes()
 
 

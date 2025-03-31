@@ -1,19 +1,8 @@
 from hashlib import blake2b
-import json
-from cryptography.hazmat.primitives.asymmetric import ed25519
-from result import Err, Ok
-from .cl_values import CLURef, CLMap, CLList, CLU32, CLU512, CLU64, CLU8, CLBool, CLOption, CLString, CLResult, CLTuple1, CLTuple2, CLTuple3, CLPublicKey
 
-
+from .constants import JsonName, AlgoKind
 from .keys import KeyAlgorithm, get_key_pair_from_pem_file, get_signature
-
-from .pricing_mode import PricingMode
-from .transaction_entry_point import TransactionEntryPoint
-from .transaction_scheduling import TransactionScheduling
-from .transaction_target import TransactionTarget
 from .transaction_v1_payload import TransactionV1Payload
-
-from .constants import RESULTHOLDER, JsonName, AlgoKind
 
 
 JSONNAME = JsonName()
@@ -106,39 +95,39 @@ class TransactionV1:
 #         }
 # args = {"arg1": CLList([CLOption(CLU32(1)), CLOption(
 #     CLU32(2)), CLOption(CLU32(3)), CLOption(CLU32(3)), CLOption(CLU32(3))])}
-arg2 = CLResult(
-    Ok(CLString("ABC")), Err(CLU32(RESULTHOLDER())), True)
-a1 = CLResult(Ok(CLOption(CLTuple2((CLString("hello"), CLU512(123))))),
-              Err(CLString(RESULTHOLDER())), True)
-a2 = CLResult(Ok(CLOption(CLTuple2((CLString(RESULTHOLDER()), CLU512(123))))),
-              Err(CLString("error Hello")), False)
-a3 = CLResult(Ok(CLOption(CLTuple2((CLString("world"), CLU512(123))))),
-              Err(CLString(RESULTHOLDER())), True)
+# arg2 = CLResult(
+#     Ok(CLString("ABC")), Err(CLU32(RESULTHOLDER())), True)
+# a1 = CLResult(Ok(CLOption(CLTuple2((CLString("hello"), CLU512(123))))),
+#               Err(CLString(RESULTHOLDER())), True)
+# a2 = CLResult(Ok(CLOption(CLTuple2((CLString(RESULTHOLDER()), CLU512(123))))),
+#               Err(CLString("error Hello")), False)
+# a3 = CLResult(Ok(CLOption(CLTuple2((CLString("world"), CLU512(123))))),
+#               Err(CLString(RESULTHOLDER())), True)
 
-c = CLList([a1, a2, a3])
-args = {
-    # "arg1": CLMap({CLU8(3): CLString("Jim"), CLU8(
-    #     2): CLString("Jack"), CLU8(4): CLString("Jane"), CLU8(1): CLString("Jill")}),
-    "arg2": c
-}
+# c = CLList([a1, a2, a3])
+# args = {
+#     # "arg1": CLMap({CLU8(3): CLString("Jim"), CLU8(
+#     #     2): CLString("Jack"), CLU8(4): CLString("Jane"), CLU8(1): CLString("Jill")}),
+#     "arg2": c
+# }
 
 
-scheduling = TransactionScheduling()
-print("scheduling to_bytes()", scheduling.to_bytes().hex())
-initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
-# initiatorAddr = "0203b3eb6ae40e21a9436b956aa8a3af5b7336340cfc6ec035db7aec6a4ff1cda22f"
-pricing_mode = PricingMode("Classic", 2500000000)
-print("pricing_mode to_bytes():", pricing_mode.to_bytes().hex())
+# scheduling = TransactionScheduling()
+# print("scheduling to_bytes()", scheduling.to_bytes().hex())
+# initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
+# # initiatorAddr = "0203b3eb6ae40e21a9436b956aa8a3af5b7336340cfc6ec035db7aec6a4ff1cda22f"
+# pricing_mode = PricingMode("Classic", 2500000000)
+# print("pricing_mode to_bytes():", pricing_mode.to_bytes().hex())
 
-target1 = TransactionTarget("VmCasperV1", "stored", "InvocableEntity",
-                            "b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6")
-print("target1 to_bytes()", target1.to_bytes().hex())
-entrypoint1 = TransactionEntryPoint("Custom", "test2")
-print("entrypoint1 bytes is:", entrypoint1.to_bytes().hex())
+# target1 = TransactionTarget("VmCasperV1", "stored", "InvocableEntity",
+#                             "b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6")
+# print("target1 to_bytes()", target1.to_bytes().hex())
+# entrypoint1 = TransactionEntryPoint("Custom", "test2")
+# print("entrypoint1 bytes is:", entrypoint1.to_bytes().hex())
 
-payload = TransactionV1Payload(args, target1,
-                               entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
-# print("payload bytes is:", payload.to_bytes().hex())
+# payload = TransactionV1Payload(args, target1,
+#                                entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
+# # print("payload bytes is:", payload.to_bytes().hex())
 
 # transaction = TransactionV1(
 #     payload, [("secret_key.pem", KeyAlgorithm.ED25519)])
@@ -155,18 +144,18 @@ payload = TransactionV1Payload(args, target1,
 # 0400000061726732080000000103000000414243100a04
 # 01005f000000030000000000000000000100010000000200360000004500000001020000000000000000000100010000002100000000b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee601000000000000000000010000000002001e000000020000000000000000000100010000000a0000000105000000746573743203000f000000010000000000000000000100000000
 
-args = {"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
-    "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007")))}
-scheduling = TransactionScheduling()
-initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
-pricing_mode = PricingMode("Classic", 200000000000)
-target1 = TransactionTarget("VmCasperV1", "stored", "InvocableEntityAlias",
-                            "accesscontract")
-print("target1 to_bytes()", target1.to_bytes().hex())
-entrypoint1 = TransactionEntryPoint("Custom", "test2")
+# args = {"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
+#     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007")))}
+# scheduling = TransactionScheduling()
+# initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
+# pricing_mode = PricingMode("Classic", 200000000000)
+# target1 = TransactionTarget("VmCasperV1", "stored", "InvocableEntityAlias",
+#                             "accesscontract")
+# print("target1 to_bytes()", target1.to_bytes().hex())
+# entrypoint1 = TransactionEntryPoint("Custom", "test2")
 
-payload = TransactionV1Payload(args, target1,
-                               entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
+# payload = TransactionV1Payload(args, target1,
+#                                entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
 
 # transaction = TransactionV1(payload, "secret_key.pem")
 

@@ -15,5 +15,5 @@ class TargetKind(object):
         return "session"
 
 
-CONST = TargetKind()
-print(CONST.NATIVE)
+# CONST = TargetKind()
+# print(CONST.NATIVE)

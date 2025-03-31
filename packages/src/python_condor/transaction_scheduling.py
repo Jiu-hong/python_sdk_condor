@@ -1,6 +1,6 @@
-from .cl_values import CLU8
-from .constants import JsonName, SchedulingKind
 from .call_table_serialization import CalltableSerialization
+from .cl_values import CLU8
+from .constants import SchedulingKind, JsonName
 
 CONST = SchedulingKind()
 VALID_ALLOWED_SCHEDULING = (CONST.STANDARD)
@@ -33,6 +33,6 @@ class TransactionScheduling:
         return result
 
 
-scheduling = TransactionScheduling()
-# print("scheduleing is: ", scheduling.to_bytes().hex())
-print("here")
+# scheduling = TransactionScheduling()
+# # print("scheduleing is: ", scheduling.to_bytes().hex())
+# print("here")

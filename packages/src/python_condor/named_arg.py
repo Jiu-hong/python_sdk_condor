@@ -1,7 +1,4 @@
-from result import Err, Ok
-from .cl_values import CLU256, CLU32, CLBool, CLResult, CLString, CLTuple1
-
-from .constants import RESULTHOLDER
+from .cl_values import CLString
 
 
 class NamedArg:
@@ -24,13 +21,13 @@ class NamedArg:
         return self.name, my_dict
 
 
-a = NamedArg("tuple1", CLTuple1(CLBool(False),))
-# tuple1: CLValue.newCLTuple1(CLValue.newCLValueBool(false)),
-b = a.to_byte_with_named_arg()
+# a = NamedArg("tuple1", CLTuple1(CLBool(False),))
+# # tuple1: CLValue.newCLTuple1(CLValue.newCLValueBool(false)),
+# b = a.to_byte_with_named_arg()
 
-c = NamedArg("arg2", CLResult(
-    Ok(CLString("ABC")), Err(CLU32(RESULTHOLDER())), True))
-d = c.to_byte_with_named_arg()
+# c = NamedArg("arg2", CLResult(
+#     Ok(CLString("ABC")), Err(CLU32(RESULTHOLDER())), True))
+# d = c.to_byte_with_named_arg()
 # print("d is:", d.hex())
 # print("b is:", b.hex())
 # print("json_value:", json.dumps(a.to_json()))

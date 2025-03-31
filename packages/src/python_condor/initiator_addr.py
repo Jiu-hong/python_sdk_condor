@@ -1,6 +1,5 @@
-from .cl_values import CLU8
-from .cl_values import CLPublicKey
 from .call_table_serialization import CalltableSerialization
+from .cl_values import CLPublicKey, CLU8
 
 
 class InitiatorAddr:
@@ -23,7 +22,7 @@ class InitiatorAddr:
         return result
 
 
-initiator_addr = InitiatorAddr(
-    "01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61")
-a = initiator_addr.to_bytes()
+# initiator_addr = InitiatorAddr(
+#     "01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61")
+# a = initiator_addr.to_bytes()
 # print("a is:", a.hex())

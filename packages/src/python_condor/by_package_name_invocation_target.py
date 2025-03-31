@@ -1,6 +1,5 @@
-from .cl_values import CLU32, CLU8, CLOption, CLString
-
 from .call_table_serialization import CalltableSerialization
+from .cl_values import CLU32, CLU8, CLOption, CLString
 from .constants import JsonName
 
 
@@ -45,5 +44,5 @@ class ByPackageNameInvocationTarget:
         # }
 
 
-a = ByPackageNameInvocationTarget("my_hash")
+# a = ByPackageNameInvocationTarget("my_hash")
 # print(a.to_json())

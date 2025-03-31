@@ -1,5 +1,5 @@
-from .cl_values import CLU64, CLU8, CLBool
 from .call_table_serialization import CalltableSerialization
+from .cl_values import CLBool, CLU8, CLU64
 from .constants import JsonName
 
 JSONNAME = JsonName()
@@ -30,6 +30,6 @@ class PaymentLimited:
         return result
 
 
-payment_limit = PaymentLimited(123, 1, True)
-a = payment_limit.to_bytes()
+# payment_limit = PaymentLimited(123, 1, True)
+# a = payment_limit.to_bytes()
 # print("a is:", a.hex())

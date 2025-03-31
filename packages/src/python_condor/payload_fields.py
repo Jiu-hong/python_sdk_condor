@@ -1,11 +1,11 @@
 # to_bytes to do
 from hashlib import blake2b
-from .transaction_entry_point import TransactionEntryPoint
-from .transaction_scheduling import TransactionScheduling
-from .transaction_target import TransactionTarget
-from .cl_values import CLU16, CLU32, CLU8, CLString
+from .cl_values import CLU16, CLU32
 from .constants import JsonName
 from .named_arg import NamedArg
+from .transaction_entry_point import TransactionEntryPoint
+from .transaction_target import TransactionTarget
+
 
 JSONNAME = JsonName()
 

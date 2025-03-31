@@ -1,13 +1,10 @@
-# https://docs.python.org/3/library/stdtypes.html#bytes
-
-
-from .cl_baseType import CLAtomic, CLValue
-from ..exceptions import ExceptionExceedMaxValue
-
+from .cl_basetype import CLAtomic, CLValue
 from ..constants import RESULTHOLDER, TAG
+from ..exceptions import ExceptionExceedMaxValue
 
 
 class CLNumber(CLValue, CLAtomic):
+
     def __init__(self, data):
         if not isinstance(data, int) and not isinstance(data, RESULTHOLDER):
             raise TypeError(
@@ -46,6 +43,14 @@ class CLI32(CLNumber):
     maxvalue = 2**31-1
     tag = TAG.CLI32.value
 
+    def __init__(self, data):
+        # not check resultholder
+        if isinstance(data, int):
+            if data > CLI32.maxvalue or data < CLI32.minvalue:
+                raise ValueError(
+                    f"The inner value for the number should be {CLI32.minvalue} - {CLI32.maxvalue}")
+        super().__init__(data)
+
     def serialize(self):
         if CLI32.minvalue <= self.data <= CLI32.maxvalue:
             return (self.data).to_bytes(4, byteorder='little', signed=True)
@@ -64,6 +69,14 @@ class CLI64(CLNumber):
     maxvalue = 2**63-1
     tag = TAG.CLI64.value
 
+    def __init__(self, data):
+        # not check resultholder
+        if isinstance(data, int):
+            if data > CLI64.maxvalue or data < CLI64.minvalue:
+                raise ValueError(
+                    f"The inner value for the number should be {CLI64.minvalue} - {CLI64.maxvalue}")
+        super().__init__(data)
+
     def serialize(self):
         if CLI64.minvalue <= self.data <= CLI64.maxvalue:
             return (self.data).to_bytes(8, byteorder='little', signed=True)
@@ -78,6 +91,14 @@ class CLI64(CLNumber):
 class CLU8(CLNumber):
     maxvalue = 2**8-1
     tag = TAG.CLU8.value
+
+    def __init__(self, data):
+        # not check resultholder
+        if isinstance(data, int):
+            if data > CLU8.maxvalue or data < 0:
+                raise ValueError(
+                    f"The inner value for the number should be 0 - {CLU8.maxvalue}")
+        super().__init__(data)
 
     def serialize(self):
         if 0 <= self.data <= CLU8.maxvalue:
@@ -94,6 +115,12 @@ class CLU8(CLNumber):
 class CLU16(CLNumber):
     maxvalue = 2**16-1
 
+    def __init__(self, data):
+        if data > CLU16.maxvalue or data < 0:
+            raise ValueError(
+                f"The inner value for the number should be 0 - {CLU16.maxvalue}")
+        super().__init__(data)
+
     def serialize(self):
         if 0 <= self.data <= CLU16.maxvalue:
             # return (self.data).to_bytes(2, byteorder='little').hex()
@@ -105,6 +132,14 @@ class CLU16(CLNumber):
 class CLU32(CLNumber):
     maxvalue = 2**32-1
     tag = TAG.CLU32.value
+
+    def __init__(self, data):
+        # not check resultholder
+        if isinstance(data, int):
+            if data > CLU32.maxvalue or data < 0:
+                raise ValueError(
+                    f"The inner value for the number should be 0 - {CLU32.maxvalue}")
+        super().__init__(data)
 
     def serialize(self):
         if 0 <= self.data <= CLU32.maxvalue:
@@ -124,6 +159,14 @@ class CLU32(CLNumber):
 class CLU64(CLNumber):
     maxvalue = 2**64-1
     tag = TAG.CLU64.value
+
+    def __init__(self, data):
+        # not check resultholder
+        if isinstance(data, int):
+            if data > CLU64.maxvalue or data < 0:
+                raise ValueError(
+                    f"The inner value for the number should be 0 - {CLU64.maxvalue}")
+        super().__init__(data)
 
     def serialize(self):
         if 0 <= self.data <= CLU64.maxvalue:
@@ -186,31 +229,46 @@ class CLBigNumber(CLNumber):
         return bytes.fromhex(bytes_len_hex+m_bytes)
 
 
-class CLU512(CLBigNumber):
-    # u512 max value - class attribute
-    maxvalue = 2**512-1
-    tag = TAG.CLU512.value
+class CLU128(CLBigNumber):
+    maxvalue = 2**128-1
+    tag = TAG.CLU128.value
+
+    def __init__(self, data):
+        # not check resultholder
+        if isinstance(data, int):
+            if data > CLU128.maxvalue or data < 0:
+                raise ValueError(
+                    f"The inner value for the number should be 0 - {CLU128.maxvalue}")
+        super().__init__(data)
 
     def serialize(self):
-        if 0 <= self.data <= CLU512.maxvalue:
+
+        if 0 <= self.data <= CLU128.maxvalue:
             return super().serialize()
         else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU512")
+            raise ExceptionExceedMaxValue(str(self.data), "CLU128")
 
+# # ite = CLBigNumber('123456789101112131415')
+# # print(ite.serialize())
 
-# a = CLU512("1000000000000000000000000")
+    # def to_json(self):
+    #     return "U128"
+# a = CLU128(123)
 # print(a.to_json())
-# print(a.serialize())
-# print(a)
-# print("cl_value:", a.cl_value())
-# a = CLU512(str(7))
-# print(a.serialize())
 
 
 class CLU256(CLBigNumber):
     # u256 max value - class attribute
     maxvalue = 2**256-1
     tag = TAG.CLU256.value
+
+    def __init__(self, data):
+        # not check resultholder
+        if isinstance(data, int):
+            if data > CLU256.maxvalue or data < 0:
+                raise ValueError(
+                    f"The inner value for the number should be 0 - {CLU256.maxvalue}")
+        super().__init__(data)
 
     def serialize(self):
         if 0 <= self.data <= CLU256.maxvalue:
@@ -229,25 +287,33 @@ class CLU256(CLBigNumber):
 # a = CLU256("2500000000")
 # print("serialize cl_value:", a.cl_value())
 
+class CLU512(CLBigNumber):
+    # u512 max value - class attribute
+    maxvalue = 2**512-1
+    tag = TAG.CLU512.value
 
-class CLU128(CLBigNumber):
-    maxvalue = 2**128-1
-    tag = TAG.CLU128.value
+    def __init__(self, data):
+        # not check resultholder
+        if isinstance(data, int):
+            if data > CLU512.maxvalue or data < 0:
+                raise ValueError(
+                    f"The inner value for the number should be 0 - {CLU512.maxvalue}")
+        super().__init__(data)
 
     def serialize(self):
-
-        if 0 <= self.data <= CLU128.maxvalue:
+        if 0 <= self.data <= CLU512.maxvalue:
             return super().serialize()
         else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU128")
+            raise ExceptionExceedMaxValue(str(self.data), "CLU512")
 
-# # ite = CLBigNumber('123456789101112131415')
-# # print(ite.serialize())
 
-    # def to_json(self):
-    #     return "U128"
-# a = CLU128(123)
+# a = CLU512("1000000000000000000000000")
 # print(a.to_json())
+# print(a.serialize())
+# print(a)
+# print("cl_value:", a.cl_value())
+# a = CLU512(str(7))
+# print(a.serialize())
 
 
 # a = CLU32(123)

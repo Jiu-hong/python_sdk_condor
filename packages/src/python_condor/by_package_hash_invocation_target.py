@@ -1,6 +1,5 @@
-from .cl_values import CLU32, CLU8, CLOption
-
 from .call_table_serialization import CalltableSerialization
+from .cl_values import CLU32, CLU8, CLOption
 from .constants import JsonName
 
 

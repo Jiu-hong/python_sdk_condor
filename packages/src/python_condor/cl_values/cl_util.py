@@ -1,5 +1,6 @@
 from result import Err, Ok
-import python_condor.cl_values.cl_baseType as cl_baseType
+import python_condor.cl_values.cl_basetype as cl_baseType
+from ..constants import RESULTHOLDER
 
 
 def deep_v2(data):
@@ -23,7 +24,7 @@ def deep_v2(data):
             else:
                 # quote string
                 result = f'"{data}"'
-        elif isinstance(data, cl_baseType.RESULTHOLDER):
+        elif isinstance(data, RESULTHOLDER):
             result = f'"{data}"'
         else:
             # result = f'{data.__class__.__name__}({deep_v2(data.data)})'
@@ -56,6 +57,8 @@ def deep_value_v2(self):
             result.append(item)
     elif isinstance(self, Ok | Err):
         result = deep_value_v2(self.value)
+    elif self is None:
+        result = None
     else:
         result = deep_value_v2(self.data)
     return result

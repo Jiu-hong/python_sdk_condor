@@ -95,5 +95,5 @@ class CLTypeName(object):
         return "PublicKey"
 
 
-CONST = CLTypeName()
-print(CONST.CLPublicKey)
+# CONST = CLTypeName()
+# print(CONST.CLPublicKey)

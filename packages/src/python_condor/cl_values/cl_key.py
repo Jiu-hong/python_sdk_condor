@@ -1,5 +1,5 @@
 
-from .cl_baseType import CLAtomic, CLValue
+from .cl_basetype import CLAtomic, CLValue
 from ..constants import TAG
 
 

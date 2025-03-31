@@ -1,6 +1,7 @@
 from .cl_values import CLU64, CLU8, CLBool
-from .payment_limit import PaymentLimited
 from .constants import JsonName, PricingModeKind
+from .payment_limit import PaymentLimited
+
 
 PRICINGMODE = PricingModeKind()
 JSONNAME = JsonName()

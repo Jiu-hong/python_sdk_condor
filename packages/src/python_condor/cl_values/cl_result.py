@@ -1,8 +1,5 @@
-from result import Err, Ok
-
-from ..cl_values.cl_baseType import CLValue
-
-from ..constants import RESULTHOLDER, TAG
+from ..cl_values.cl_basetype import CLValue
+from ..constants import TAG
 
 
 class CLResult(CLValue):

@@ -1,7 +1,5 @@
-
-from .cl_baseType import CLValue
+from .cl_basetype import CLValue
 from ..cl_values import CLList, CLTuple2
-
 from ..constants import TAG
 
 

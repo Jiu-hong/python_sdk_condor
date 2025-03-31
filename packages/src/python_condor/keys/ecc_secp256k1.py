@@ -1,7 +1,6 @@
+import ecdsa
 import hashlib
 import typing
-
-import ecdsa
 
 
 # Default ECC + associated Casper specific hashing function.

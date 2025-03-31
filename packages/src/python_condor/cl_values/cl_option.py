@@ -1,15 +1,19 @@
-from .cl_baseType import CLValue
-# from cl_list import CLList
-# from cl_values import CLU32, CLU64, CLString, CLTuple2
+from python_condor.cl_values.cl_basetype import CLValue
+from python_condor.cl_values.cl_number import CLU32
+from python_condor.cl_values.cl_string import CLString
+from python_condor.constants.base import RESULTHOLDER, TAG
+# from .cl_basetype import CLValue
+# from ..constants import TAG
 
 
-from ..constants import TAG
+# new CLValueOption(null, new CLTypeOption(CLTypeUInt32))
 
 
 class CLOption(CLValue):
     tag = TAG.CLOption.value
 
     def __init__(self, data: CLValue | None) -> None:
+        print("data is:", data)
         if data is not None and not isinstance(data, CLValue):
             raise TypeError(
                 "Input type should be None or CLValue for CLOption")
@@ -27,7 +31,8 @@ class CLOption(CLValue):
 #     CLU32(2)), CLOption(CLU32(3)), CLOption(CLU32(3)), CLOption(CLU32(3))]))
 # print(a.value())
 # print(a.cl_value())
-# a = CLOption(CLU32(777))
+# c = CLOption(None, CLString(RESULTHOLDER()))
+a = CLOption(CLU32(777))
 # b = CLOption(CLU32(888))
 # print(a.serialize())
 # print(b.serialize())
@@ -45,11 +50,11 @@ class CLOption(CLValue):
 # print(d)
 # print(d.serialize())
 # # print(b.serialize())
-# c = CLOption(None)
+
 # c = CLOption(CLU64(0))
 # a = CLOption(CLTuple2((CLU32(1), CLString("hello"))))
 # print('C:', c.cl_value())
-# print(a.to_json())
+# print(c.to_json())
 # {
 # "Option": {
 #     "Tuple3": [

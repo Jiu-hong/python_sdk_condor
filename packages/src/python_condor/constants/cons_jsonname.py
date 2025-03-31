@@ -133,3 +133,11 @@ class JsonName(object):
     @constant
     def PRICING_MODE():
         return "pricing_mode"
+
+    @constant
+    def BYHASH():
+        return "ByHash"
+
+    @constant
+    def BYNAME():
+        return "ByName"

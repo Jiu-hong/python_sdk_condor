@@ -1,6 +1,6 @@
-from .cl_values import CLU32, CLU8, CLOption
+from .constants import JsonName
 
-from .call_table_serialization import CalltableSerialization
+JSONNAME = JsonName()
 
 
 class InvocableEntityAliasTarget:
@@ -12,7 +12,7 @@ class InvocableEntityAliasTarget:
 
     def to_json(self):
         result = {}
-        result["ByName"] = self.contract_name
+        result[JSONNAME.BYNAME] = self.contract_name
         return result
 
 
@@ -26,5 +26,5 @@ class InvocableEntityAliasTarget:
         #         "runtime": "VmCasperV1"
         #     }
         # }
-a = InvocableEntityAliasTarget("apple_contract")
+# a = InvocableEntityAliasTarget("apple_contract")
 # print(a.to_json())

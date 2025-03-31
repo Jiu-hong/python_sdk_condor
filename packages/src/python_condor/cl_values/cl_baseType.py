@@ -1,6 +1,5 @@
 from .cl_util import deep_v2, deep_value_v2
-from ..constants import TAG
-from ..constants import CLTypeName
+from ..constants import CLTypeName, TAG
 
 CONST = CLTypeName()
 
@@ -51,6 +50,8 @@ class CLValue(object):
             if hasattr(self.data, 'tag'):
                 return {json_type: get_deep_json(self.data)}
             elif isinstance(self.data, tuple):
+                if self.tag == TAG.CLOption.value and self.data[0] is None:
+                    return {json_type: get_deep_json(self.data[1])}
                 # result type
                 if self.tag == TAG.CLResult.value:
                     return {json_type: {'ok': get_deep_json(self.data[0].value), 'err': get_deep_json(self.data[1].value)}}

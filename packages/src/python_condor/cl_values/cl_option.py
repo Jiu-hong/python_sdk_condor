@@ -12,16 +12,28 @@ from python_condor.constants.base import RESULTHOLDER, TAG
 class CLOption(CLValue):
     tag = TAG.CLOption.value
 
-    def __init__(self, data: CLValue | None) -> None:
-        print("data is:", data)
-        if data is not None and not isinstance(data, CLValue):
-            raise TypeError(
-                "Input type should be None or CLValue for CLOption")
-        super().__init__(data)
+    def __init__(self, *data: CLValue | None) -> None:
+        print("data is here:", data)
+        # Some
+        if len(data) == 1:
+            if not isinstance(data[0], CLValue):
+                raise TypeError(
+                    "Input type should be CLValue for CLOption")
+            self.flag = 1  # 1 - some, 0 - none
+            self.data = data[0]
+        # None
+        if len(data) == 2:
+            if data[0] is not None:
+                raise TypeError(
+                    "Input type should be None or CLValue for CLOption")
+            self.flag = 0
+            self.data = data
 
     def serialize(self):
-        if self.data == None:
+        # None
+        if self.flag == 0:
             return int(0).to_bytes()
+        # Some
         else:
             # remove '0x'
             return int(1).to_bytes()+self.data.serialize()
@@ -32,7 +44,13 @@ class CLOption(CLValue):
 # print(a.value())
 # print(a.cl_value())
 # c = CLOption(None, CLString(RESULTHOLDER()))
-a = CLOption(CLU32(777))
+# a = CLOption(CLU32(777))
+# print("a.cl_value()", a.cl_value())
+
+# b = CLOption(None, CLString(RESULTHOLDER()))
+# print("b cl_value():", b.cl_value())
+# print("b json():", b.to_json())
+
 # b = CLOption(CLU32(888))
 # print(a.serialize())
 # print(b.serialize())

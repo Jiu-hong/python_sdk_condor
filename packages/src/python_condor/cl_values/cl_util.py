@@ -46,6 +46,9 @@ def deep_value_v2(self):
             else:  # err value
                 result = {'Err': deep_value_v2(self[1])}
             return result
+        # check if cloption none
+        if isinstance(self, tuple) and self[0] is None:
+            return
         result = [deep_value_v2(x) for x in self]
         if isinstance(self, tuple):
             result = tuple(result)
@@ -55,8 +58,10 @@ def deep_value_v2(self):
             item = {'key': deep_value_v2(
                 key_value[0]), 'value': deep_value_v2(key_value[1])}
             result.append(item)
-    elif isinstance(self, Ok | Err):
-        result = deep_value_v2(self.value)
+    elif isinstance(self, Ok):
+        result = deep_value_v2(self.ok_value)
+    elif isinstance(self, Err):
+        result = deep_value_v2(self.err_value)
     elif self is None:
         result = None
     else:

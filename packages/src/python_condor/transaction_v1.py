@@ -1,8 +1,20 @@
 from hashlib import blake2b
+import json
 
-from .constants import JsonName, AlgoKind
-from .keys import KeyAlgorithm, get_key_pair_from_pem_file, get_signature
-from .transaction_v1_payload import TransactionV1Payload
+from python_condor.cl_values.cl_number import CLBool
+from python_condor.cl_values.cl_option import CLOption
+from python_condor.cl_values.cl_string import CLString
+from python_condor.cl_values.cl_tuple import CLTuple3
+from python_condor.cl_values.cl_uref import CLURef
+from python_condor.constants.base import RESULTHOLDER
+from python_condor.pricing_mode import PricingMode
+from python_condor.transaction_entry_point import TransactionEntryPoint
+from python_condor.transaction_scheduling import TransactionScheduling
+from python_condor.transaction_target import TransactionTarget
+
+from python_condor.constants import JsonName, AlgoKind
+from python_condor.keys import KeyAlgorithm, get_key_pair_from_pem_file, get_signature
+from python_condor.transaction_v1_payload import TransactionV1Payload
 
 
 JSONNAME = JsonName()
@@ -145,7 +157,8 @@ class TransactionV1:
 # 01005f000000030000000000000000000100010000000200360000004500000001020000000000000000000100010000002100000000b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee601000000000000000000010000000002001e000000020000000000000000000100010000000a0000000105000000746573743203000f000000010000000000000000000100000000
 
 # args = {"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
-#     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007")))}
+#     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"))),
+#     "arg2": CLOption(None, CLString(RESULTHOLDER()))}
 # scheduling = TransactionScheduling()
 # initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 # pricing_mode = PricingMode("Classic", 200000000000)
@@ -157,6 +170,7 @@ class TransactionV1:
 # payload = TransactionV1Payload(args, target1,
 #                                entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
 
-# transaction = TransactionV1(payload, "secret_key.pem")
+# transaction = TransactionV1(
+#     payload, [("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
 
 # print("transaction_to_json1:", json.dumps(transaction.to_json()))

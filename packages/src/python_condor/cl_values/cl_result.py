@@ -17,9 +17,9 @@ class CLResult(CLValue):
         # check ok or err
         match self.data[2]:
             case True:
-                return int(1).to_bytes(1, byteorder='little') + self.data[0].value.serialize()
+                return int(1).to_bytes(1, byteorder='little') + self.data[0].ok_value.serialize()
             case False:
-                return int(0).to_bytes(1, byteorder='little') + self.data[1].value.serialize()
+                return int(0).to_bytes(1, byteorder='little') + self.data[1].err_value.serialize()
             case _:
                 # todo
                 # it should be result type

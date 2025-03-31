@@ -8,6 +8,7 @@ class CLURef(CLValue, CLAtomic):
     def __init__(self, data):
         # self.data = data
         temp = data.split('-')
+        print("temp[2]:", temp[2])
         if temp[0] != 'uref':
             # prefix should be uref
             raise ValueError(
@@ -15,11 +16,11 @@ class CLURef(CLValue, CLAtomic):
         if len(temp[1]) != 64:
             # length is incorrect
             raise ValueError(
-                f"Input length is {len(temp[1])}. Expected length is 64")
-        if int(temp[2]) < 7 or int(temp[2]) < 0:
+                f"Input length is {len(temp[1])}. Expected length is 64.")
+        if int(temp[2]) > 7 or int(temp[2]) < 0:
             # access right should be 0-7
             raise ValueError(
-                f"Input access right is {temp[2]}. Expected access right should be between 0-7")
+                f"Input access right is {temp[2]}. Expected access right should be between 000-007.")
         super().__init__(data)
 
     def serialize(self):

@@ -13,7 +13,6 @@ class CLList(CLValue):
         # check type if consistent
         for element in data[1:]:
             if type(element) != base_type:
-
                 raise TypeError(f"types aren't consistent in the elements")
         super().__init__(data)
 

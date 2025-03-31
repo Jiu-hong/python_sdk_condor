@@ -1,4 +1,6 @@
 
+from python_condor.call_table_serialization import CalltableSerialization
+from python_condor.cl_values.cl_number import CLU8
 from .constants import JsonName
 
 JSONNAME = JsonName()
@@ -9,7 +11,10 @@ class InvocableEntityTarget:
         self.contract_hash = contract_hash
 
     def to_bytes(self):
-        pass
+        table = CalltableSerialization()
+        table.addField(0, CLU8(0).serialize()).\
+            addField(1, bytes.fromhex(self.contract_hash))
+        return table.to_bytes()
 
     def to_json(self):
         result = {}

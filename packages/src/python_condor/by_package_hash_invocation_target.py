@@ -16,7 +16,7 @@ class ByPackageHashInvocationTarget:
 
         version_bytes = b''
         if self.version is None:
-            version_bytes = CLOption(None).serialize()
+            version_bytes = bytes.fromhex("00")
         else:
             version_bytes = CLOption(CLU32(self.version)).serialize()
         table.addField(0, CLU8(2).serialize()).addField(

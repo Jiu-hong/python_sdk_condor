@@ -76,7 +76,7 @@ class ContractCallBuilder(TransactionBuilder):
 
     def by_package_name(self, package_name: str, version: int = None) -> ContractCallBuilder:
         target = TransactionTarget(RUNTIMEKIND.VMCASPERV1, TARGETKIND.STORED, INVOCATIONKIND.PACKAGEALIAS,
-                                   package_name)
+                                   package_name, version)
         self.target = target
         return self
 

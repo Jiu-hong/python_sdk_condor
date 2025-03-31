@@ -27,23 +27,28 @@ class TransactionInvocationTarget:
     def to_bytes(self):
         match self.invocation_kind:
             case CONST.INVOCABLEENTITY:
-                table = CalltableSerialization()
-                table.addField(0, CLU8(0).serialize()).\
-                    addField(1, bytes.fromhex(self.args[0]))
-                return table.to_bytes()
+                # table = CalltableSerialization()
+                # table.addField(0, CLU8(0).serialize()).\
+                #     addField(1, bytes.fromhex(self.args[0]))
+                # return table.to_bytes()
+                return InvocableEntityTarget(
+                    *self.args).to_bytes()
 
             case CONST.INVOCABLEENTITYALIAS:
-                table = CalltableSerialization()
-                table.addField(0, CLU8(1).serialize()).\
-                    addField(1, CLString(
-                        *self.args).serialize())
-                return table.to_bytes()
+                # table = CalltableSerialization()
+                # table.addField(0, CLU8(1).serialize()).\
+                #     addField(1, CLString(
+                #         *self.args).serialize())
+                # return table.to_bytes()
+                return InvocableEntityAliasTarget(
+                    *self.args).to_bytes()
 
             case CONST.PACKAGE:
                 return ByPackageHashInvocationTarget(
                     *self.args).to_bytes()
 
             case CONST.PACKAGEALIAS:
+                print("self.args:", self.args)
                 return ByPackageNameInvocationTarget(
                     *self.args).to_bytes()
 

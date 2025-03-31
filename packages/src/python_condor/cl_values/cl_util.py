@@ -3,33 +3,33 @@ import python_condor.cl_values.cl_basetype as cl_baseType
 from ..constants import RESULTHOLDER
 
 
-def deep_v2(data):
-    result = ""
-    if isinstance(data, cl_baseType.CLValue):
-        result = f'{data.__class__.__name__}({deep_v2(data.data)})'
-    elif isinstance(data, list | tuple):
-        result = [
-            f'{x.__class__.__name__}({deep_v2(x.data)})' for x in data]
-        # remove single quote for list members
-        result = f"[{', '.join(result)}]"
-    elif isinstance(data, dict):
-        result = "{"+f'{deep_v2(list(data.keys())[0])}: {
-            deep_v2(list(data.values())[0])}' + "}"
-    elif isinstance(data, Ok | Err):
-        result = f'{data.__class__.__name__}({deep_v2(data.value)})'
-    else:
-        if isinstance(data, int | str):
-            if isinstance(data, int):
-                result = data
-            else:
-                # quote string
-                result = f'"{data}"'
-        elif isinstance(data, RESULTHOLDER):
-            result = f'"{data}"'
-        else:
-            # result = f'{data.__class__.__name__}({deep_v2(data.data)})'
-            raise  # incorrect types
-    return result
+# def deep_v2(data):
+#     result = ""
+#     if isinstance(data, cl_baseType.CLValue):
+#         result = f'{data.__class__.__name__}({deep_v2(data.data)})'
+#     elif isinstance(data, list | tuple):
+#         result = [
+#             {x.__class__.__name__}({deep_v2(x.data)}) for x in data]
+#         # remove single quote for list members
+#         result = f"[{', '.join(result)}]"
+#     elif isinstance(data, dict):
+#         result = "{"+f'{deep_v2(list(data.keys())[0])}: {
+#             deep_v2(list(data.values())[0])}' + "}"
+#     elif isinstance(data, Ok | Err):
+#         result = f'{data.__class__.__name__}({deep_v2(data.value)})'
+#     else:
+#         if isinstance(data, int | str):
+#             if isinstance(data, int):
+#                 result = data
+#             else:
+#                 # quote string
+#                 result = f'{data}'
+#         elif isinstance(data, RESULTHOLDER):
+#             result = f'{data}'
+#         else:
+#             # result = f'{data.__class__.__name__}({deep_v2(data.data)})'
+#             raise  # incorrect types
+#     return result
 
 
 def deep_value_v2(self):

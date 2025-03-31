@@ -1,4 +1,4 @@
-from .cl_util import deep_v2, deep_value_v2
+from .cl_util import deep_value_v2
 from ..constants import CLTypeName, TAG
 
 CONST = CLTypeName()
@@ -7,9 +7,6 @@ CONST = CLTypeName()
 class CLValue(object):
     def __init__(self, data) -> None:
         self.data = data
-
-    def __str__(self):
-        return f'{self.__class__.__name__}({deep_v2(self.data)})'
 
     def value(self):
         return deep_value_v2(self)

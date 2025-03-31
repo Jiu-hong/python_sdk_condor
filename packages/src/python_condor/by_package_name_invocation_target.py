@@ -11,13 +11,14 @@ class ByPackageNameInvocationTarget:
     def __init__(self, name: str, version: int = None):
         self.name = name  # string
         self.version = version
+        print("self.version here:", self.version)
 
     def to_bytes(self):
         table = CalltableSerialization()
 
         version_bytes = b''
         if self.version is None:
-            version_bytes = CLOption(None).serialize()
+            version_bytes = bytes.fromhex("00")
         else:
             version_bytes = CLOption(CLU32(self.version)).serialize()
         table.addField(0, CLU8(3).serialize()).addField(

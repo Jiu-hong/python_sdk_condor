@@ -1,15 +1,13 @@
 from __future__ import annotations
 
-from python_condor.transaction_native_target import TransactionNativeTarget
 from .constants import EntryPointKind, InvocationKind, PricingModeKind, RuntimeKind, TargetKind
-
 from .entity_alias_target import EntityAliasTarget
 from .entity_target import EntityTarget
 from .package_hash_target import PackageHashTarget
 from .package_name_target import PackageNameTarget
 from .pricing_mode import PricingMode
-
 from .transaction_entry_point import TransactionEntryPoint
+from .transaction_native_target import TransactionNativeTarget
 from .transaction_scheduling import TransactionScheduling
 from .transaction_session_target import TransactionSessionTarget
 from .transaction_v1 import TransactionV1
@@ -71,12 +69,8 @@ class NativeBuilder(TransactionBuilder):
 class ContractCallBuilder(TransactionBuilder):
 
     def by_contract_hash(self, contract_hash: str) -> ContractCallBuilder:
-
-        # target = TransactionTarget(RUNTIMEKIND.VMCASPERV1, TARGETKIND.STORED, INVOCATIONKIND.INVOCABLEENTITY,
-        #                            contract_hash)
         target = EntityTarget(RUNTIMEKIND.VMCASPERV1, contract_hash)
         self.target = target
-
         return self
 
     def by_contract_name(self, contract_name: str) -> ContractCallBuilder:
@@ -102,9 +96,12 @@ class ContractCallBuilder(TransactionBuilder):
 
 
 class SessionCallBuilder(TransactionBuilder):
+    def __init__(self, data):
+        self.entry_point = TransactionEntryPoint(ENTRYPOINT.CALL)
+        super().__init__(data)
+
     def module_bytes(self, module_bytes: str, is_install_upgrade: bool = False) -> SessionCallBuilder:
         target = TransactionSessionTarget(
             RUNTIMEKIND.VMCASPERV1, module_bytes, is_install_upgrade)
         self.target = target
-        self.entry_point = TransactionEntryPoint(ENTRYPOINT.CALL)
         return self

@@ -7,6 +7,7 @@ from python_condor.cl_values.cl_string import CLString
 from python_condor.cl_values.cl_tuple import CLTuple3
 from python_condor.cl_values.cl_uref import CLURef
 from python_condor.constants.base import RESULTHOLDER
+from python_condor.entity_target import EntityTarget
 from python_condor.pricing_mode import PricingMode
 from python_condor.transaction_entry_point import TransactionEntryPoint
 from python_condor.transaction_scheduling import TransactionScheduling
@@ -162,8 +163,8 @@ class TransactionV1:
 # scheduling = TransactionScheduling()
 # initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 # pricing_mode = PricingMode("Classic", 200000000000)
-# target1 = TransactionTarget("VmCasperV1", "stored", "InvocableEntityAlias",
-#                             "accesscontract")
+# target1 = EntityTarget("VmCasperV1", "stored", "InvocableEntityAlias",
+#                        "accesscontract")
 # print("target1 to_bytes()", target1.to_bytes().hex())
 # entrypoint1 = TransactionEntryPoint("Custom", "test2")
 

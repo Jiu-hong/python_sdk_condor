@@ -9,7 +9,6 @@ from python_condor.transaction_scheduling import TransactionScheduling
 from .constants import JsonName
 from .named_arg import NamedArg
 from .transaction_entry_point import TransactionEntryPoint
-from .transaction_target import TransactionTarget
 
 
 JSONNAME = JsonName()

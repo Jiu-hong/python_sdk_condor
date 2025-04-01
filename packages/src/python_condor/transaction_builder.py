@@ -12,7 +12,6 @@ from .constants import EntryPointKind, InvocationKind, PricingModeKind, RuntimeK
 from .pricing_mode import PricingMode
 from .transaction_entry_point import TransactionEntryPoint
 from .transaction_scheduling import TransactionScheduling
-from .transaction_target import TransactionTarget
 from .transaction_v1 import TransactionV1
 from .transaction_v1_payload import TransactionV1Payload
 

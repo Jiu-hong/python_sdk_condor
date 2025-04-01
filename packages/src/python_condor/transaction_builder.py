@@ -24,6 +24,7 @@ ENTRYPOINT = EntryPointKind()
 class TransactionBuilder:
     def __init__(self, signers_keypaths_algo) -> TransactionBuilder:
         self.signers_keypaths_algo = signers_keypaths_algo
+        self.vm = RUNTIMEKIND.VMCASPERV1
 
     def from_publickey(self, public_key: str) -> TransactionBuilder:
         self.initiator_addr = public_key
@@ -68,25 +69,25 @@ class NativeBuilder(TransactionBuilder):
 
 class ContractCallBuilder(TransactionBuilder):
 
-    def by_contract_hash(self, contract_hash: str, vm=RUNTIMEKIND.VMCASPERV1) -> ContractCallBuilder:
-        target = EntityTarget(vm, contract_hash)
+    def by_contract_hash(self, contract_hash: str) -> ContractCallBuilder:
+        target = EntityTarget(self.vm, contract_hash)
         self.target = target
         return self
 
-    def by_contract_name(self, contract_name: str, vm=RUNTIMEKIND.VMCASPERV1) -> ContractCallBuilder:
-        target = EntityAliasTarget(vm, contract_name)
+    def by_contract_name(self, contract_name: str) -> ContractCallBuilder:
+        target = EntityAliasTarget(self.vm, contract_name)
         self.target = target
         return self
 
-    def by_package_hash(self, package_hash, version: int = None, vm=RUNTIMEKIND.VMCASPERV1) -> ContractCallBuilder:
+    def by_package_hash(self, package_hash, version: int = None) -> ContractCallBuilder:
         target = PackageHashTarget(
-            vm, package_hash, version)
+            self.vm, package_hash, version)
         self.target = target
         return self
 
-    def by_package_name(self, package_name: str, version: int = None, vm=RUNTIMEKIND.VMCASPERV1) -> ContractCallBuilder:
+    def by_package_name(self, package_name: str, version: int = None) -> ContractCallBuilder:
         target = PackageNameTarget(
-            vm, package_name, version)
+            self.vm, package_name, version)
         self.target = target
         return self
 
@@ -100,8 +101,8 @@ class SessionCallBuilder(TransactionBuilder):
         self.entry_point = TransactionEntryPoint(ENTRYPOINT.CALL)
         super().__init__(data)
 
-    def module_bytes(self, module_bytes: str, is_install_upgrade: bool = False, vm=RUNTIMEKIND.VMCASPERV1) -> SessionCallBuilder:
+    def module_bytes(self, module_bytes: str, is_install_upgrade: bool = False) -> SessionCallBuilder:
         target = TransactionSessionTarget(
-            vm, module_bytes, is_install_upgrade)
+            self.vm, module_bytes, is_install_upgrade)
         self.target = target
         return self

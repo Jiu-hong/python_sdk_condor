@@ -1,4 +1,5 @@
 from result import Err, Ok
+from .call_table_serialization import CalltableSerialization
 
 
 def serialize_string(data):

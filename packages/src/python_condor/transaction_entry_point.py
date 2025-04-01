@@ -1,5 +1,4 @@
-from .utils import serialize_string
-from .call_table_serialization import CalltableSerialization
+from .utils import serialize_string, CalltableSerialization
 
 from .constants import EntryPointKind, JsonName
 

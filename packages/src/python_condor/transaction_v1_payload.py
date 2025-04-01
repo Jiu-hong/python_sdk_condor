@@ -1,19 +1,17 @@
 from datetime import datetime, timezone
 
-from python_condor.entity_alias_target import EntityAliasTarget
-from python_condor.entity_target import EntityTarget
-from python_condor.package_hash_target import PackageHashTarget
-from python_condor.package_name_target import PackageNameTarget
-from python_condor.utils import serialize_string
-
-from .call_table_serialization import CalltableSerialization
 from .constants import JsonName
+from .entity_alias_target import EntityAliasTarget
+from .entity_target import EntityTarget
 from .initiator_addr import InitiatorAddr
 from .named_arg import NamedArg
+from .package_hash_target import PackageHashTarget
+from .package_name_target import PackageNameTarget
 from .payload_fields import PayloadFields
 from .pricing_mode import PricingMode
 from .transaction_entry_point import TransactionEntryPoint
 from .transaction_scheduling import TransactionScheduling
+from .utils import serialize_string, CalltableSerialization
 
 
 JSONNAME = JsonName()

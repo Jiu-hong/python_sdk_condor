@@ -1,7 +1,7 @@
 
 from python_condor.utils import serialize_string
 from .transaction_runtime import TransactionRuntime
-from .call_table_serialization import CalltableSerialization
+from .utils import CalltableSerialization
 from .constants import JsonName
 
 

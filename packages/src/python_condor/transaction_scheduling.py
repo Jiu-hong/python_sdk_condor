@@ -1,5 +1,5 @@
-from .call_table_serialization import CalltableSerialization
-from .cl_values import CLU8
+from .utils import CalltableSerialization
+# from .cl_values import CLU8
 from .constants import SchedulingKind, JsonName
 
 CONST = SchedulingKind()
@@ -22,10 +22,10 @@ class TransactionScheduling:
                 table.addField(0, int(0).to_bytes())
                 return table.to_bytes()
 
-    def serialize(self):
-        match self.schedule_mode:
-            case CONST.STANDARD:
-                return CLU8(0).serialize()
+    # def serialize(self):
+    #     match self.schedule_mode:
+    #         case CONST.STANDARD:
+    #             return int(0).to_bytes()
 
     def to_json(self):
         result = {}

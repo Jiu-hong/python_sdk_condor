@@ -1,4 +1,4 @@
-from .call_table_serialization import CalltableSerialization
+from .utils import CalltableSerialization
 from .cl_values import CLPublicKey, CLU8
 
 

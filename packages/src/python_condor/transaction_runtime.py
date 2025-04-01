@@ -1,5 +1,4 @@
-from .call_table_serialization import CalltableSerialization
-from .cl_values import CLU8
+from .utils import CalltableSerialization
 from .constants import JsonName, RuntimeKind
 
 CONST = RuntimeKind()
@@ -17,11 +16,8 @@ class TransactionRuntime:
 
     def to_bytes(self):
         table = CalltableSerialization()
-        table.addField(0, CLU8(0).serialize())
+        table.addField(0, int(0).to_bytes())
         return table.to_bytes()
-
-    def serialize(self):
-        return CLU8(0).serialize()
 
     def to_json(self):
         result = {}

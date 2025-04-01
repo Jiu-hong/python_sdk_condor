@@ -1,7 +1,6 @@
 import re
-from python_condor.transaction_runtime import TransactionRuntime
-from .call_table_serialization import CalltableSerialization
-from .cl_values import CLU32, CLU8, CLOption
+from .transaction_runtime import TransactionRuntime
+from .utils import CalltableSerialization
 from .constants import JsonName
 
 
@@ -25,12 +24,13 @@ class PackageHashTarget:
 
         version_bytes = b''
         if self.version is None:
-            version_bytes = bytes.fromhex("00")
+            version_bytes = int(0).to_bytes()
         else:
-            version_bytes = CLOption(CLU32(self.version)).serialize()
-        selftable.addField(0, CLU8(2).serialize()).addField(
+            version_bytes = int(1).to_bytes() + \
+                (self.version).to_bytes(4, byteorder='little')
+        selftable.addField(0, int(2).to_bytes()).addField(
             1, bytes.fromhex(self.package_hash)).addField(2, version_bytes)
-        # return selftable.to_bytes()
+
         table = CalltableSerialization()
         table.addField(0, int(1).to_bytes()).addField(
             1, selftable.to_bytes()).addField(

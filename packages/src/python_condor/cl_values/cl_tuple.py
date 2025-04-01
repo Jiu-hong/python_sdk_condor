@@ -32,20 +32,6 @@ class CLTuple1(CLTupleBase):
                 f"Input tuple length is {len(data)}. Allowed CLTuple1 length is 1.")
 
 
-a = CLTuple1(CLBool(True))
-print("a.to_json is:", a.to_json())
-print("a.cl_value is:", a.cl_value())
-# expected:
-# 01000000001200
-# 01000000011200
-# 010000000112
-# tuple2(bool,string)
-# expected:
-# 0a000000 010500000048656c6c6f 13000a
-# actual
-#
-
-
 class CLTuple2(CLTupleBase):
     tag = TAG.CLTuple2.value
 

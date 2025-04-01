@@ -14,3 +14,4 @@ from .package_hash_target import PackageHashTarget
 from .package_name_target import PackageNameTarget
 from .transaction_runtime import TransactionRuntime
 from .transaction_native_target import TransactionNativeTarget
+from .transaction_session_target import TransactionSessionTarget

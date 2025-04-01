@@ -28,11 +28,9 @@ class TransactionV1Payload:
             args, transactionTarget, entrypoint, scheduling)
 
     def to_bytes(self):
-        # runtimeArgsBuffer = CLU8(0).serialize()
+
         runtimeArgsBuffer = int(0).to_bytes()
 
-        # runtimeArgsBuffer = runtimeArgsBuffer + \
-        #     CLU32(len(self.fields.args)).serialize()
         runtimeArgsBuffer = runtimeArgsBuffer + \
             len(self.fields.args).to_bytes(4, byteorder='little')
 
@@ -41,8 +39,6 @@ class TransactionV1Payload:
             arg_bytes = named_arg.to_byte_with_named_arg()
             runtimeArgsBuffer = runtimeArgsBuffer + arg_bytes
 
-        # lenth_runtimeArgsBuffer = CLU32(
-        #     len(runtimeArgsBuffer)).serialize()
         lenth_runtimeArgsBuffer = len(
             runtimeArgsBuffer).to_bytes(4, byteorder='little')
 
@@ -53,8 +49,6 @@ class TransactionV1Payload:
         # target
         targetBytes = self.fields.target.to_bytes()
 
-        # length_targetBytes = CLU32(
-        #     len(targetBytes)).serialize()
         length_targetBytes = len(targetBytes).to_bytes(4, byteorder='little')
         targetWithLength = length_targetBytes + targetBytes
 
@@ -62,8 +56,7 @@ class TransactionV1Payload:
 
         # entryPointBytes
         entryPointBytes = self.fields.entry_point.to_bytes()
-        # length_entryPointBytes = CLU32(
-        #     len(entryPointBytes)).serialize()
+
         length_entryPointBytes = len(
             entryPointBytes).to_bytes(4, byteorder='little')
         entryPointWithLength = length_entryPointBytes + entryPointBytes
@@ -73,15 +66,12 @@ class TransactionV1Payload:
         # schedulingBytes
         schedulingBytes = self.fields.scheduling.to_bytes()
 
-        # length_schedulingBytes = CLU32(
-        #     len(schedulingBytes)).serialize()
         length_schedulingBytes = len(
             schedulingBytes).to_bytes(4, byteorder='little')
         schedulingWithLength = length_schedulingBytes + schedulingBytes
 
         self.fields.addField(3, schedulingWithLength)
 
-        #
         table = CalltableSerialization()
         # table.addField(0, InitiatorAddr(
         #     self.initiatorAddr).to_bytes()).\

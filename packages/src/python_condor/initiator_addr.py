@@ -1,5 +1,5 @@
 from .utils import CalltableSerialization
-from .cl_values import CLPublicKey, CLU8
+from .cl_values import CLPublicKey
 
 
 class InitiatorAddr:
@@ -9,12 +9,12 @@ class InitiatorAddr:
     def to_bytes(self):
         # account hash to do
         table = CalltableSerialization()
-        table.addField(0, CLU8(0).serialize()).addField(
+        table.addField(0, int(0).to_bytes()).addField(
             1, CLPublicKey(self.address).serialize())
         return table.to_bytes()
 
     def serialize(self):
-        return CLU8(0).serialize() + self.address  # public key
+        return int(0).to_bytes() + self.address  # public key
 
     def to_json(self):
         result = {}

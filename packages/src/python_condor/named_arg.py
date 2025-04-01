@@ -1,4 +1,4 @@
-from .cl_values import CLString
+from .utils import serialize_string
 
 
 class NamedArg:
@@ -7,7 +7,7 @@ class NamedArg:
         self.value = value  # CLValue
 
     def to_byte_with_named_arg(self):
-        name_bytes = CLString(self.name).serialize()
+        name_bytes = serialize_string(self.name)
         value_bytes = bytes.fromhex(self.value.cl_value())
 
         return name_bytes + value_bytes

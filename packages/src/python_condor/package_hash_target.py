@@ -1,3 +1,4 @@
+import re
 from python_condor.transaction_runtime import TransactionRuntime
 from .call_table_serialization import CalltableSerialization
 from .cl_values import CLU32, CLU8, CLOption
@@ -9,7 +10,12 @@ JSONNAME = JsonName()
 
 class PackageHashTarget:
     def __init__(self, runtime: str, package_hash: str, version: int = None):
-        # todo check package-hash format
+        regx = "([0-9a-z]{64})"
+        pattern = re.compile(regx)
+        result = pattern.fullmatch(package_hash)
+        if not isinstance(result, re.Match):
+            raise ValueError(
+                "package-hash should only contain alphabet and number(64 length)")
         self.package_hash = package_hash  # hex string
         self.version = version
         self.runtime = runtime

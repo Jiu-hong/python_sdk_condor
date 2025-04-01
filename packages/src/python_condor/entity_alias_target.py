@@ -1,8 +1,9 @@
 from python_condor.call_table_serialization import CalltableSerialization
 from python_condor.cl_values.cl_number import CLU8
 from python_condor.cl_values.cl_string import CLString
-from python_condor.cl_values.cl_util import serialize_string
+
 from python_condor.transaction_runtime import TransactionRuntime
+from python_condor.utils import serialize_string
 from .constants import JsonName
 
 JSONNAME = JsonName()

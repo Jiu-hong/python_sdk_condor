@@ -1,4 +1,5 @@
 
+import re
 from python_condor.call_table_serialization import CalltableSerialization
 from python_condor.cl_values.cl_number import CLU8
 from python_condor.transaction_runtime import TransactionRuntime
@@ -9,6 +10,12 @@ JSONNAME = JsonName()
 
 class EntityTarget:
     def __init__(self, runtime: str, contract_hash: str):
+        regx = "([0-9a-z]{64})"
+        pattern = re.compile(regx)
+        result = pattern.fullmatch(contract_hash)
+        if not isinstance(result, re.Match):
+            raise ValueError(
+                "contract-hash should only contain alphabet and number(64 length)")
         self.contract_hash = contract_hash
         self.runtime = runtime
 

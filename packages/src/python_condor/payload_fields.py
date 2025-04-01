@@ -1,6 +1,11 @@
 # to_bytes to do
 from hashlib import blake2b
-from .cl_values import CLU16, CLU32
+
+from python_condor.entity_alias_target import EntityAliasTarget
+from python_condor.entity_target import EntityTarget
+from python_condor.package_hash_target import PackageHashTarget
+from python_condor.package_name_target import PackageNameTarget
+from python_condor.transaction_scheduling import TransactionScheduling
 from .constants import JsonName
 from .named_arg import NamedArg
 from .transaction_entry_point import TransactionEntryPoint
@@ -11,7 +16,7 @@ JSONNAME = JsonName()
 
 
 class PayloadFields:
-    def __init__(self, args: dict, target: TransactionTarget, entry_point: TransactionEntryPoint, scheduleing):
+    def __init__(self, args: dict, target: EntityTarget | EntityAliasTarget | PackageHashTarget | PackageNameTarget, entry_point: TransactionEntryPoint, scheduleing: TransactionScheduling):
 
         self.args = args
         self.target = target
@@ -20,20 +25,16 @@ class PayloadFields:
         self.dict = {}
 
     def addField(self, index, bytes):
-        self.dict[CLU16(index)] = bytes
+        # self.dict[CLU16(index)] = bytes
+        self.dict[index] = bytes
 
     def to_bytes(self):
-        buffer = CLU32(len(self.dict)).serialize()
+        # buffer = CLU32(len(self.dict)).serialize()
+        buffer = (len(self.dict)).to_bytes(4, byteorder='little')
         for key, value in self.dict.items():
-            # print("key:", key)
-            # print("key serialize:", key.serialize().hex())
-            # print("value: ", value.hex())
-            buffer = buffer + key.serialize()  # key is CLU16
+            buffer = buffer + key.to_bytes(2, byteorder='little')
             buffer = buffer + value
         return buffer
-
-    # def serialize(self):
-    #     return self.args.serialize() + self.target.serialize() + self.entry_point.serialize()+self.scheduling.serialize()
 
     def body_hash(self):
         body_hex = self.serialize()
@@ -43,7 +44,6 @@ class PayloadFields:
         return h.hexdigest()
 
     def to_json(self):
-
         result = {}
         name_args = []
 

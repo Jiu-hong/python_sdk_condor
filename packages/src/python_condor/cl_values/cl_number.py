@@ -53,7 +53,7 @@ class CLI32(CLNumber):
 
     def serialize(self):
         if CLI32.minvalue <= self.data <= CLI32.maxvalue:
-            return (self.data).to_bytes(4, byteorder='little', signed=True)
+            return self.data.to_bytes(4, byteorder='little', signed=True)
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLI32")
 
@@ -79,7 +79,7 @@ class CLI64(CLNumber):
 
     def serialize(self):
         if CLI64.minvalue <= self.data <= CLI64.maxvalue:
-            return (self.data).to_bytes(8, byteorder='little', signed=True)
+            return self.data.to_bytes(8, byteorder='little', signed=True)
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLI64")
 
@@ -102,7 +102,7 @@ class CLU8(CLNumber):
 
     def serialize(self):
         if 0 <= self.data <= CLU8.maxvalue:
-            return (self.data).to_bytes(1, byteorder='little')
+            return self.data.to_bytes(1, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU8")
 
@@ -124,7 +124,7 @@ class CLU16(CLNumber):
     def serialize(self):
         if 0 <= self.data <= CLU16.maxvalue:
             # return (self.data).to_bytes(2, byteorder='little').hex()
-            return (self.data).to_bytes(2, byteorder='little')
+            return self.data.to_bytes(2, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU16")
 
@@ -143,7 +143,7 @@ class CLU32(CLNumber):
 
     def serialize(self):
         if 0 <= self.data <= CLU32.maxvalue:
-            return (self.data).to_bytes(4, byteorder='little')
+            return self.data.to_bytes(4, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU32")
 
@@ -170,7 +170,7 @@ class CLU64(CLNumber):
 
     def serialize(self):
         if 0 <= self.data <= CLU64.maxvalue:
-            return (self.data).to_bytes(8, byteorder='little')
+            return self.data.to_bytes(8, byteorder='little')
         else:
             raise ExceptionExceedMaxValue(str(self.data), "CLU64")
 

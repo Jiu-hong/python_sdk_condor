@@ -1,7 +1,12 @@
 from datetime import datetime, timezone
 
+from python_condor.entity_alias_target import EntityAliasTarget
+from python_condor.entity_target import EntityTarget
+from python_condor.package_hash_target import PackageHashTarget
+from python_condor.package_name_target import PackageNameTarget
+from python_condor.utils import serialize_string
+
 from .call_table_serialization import CalltableSerialization
-from .cl_values import CLU32, CLU64, CLU8, CLString
 from .constants import JsonName
 from .initiator_addr import InitiatorAddr
 from .named_arg import NamedArg
@@ -9,14 +14,13 @@ from .payload_fields import PayloadFields
 from .pricing_mode import PricingMode
 from .transaction_entry_point import TransactionEntryPoint
 from .transaction_scheduling import TransactionScheduling
-from .transaction_target import TransactionTarget
 
 
 JSONNAME = JsonName()
 
 
 class TransactionV1Payload:
-    def __init__(self, args: dict, transactionTarget: TransactionTarget, entrypoint: TransactionEntryPoint, scheduling: TransactionScheduling, initiatorAddr: str,  pricing_mode: PricingMode, chainName: str, ttl=30, now=datetime.now(timezone.utc)):
+    def __init__(self, args: dict, transactionTarget: EntityTarget | EntityAliasTarget | PackageHashTarget | PackageNameTarget, entrypoint: TransactionEntryPoint, scheduling: TransactionScheduling, initiatorAddr: str,  pricing_mode: PricingMode, chainName: str, ttl=30, now=datetime.now(timezone.utc)):
         self.initiatorAddr = initiatorAddr
         self.ttl = ttl
         self.pricingMode = pricing_mode
@@ -26,18 +30,23 @@ class TransactionV1Payload:
             args, transactionTarget, entrypoint, scheduling)
 
     def to_bytes(self):
-        runtimeArgsBuffer = CLU8(0).serialize()
+        # runtimeArgsBuffer = CLU8(0).serialize()
+        runtimeArgsBuffer = int(0).to_bytes()
 
+        # runtimeArgsBuffer = runtimeArgsBuffer + \
+        #     CLU32(len(self.fields.args)).serialize()
         runtimeArgsBuffer = runtimeArgsBuffer + \
-            CLU32(len(self.fields.args)).serialize()
+            len(self.fields.args).to_bytes(4, byteorder='little')
 
         for name, value in self.fields.args.items():
             named_arg = NamedArg(name, value)
             arg_bytes = named_arg.to_byte_with_named_arg()
             runtimeArgsBuffer = runtimeArgsBuffer + arg_bytes
 
-        lenth_runtimeArgsBuffer = CLU32(
-            len(runtimeArgsBuffer)).serialize()
+        # lenth_runtimeArgsBuffer = CLU32(
+        #     len(runtimeArgsBuffer)).serialize()
+        lenth_runtimeArgsBuffer = len(
+            runtimeArgsBuffer).to_bytes(4, byteorder='little')
 
         runtimeArgsWithLength = lenth_runtimeArgsBuffer + runtimeArgsBuffer
 
@@ -46,18 +55,19 @@ class TransactionV1Payload:
         # target
         targetBytes = self.fields.target.to_bytes()
 
-        length_targetBytes = CLU32(
-            len(targetBytes)).serialize()
-
+        # length_targetBytes = CLU32(
+        #     len(targetBytes)).serialize()
+        length_targetBytes = len(targetBytes).to_bytes(4, byteorder='little')
         targetWithLength = length_targetBytes + targetBytes
 
         self.fields.addField(1, targetWithLength)
 
         # entryPointBytes
         entryPointBytes = self.fields.entry_point.to_bytes()
-        length_entryPointBytes = CLU32(
-            len(entryPointBytes)).serialize()
-
+        # length_entryPointBytes = CLU32(
+        #     len(entryPointBytes)).serialize()
+        length_entryPointBytes = len(
+            entryPointBytes).to_bytes(4, byteorder='little')
         entryPointWithLength = length_entryPointBytes + entryPointBytes
 
         self.fields.addField(2, entryPointWithLength)
@@ -65,19 +75,28 @@ class TransactionV1Payload:
         # schedulingBytes
         schedulingBytes = self.fields.scheduling.to_bytes()
 
-        length_schedulingBytes = CLU32(
-            len(schedulingBytes)).serialize()
+        # length_schedulingBytes = CLU32(
+        #     len(schedulingBytes)).serialize()
+        length_schedulingBytes = len(
+            schedulingBytes).to_bytes(4, byteorder='little')
         schedulingWithLength = length_schedulingBytes + schedulingBytes
 
         self.fields.addField(3, schedulingWithLength)
 
         #
         table = CalltableSerialization()
+        # table.addField(0, InitiatorAddr(
+        #     self.initiatorAddr).to_bytes()).\
+        #     addField(1, CLU64(int(self.time.timestamp() * 1000)).serialize()). \
+        #     addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
+        #     addField(3, serialize_string(self.chainName)). \
+        #     addField(4, self.pricingMode.to_bytes()). \
+        #     addField(5, self.fields.to_bytes())
         table.addField(0, InitiatorAddr(
             self.initiatorAddr).to_bytes()).\
-            addField(1, CLU64(int(self.time.timestamp() * 1000)).serialize()). \
-            addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
-            addField(3, CLString(self.chainName).serialize()). \
+            addField(1, int(self.time.timestamp() * 1000).to_bytes(8, byteorder='little')). \
+            addField(2, (int(self.ttl) * 60000).to_bytes(8, byteorder='little')). \
+            addField(3, serialize_string(self.chainName)). \
             addField(4, self.pricingMode.to_bytes()). \
             addField(5, self.fields.to_bytes())
         # table.addField(0, InitiatorAddr(

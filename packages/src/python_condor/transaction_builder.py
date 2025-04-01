@@ -4,6 +4,7 @@ from python_condor.entity_alias_target import EntityAliasTarget
 from python_condor.entity_target import EntityTarget
 from python_condor.package_hash_target import PackageHashTarget
 from python_condor.package_name_target import PackageNameTarget
+from python_condor.transaction_session_target import TransactionSessionTarget
 
 from .constants import EntryPointKind, InvocationKind, PricingModeKind, RuntimeKind, TargetKind
 
@@ -92,10 +93,9 @@ class ContractCallBuilder(TransactionBuilder):
 
 
 class SessionCallBuilder(TransactionBuilder):
-    #   private _transactionInvocationTarget: TransactionInvocationTarget;
     def module_bytes(self, module_bytes: str, is_install_upgrade: bool = False) -> SessionCallBuilder:
-        target = TransactionTarget(
-            RUNTIMEKIND.VMCASPERV1, TARGETKIND.SESSION, module_bytes, is_install_upgrade)
+        target = TransactionSessionTarget(
+            RUNTIMEKIND.VMCASPERV1, module_bytes, is_install_upgrade)
         self.target = target
         return self
 

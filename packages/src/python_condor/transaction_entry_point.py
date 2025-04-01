@@ -1,5 +1,5 @@
+from .utils import serialize_string
 from .call_table_serialization import CalltableSerialization
-from .cl_values import CLU8, CLString
 
 from .constants import EntryPointKind, JsonName
 
@@ -23,26 +23,26 @@ class TransactionEntryPoint:
         table = CalltableSerialization()
         match self.entry_point:
             case ENTYPOINT.CALL:
-                table.addField(0, CLU8(0).serialize())
+                table.addField(0, int(0).to_bytes())
             case ENTYPOINT.CUSTOM:
-                table.addField(0, CLU8(1).serialize()).addField(
-                    1, CLString(self.arg).serialize())
+                table.addField(0, int(1).to_bytes()).addField(
+                    1, serialize_string(self.arg))
             case ENTYPOINT.TRANSFER:
-                table.addField(0, CLU8(2).serialize())
+                table.addField(0, int(2).to_bytes())
             case ENTYPOINT.ADD_BID:
-                table.addField(0, CLU8(3).serialize())
+                table.addField(0, int(3).to_bytes())
             case ENTYPOINT.WITHDRAW_BID:
-                table.addField(0, CLU8(4).serialize())
+                table.addField(0, int(4).to_bytes())
             case ENTYPOINT.DELEGATE:
-                table.addField(0, CLU8(5).serialize())
+                table.addField(0, int(5).to_bytes())
             case ENTYPOINT.UNDELEGATE:
-                table.addField(0, CLU8(6).serialize())
+                table.addField(0, int(6).to_bytes())
             case ENTYPOINT.REDELEGATE:
-                table.addField(0, CLU8(7).serialize())
+                table.addField(0, int(7).to_bytes())
             case ENTYPOINT.ACTIVATE_BID:
-                table.addField(0, CLU8(8).serialize())
+                table.addField(0, int(8).to_bytes())
             case ENTYPOINT.CHANGEPUBLICKEY:
-                table.addField(0, CLU8(9).serialize())
+                table.addField(0, int(9).to_bytes())
 
         return table.to_bytes()
 

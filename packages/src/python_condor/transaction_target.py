@@ -1,6 +1,6 @@
 from python_condor.transaction_native_target import TransactionNativeTarget
-from .call_table_serialization import CalltableSerialization
-from .cl_values import CLU8
+
+
 from .constants import JsonName, TargetKind
 from .transaction_session_target import TransactionSessionTarget
 from .transaction_stored_target import TransactionStoredTarget

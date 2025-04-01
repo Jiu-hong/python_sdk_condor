@@ -1,5 +1,4 @@
 from .call_table_serialization import CalltableSerialization
-from .cl_values import CLBool, CLU8, CLU64
 from .constants import JsonName
 
 JSONNAME = JsonName()
@@ -13,10 +12,14 @@ class PaymentLimited:
 
     def to_bytes(self):
         table = CalltableSerialization()
-        table.addField(0, CLU8(0).serialize()).addField(
-            1, CLU64(self.payment_amount).serialize()).addField(
-            2, CLU8(self.gas_price_tolerance).serialize()).addField(
-            3, CLBool(self.standard_payment).serialize())
+        # table.addField(0, int(0).to_bytes()).addField(
+        #     1, CLU64(self.payment_amount).serialize()).addField(
+        #     2, CLU8(self.gas_price_tolerance).serialize()).addField(
+        #     3, CLBool(self.standard_payment).serialize())
+        table.addField(0, int(0).to_bytes()).addField(
+            1, self.payment_amount.to_bytes(8, byteorder='little')).addField(
+            2, self.gas_price_tolerance.to_bytes()).addField(
+            3, int(self.standard_payment).to_bytes())
         return table.to_bytes()
 
     def to_json(self):

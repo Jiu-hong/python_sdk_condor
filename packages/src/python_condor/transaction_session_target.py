@@ -1,5 +1,4 @@
 from .call_table_serialization import CalltableSerialization
-from .cl_values import CLBool, CLU32
 from .constants import JsonName, RuntimeKind
 from .transaction_runtime import TransactionRuntime
 
@@ -17,11 +16,11 @@ class TransactionSessionTarget:
         self.runtime = runtime
 
     def to_bytes(self):
-
-        module_bytes_length = CLU32(len(self.module_bytes)).serialize()
+        module_bytes_length = len(
+            self.module_bytes).to_bytes(4, byteorder='little')
         table = CalltableSerialization()
         table.addField(0, int(2).to_bytes()).addField(
-            1, CLBool(self.is_install_upgrade).serialize()).addField(
+            1, self.is_install_upgrade.to_bytes()).addField(
             2, TransactionRuntime(self.runtime).to_bytes()).addField(
             3, module_bytes_length+self.module_bytes)
         return table.to_bytes()

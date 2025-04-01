@@ -1,4 +1,3 @@
-from .cl_values import CLU64, CLU8, CLBool
 from .constants import JsonName, PricingModeKind
 from .payment_limit import PaymentLimited
 
@@ -19,16 +18,14 @@ class PricingMode:
             raise TypeError(
                 f"Invalid type of input: {type(payment_amount)} for payment_amount. Allowed value is int.")
         self.pricing_mode = pricing_mode
-        self.payment_amount = payment_amount
-        self.gas_price_tolerance = gas_price_tolerance
-        self.standard_payment = standard_payment
+        self.payment_limited = PaymentLimited(payment_amount,
+                                              gas_price_tolerance, standard_payment)
 
     def to_bytes(self):
 
         match self.pricing_mode:
             case PRICINGMODE.CLASSIC:
-                return PaymentLimited(self.payment_amount,
-                                      self.gas_price_tolerance, self.standard_payment).to_bytes()
+                return self.payment_limited.to_bytes()
 
     # def serialize(self):
     #     match self.pricing_mode:
@@ -41,8 +38,7 @@ class PricingMode:
         result = {}
         match self.pricing_mode:
             case PRICINGMODE.CLASSIC:
-                result[JSONNAME.PRICING_MODE] = PaymentLimited(self.payment_amount,
-                                                               self.gas_price_tolerance, self.standard_payment).to_json()
+                result[JSONNAME.PRICING_MODE] = self.payment_limited.to_json()
 
             case PRICINGMODE.FIXED:
                 # result["pricing_mode"] = {

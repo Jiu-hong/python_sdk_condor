@@ -1,9 +1,6 @@
 from .call_table_serialization import CalltableSerialization
 from .constants import JsonName, RuntimeKind
 
-from .transaction_invocation_target import TransactionInvocationTarget
-from .transaction_runtime import TransactionRuntime
-
 
 JSONNAME = JsonName()
 RUNTIME = RuntimeKind()

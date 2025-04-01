@@ -1,5 +1,4 @@
 from .utils import CalltableSerialization
-# from .cl_values import CLU8
 from .constants import SchedulingKind, JsonName
 
 CONST = SchedulingKind()

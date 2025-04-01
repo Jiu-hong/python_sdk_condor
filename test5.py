@@ -3,7 +3,6 @@ import json
 
 from python_condor.entity_target import EntityTarget
 from python_condor.transaction_builder import ContractCallBuilder
-from python_condor.transaction_stored_target import TransactionStoredTarget
 
 args = {"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007")))}

@@ -1,13 +1,12 @@
-# to_bytes to do
 from hashlib import blake2b
 
-from python_condor.entity_alias_target import EntityAliasTarget
-from python_condor.entity_target import EntityTarget
-from python_condor.package_hash_target import PackageHashTarget
-from python_condor.package_name_target import PackageNameTarget
-from python_condor.transaction_scheduling import TransactionScheduling
 from .constants import JsonName
+from .entity_alias_target import EntityAliasTarget
+from .entity_target import EntityTarget
 from .named_arg import NamedArg
+from .package_hash_target import PackageHashTarget
+from .package_name_target import PackageNameTarget
+from .transaction_scheduling import TransactionScheduling
 from .transaction_entry_point import TransactionEntryPoint
 
 

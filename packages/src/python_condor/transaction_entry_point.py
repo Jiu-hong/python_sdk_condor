@@ -1,7 +1,5 @@
-from .utils import serialize_string, CalltableSerialization
-
 from .constants import EntryPointKind, JsonName
-
+from .utils import CalltableSerialization, serialize_string
 
 ENTYPOINT = EntryPointKind()
 VALID_ALLOWD_ENTRY_POINTS = (
@@ -15,6 +13,10 @@ class TransactionEntryPoint:
         if entry_point not in VALID_ALLOWD_ENTRY_POINTS:
             raise ValueError(
                 f"Invalid input: {entry_point}. Allowed values are: {VALID_ALLOWD_ENTRY_POINTS}")
+        if entry_point == ENTYPOINT.CUSTOM:
+            if arg is None:
+                raise ValueError(
+                    "Entrypoint name cannot be empty for Custom.")
         self.entry_point = entry_point
         self.arg = arg
 

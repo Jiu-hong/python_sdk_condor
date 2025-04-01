@@ -11,7 +11,7 @@ from python_condor.entity_target import EntityTarget
 from python_condor.pricing_mode import PricingMode
 from python_condor.transaction_entry_point import TransactionEntryPoint
 from python_condor.transaction_scheduling import TransactionScheduling
-from python_condor.transaction_target import TransactionTarget
+
 
 from python_condor.constants import JsonName, AlgoKind
 from python_condor.keys import KeyAlgorithm, get_key_pair_from_pem_file, get_signature

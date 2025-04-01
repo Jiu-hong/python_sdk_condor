@@ -1,16 +1,11 @@
-from .utils import CalltableSerialization
 from .constants import JsonName, RuntimeKind
-
+from .utils import CalltableSerialization
 
 JSONNAME = JsonName()
 RUNTIME = RuntimeKind()
 
 
 class TransactionNativeTarget:
-    # def __init__(self, runtime, *id):
-    #     self.runtime = runtime
-    #     self.id = TransactionInvocationTarget(*id)
-
     def to_bytes(self):
         table = CalltableSerialization()
         # table.addField(0, CLU8(0).serialize())

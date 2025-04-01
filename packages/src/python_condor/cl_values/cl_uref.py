@@ -8,7 +8,6 @@ class CLURef(CLValue, CLAtomic):
     def __init__(self, data):
         # self.data = data
         temp = data.split('-')
-        print("temp[2]:", temp[2])
         if temp[0] != 'uref':
             # prefix should be uref
             raise ValueError(

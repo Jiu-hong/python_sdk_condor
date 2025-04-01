@@ -86,8 +86,6 @@ def get_key_pair_from_pem_file(
     fpath: str,
     algo: KeyAlgorithm = DEFAULT_KEY_ALGO
 ) -> typing.Tuple[PrivateKeyBytes, PublicKeyBytes]:
-    print("fpath:", fpath)
-    print("algo:", algo)
     """Returns an ECC key pair derived from a previously persisted PEM file.
 
     :param fpath: PEM file path.

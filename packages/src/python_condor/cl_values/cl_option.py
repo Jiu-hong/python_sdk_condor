@@ -13,7 +13,6 @@ class CLOption(CLValue):
     tag = TAG.CLOption.value
 
     def __init__(self, *data: CLValue | None) -> None:
-        print("data is here:", data)
         # Some
         if len(data) == 1:
             if not isinstance(data[0], CLValue):

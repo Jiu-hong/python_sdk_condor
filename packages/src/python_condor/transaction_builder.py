@@ -68,25 +68,25 @@ class NativeBuilder(TransactionBuilder):
 
 class ContractCallBuilder(TransactionBuilder):
 
-    def by_contract_hash(self, contract_hash: str) -> ContractCallBuilder:
-        target = EntityTarget(RUNTIMEKIND.VMCASPERV1, contract_hash)
+    def by_contract_hash(self, contract_hash: str, vm=RUNTIMEKIND.VMCASPERV1) -> ContractCallBuilder:
+        target = EntityTarget(vm, contract_hash)
         self.target = target
         return self
 
-    def by_contract_name(self, contract_name: str) -> ContractCallBuilder:
-        target = EntityAliasTarget(RUNTIMEKIND.VMCASPERV1, contract_name)
+    def by_contract_name(self, contract_name: str, vm=RUNTIMEKIND.VMCASPERV1) -> ContractCallBuilder:
+        target = EntityAliasTarget(vm, contract_name)
         self.target = target
         return self
 
-    def by_package_hash(self, package_hash, version: int = None) -> ContractCallBuilder:
+    def by_package_hash(self, package_hash, version: int = None, vm=RUNTIMEKIND.VMCASPERV1) -> ContractCallBuilder:
         target = PackageHashTarget(
-            RUNTIMEKIND.VMCASPERV1, package_hash, version)
+            vm, package_hash, version)
         self.target = target
         return self
 
-    def by_package_name(self, package_name: str, version: int = None) -> ContractCallBuilder:
+    def by_package_name(self, package_name: str, version: int = None, vm=RUNTIMEKIND.VMCASPERV1) -> ContractCallBuilder:
         target = PackageNameTarget(
-            RUNTIMEKIND.VMCASPERV1, package_name, version)
+            vm, package_name, version)
         self.target = target
         return self
 
@@ -100,8 +100,8 @@ class SessionCallBuilder(TransactionBuilder):
         self.entry_point = TransactionEntryPoint(ENTRYPOINT.CALL)
         super().__init__(data)
 
-    def module_bytes(self, module_bytes: str, is_install_upgrade: bool = False) -> SessionCallBuilder:
+    def module_bytes(self, module_bytes: str, is_install_upgrade: bool = False, vm=RUNTIMEKIND.VMCASPERV1) -> SessionCallBuilder:
         target = TransactionSessionTarget(
-            RUNTIMEKIND.VMCASPERV1, module_bytes, is_install_upgrade)
+            vm, module_bytes, is_install_upgrade)
         self.target = target
         return self

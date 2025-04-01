@@ -37,7 +37,6 @@ class CLTuple2(CLTupleBase):
 
     def __init__(self, data: tuple):
         super().__init__(data)
-        print("data:", data)
         if len(data) != Length.CLTuple2.value:
             raise ValueError(
                 f"Input tuple length is {len(data)}. Allowed CLTuple2 length is 2.")

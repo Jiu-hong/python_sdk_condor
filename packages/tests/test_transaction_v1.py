@@ -3,7 +3,7 @@ from datetime import datetime
 from python_condor import KeyAlgorithm, TransactionV1, TransactionV1Payload, TransactionEntryPoint, EntityAliasTarget, PricingMode, TransactionScheduling, CLOption, CLTuple3, CLString, CLBool, CLURef, RESULTHOLDER
 
 
-# ===== transaction v1payload =====
+# ===== transaction v1 =====
 args = {"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"))),
     "arg2": CLOption(None, CLString(RESULTHOLDER()))}
@@ -11,7 +11,6 @@ scheduling = TransactionScheduling()
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 pricing_mode = PricingMode("Classic", 200000000000)
 target1 = EntityAliasTarget("VmCasperV1", "accesscontract")
-print("target1 to_bytes()", target1.to_bytes().hex())
 entrypoint1 = TransactionEntryPoint("Custom", "test2")
 
 transaction_v1payload = TransactionV1Payload(args, target1,
@@ -19,17 +18,6 @@ transaction_v1payload = TransactionV1Payload(args, target1,
 
 transactionv1 = TransactionV1(
     transaction_v1payload, [("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
-
-
-def test_transactionv1_to_bytes():
-    result = transactionv1.byteHash()
-    assert result == "f2a4859da51264535b47ab93e775672e0e38e4fe7c36596309a4e52de8f787cb"
-
-
-def test_transactionv1_to_json():
-    result = transactionv1.to_json()
-    assert result == transactionv1_json
-
 
 transactionv1_json = {'transaction': {'Version1': {'approvals': [{'signature': '0141b5e6ee2b5784381844a55ffc274e68ffcc28fc4a99f409e66cfae034e16c04f77622f61d885316f90c64c4dd693c99e8716ebabc341143d23cd62f45dafb09',
                                                                   'signer': '017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5'}],
@@ -57,3 +45,13 @@ transactionv1_json = {'transaction': {'Version1': {'approvals': [{'signature': '
                                                                                                    'standard_payment': True}},
                                                                'timestamp': '2025-03-26T03:11:48.829Z',
                                                                'ttl': '30m'}}}}
+
+
+def test_transactionv1_to_bytes():
+    result = transactionv1.byteHash()
+    assert result == "f2a4859da51264535b47ab93e775672e0e38e4fe7c36596309a4e52de8f787cb"
+
+
+def test_transactionv1_to_json():
+    result = transactionv1.to_json()
+    assert result == transactionv1_json

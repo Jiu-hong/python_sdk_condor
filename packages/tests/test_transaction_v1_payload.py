@@ -5,7 +5,6 @@ from python_condor import TransactionV1Payload, TransactionEntryPoint, EntityAli
 
 # ===== transaction v1payload =====
 
-
 args = {"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"))),
     "arg2": CLOption(None, CLString(RESULTHOLDER()))}
@@ -13,7 +12,7 @@ scheduling = TransactionScheduling()
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 pricing_mode = PricingMode("Classic", 200000000000)
 target1 = EntityAliasTarget("VmCasperV1", "accesscontract")
-print("target1 to_bytes()", target1.to_bytes().hex())
+
 entrypoint1 = TransactionEntryPoint("Custom", "test2")
 
 transaction_v1payload = TransactionV1Payload(args, target1,

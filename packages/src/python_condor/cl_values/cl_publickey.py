@@ -7,14 +7,16 @@ from ..constants import TAG
 class CLPublicKey(CLValue, CLAtomic):
     tag = TAG.CLPublicKey.value
 
-    def serialize(self):
+    def __init__(self, data):
         regx = "(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})"
         pattern = re.compile(regx)
-        result = pattern.fullmatch(self.data)
+        result = pattern.fullmatch(data)
         if not isinstance(result, re.Match):
-            # incorrect publickey should be 01xxx(64length) or 02xxx(66length)
             raise ValueError(
                 "publickey should be 01xxx(64 length) or 02xxx(66 length)")
+        super().__init__(data)
+
+    def serialize(self):
         return bytes.fromhex(self.data)
 
     # def cl_value(self):

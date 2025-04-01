@@ -24,8 +24,12 @@ class TransactionStoredTarget:
 # ok
     def to_json(self):
         result = {}
-        result[JSONNAME.STORED] = {
+        result_inner = {}
+
+        result_inner[JSONNAME.STORED] = {
             **self.id.to_json(),
             JSONNAME.RUNTIME: self.runtime
         }
+        result[JSONNAME.TARGET] = result_inner
+
         return result

@@ -3,6 +3,10 @@ import python_condor.cl_values.cl_basetype as cl_baseType
 from ..constants import RESULTHOLDER
 
 
+def serialize_string(data):
+    content = bytearray(data, encoding="utf-8")
+    bytes_len = int(len(content)).to_bytes(4, byteorder='little')
+    return bytes_len+content
 # def deep_v2(data):
 #     result = ""
 #     if isinstance(data, cl_baseType.CLValue):

@@ -1,3 +1,4 @@
+from python_condor.transaction_native_target import TransactionNativeTarget
 from .call_table_serialization import CalltableSerialization
 from .cl_values import CLU8
 from .constants import JsonName, TargetKind
@@ -22,9 +23,11 @@ class TransactionTarget:
     def to_bytes(self):
         match self.target_kind:
             case CONST.NATIVE:
-                table = CalltableSerialization()
-                table.addField(0, CLU8(0).serialize())
-                return table.to_bytes()
+                # table = CalltableSerialization()
+                # # table.addField(0, CLU8(0).serialize())
+                # table.addField(0, int(0).to_bytes())
+                # return table.to_bytes()
+                return TransactionNativeTarget().to_bytes()
             case CONST.STORED:
                 return TransactionStoredTarget(self.runtime, *self.args).to_bytes()
             case CONST.SESSION:

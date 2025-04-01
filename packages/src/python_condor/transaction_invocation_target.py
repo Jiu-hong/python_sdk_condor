@@ -1,8 +1,8 @@
-from .by_package_hash_invocation_target import ByPackageHashInvocationTarget
-from .by_package_name_invocation_target import ByPackageNameInvocationTarget
+from .package_hash_target import PackageHashTarget
+from .package_name_target import PackageNameTarget
 from .cl_values import CLU8, CLString
-from .invocable_entity_alias_target import InvocableEntityAliasTarget
-from .invocable_entity_target import InvocableEntityTarget
+from .entity_alias_target import EntityAliasTarget
+from .entity_target import EntityTarget
 
 
 from .constants import JsonName, InvocationKind
@@ -31,7 +31,7 @@ class TransactionInvocationTarget:
                 # table.addField(0, CLU8(0).serialize()).\
                 #     addField(1, bytes.fromhex(self.args[0]))
                 # return table.to_bytes()
-                return InvocableEntityTarget(
+                return EntityTarget(
                     *self.args).to_bytes()
 
             case CONST.INVOCABLEENTITYALIAS:
@@ -40,16 +40,15 @@ class TransactionInvocationTarget:
                 #     addField(1, CLString(
                 #         *self.args).serialize())
                 # return table.to_bytes()
-                return InvocableEntityAliasTarget(
+                return EntityAliasTarget(
                     *self.args).to_bytes()
 
             case CONST.PACKAGE:
-                return ByPackageHashInvocationTarget(
+                return PackageHashTarget(
                     *self.args).to_bytes()
 
             case CONST.PACKAGEALIAS:
-                print("self.args:", self.args)
-                return ByPackageNameInvocationTarget(
+                return PackageNameTarget(
                     *self.args).to_bytes()
 
     def to_json(self):
@@ -57,19 +56,19 @@ class TransactionInvocationTarget:
         result = {}
         match self.invocation_kind:
             case CONST.INVOCABLEENTITY:
-                target = InvocableEntityTarget(
+                target = EntityTarget(
                     *self.args).to_json()
 
             case CONST.INVOCABLEENTITYALIAS:
-                target = InvocableEntityAliasTarget(
+                target = EntityAliasTarget(
                     *self.args).to_json()
 
             case CONST.PACKAGE:
-                target = ByPackageHashInvocationTarget(
+                target = PackageHashTarget(
                     *self.args).to_json()
 
             case CONST.PACKAGEALIAS:
-                target = ByPackageNameInvocationTarget(
+                target = PackageNameTarget(
                     *self.args).to_json()
 
         # result["Stored"] = {

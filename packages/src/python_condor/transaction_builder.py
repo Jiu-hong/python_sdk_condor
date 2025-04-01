@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+from python_condor.entity_alias_target import EntityAliasTarget
+from python_condor.entity_target import EntityTarget
+from python_condor.package_hash_target import PackageHashTarget
+from python_condor.package_name_target import PackageNameTarget
+
 from .constants import EntryPointKind, InvocationKind, PricingModeKind, RuntimeKind, TargetKind
 
 
@@ -57,26 +62,27 @@ class ContractCallBuilder(TransactionBuilder):
 
     def by_contract_hash(self, contract_hash: str) -> ContractCallBuilder:
 
-        target = TransactionTarget(RUNTIMEKIND.VMCASPERV1, TARGETKIND.STORED, INVOCATIONKIND.INVOCABLEENTITY,
-                                   contract_hash)
+        # target = TransactionTarget(RUNTIMEKIND.VMCASPERV1, TARGETKIND.STORED, INVOCATIONKIND.INVOCABLEENTITY,
+        #                            contract_hash)
+        target = EntityTarget(RUNTIMEKIND.VMCASPERV1, contract_hash)
         self.target = target
+
         return self
 
     def by_contract_name(self, contract_name: str) -> ContractCallBuilder:
-        target = TransactionTarget(RUNTIMEKIND.VMCASPERV1, TARGETKIND.STORED, INVOCATIONKIND.INVOCABLEENTITYALIAS,
-                                   contract_name)
+        target = EntityAliasTarget(RUNTIMEKIND.VMCASPERV1, contract_name)
         self.target = target
         return self
 
     def by_package_hash(self, package_hash, version: int = None) -> ContractCallBuilder:
-        target = TransactionTarget(RUNTIMEKIND.VMCASPERV1, TARGETKIND.STORED, INVOCATIONKIND.PACKAGE,
-                                   package_hash, version)
+        target = PackageHashTarget(
+            RUNTIMEKIND.VMCASPERV1, package_hash, version)
         self.target = target
         return self
 
     def by_package_name(self, package_name: str, version: int = None) -> ContractCallBuilder:
-        target = TransactionTarget(RUNTIMEKIND.VMCASPERV1, TARGETKIND.STORED, INVOCATIONKIND.PACKAGEALIAS,
-                                   package_name, version)
+        target = PackageNameTarget(
+            RUNTIMEKIND.VMCASPERV1, package_name, version)
         self.target = target
         return self
 

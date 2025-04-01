@@ -15,5 +15,6 @@ transaction_json = builder.runtime_args(args). \
     entry_point("Transfer"). \
     from_publickey(initiatorAddr). \
     payment(2500000000).build()
-a = PutTransction(url, transaction_json)
-print(a.run())
+
+transaction_result = PutTransction(url, transaction_json).run()
+print(transaction_result)

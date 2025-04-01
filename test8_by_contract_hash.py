@@ -15,10 +15,10 @@ args = {"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "arg2": CLOption(None, CLString(RESULTHOLDER()))}
 scheduling = TransactionScheduling()
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
-pricing_mode = PricingMode("Classic", 200000000000)
+pricing_mode = PricingMode("Classic", 2500000000)
 target1 = EntityTarget(
     "VmCasperV1", "b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6")
-print("target1 to_bytes()", target1.to_bytes().hex())
+
 entrypoint1 = TransactionEntryPoint("Custom", "test2")
 
 payload = TransactionV1Payload(args, target1,
@@ -27,6 +27,6 @@ payload = TransactionV1Payload(args, target1,
 transaction = TransactionV1(
     payload, [("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
 url = "http://node.integration.casper.network:7777/rpc"
-# print("transaction_to_json1:", json.dumps(transaction.to_json()))
-a = PutTransction(url, transaction.to_json())
-print(a.run())
+
+transaction_result = PutTransction(url, transaction.to_json()).run()
+print(transaction_result)

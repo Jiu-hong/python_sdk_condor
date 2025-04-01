@@ -1,6 +1,6 @@
 import requests
 
-from ..constants.const_rpc import RpcMethod
+from ..constants import RpcMethod
 # from ..constants import RpcMethod
 
 RPCMETHOD = RpcMethod()
@@ -15,14 +15,14 @@ RPCMETHOD = RpcMethod()
 # print(result)
 
 
-class PutTransction:
-    def __init__(self, url, transactionV1: dict):
+class PutDeploy:
+    def __init__(self, url, deploy: dict):
         self.url = url
         self.rpc_payload = {
             "jsonrpc": "2.0",
             "id": 1,
-            "method": RPCMETHOD.ACCOUNT_PUT_TRANSACTION,
-            "params": transactionV1}
+            "method": RPCMETHOD.ACCOUNT_PUT_DEPLOY,
+            "params": deploy}
 
     def run(self):
         x = requests.post(self.url, json=self.rpc_payload)

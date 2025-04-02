@@ -2,5 +2,5 @@ from .cl_values import CLI32, CLI64, CLU128, CLU16, CLU256, CLU32, CLU64, CLU512
 from .constants import NoneHolder
 from .deployment import SessionContractHashBuilder, SessionContractNameBuilder, SessionPackageNameBuilder, SessionPackageHashBuilder, SessionModuleBytesBuilder, DeployNamedArg, DeployHeader, Deploy, SessionModuleBytes, SessionPackageHash, SessionContractHash, SessionPackageName, SessionContractName, SessionPayment
 from .keys import KeyAlgorithm
-from .rpc import PutTransction, PutDeploy, GetTransction, GetDeploy
+from .rpc import PutTransction, PutDeploy, GetTransction, GetDeploy, QUERY_GLOBAL_STATE
 from .transaction import PricingMode, EntityAliasTarget, EntityTarget, PackageHashTarget, PackageNameTarget, TransactionSessionTarget, TransactionNativeTarget, TransactionRuntime, TransactionScheduling, TransactionEntryPoint, TransactionV1Payload, TransactionV1, ContractCallBuilder, SessionCallBuilder, NativeBuilder

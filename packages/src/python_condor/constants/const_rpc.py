@@ -4,6 +4,10 @@ from .base import constant
 
 class RpcMethod(object):
     @constant
+    def QUERY_GLOBAL_STATE():
+        return "query_global_state"
+
+    @constant
     def ACCOUNT_PUT_TRANSACTION():
         return "account_put_transaction"
 

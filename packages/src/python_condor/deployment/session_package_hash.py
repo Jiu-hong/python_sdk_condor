@@ -43,7 +43,7 @@ class SessionPackageHash:
         return result
 
     def to_json(self):
-        result = {JSONNAME.SESSION: {
+        result = {JSONNAME.DEPLOY_SESSION: {
             JSONNAME.STOREDVERSIONEDCONTRACTBYHASH: {
                 JSONNAME.HASH: self.package_hash,
                 JSONNAME.VERSION: self.version,

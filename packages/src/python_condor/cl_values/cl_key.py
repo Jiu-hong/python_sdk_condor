@@ -1,4 +1,3 @@
-
 from .cl_basetype import CLAtomic, CLValue
 from ..constants import TAG
 

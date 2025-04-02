@@ -35,7 +35,7 @@ class SessionPackageName:
         return result
 
     def to_json(self):
-        result = {JSONNAME.SESSION: {
+        result = {JSONNAME.DEPLOY_SESSION: {
             JSONNAME.STOREDVERSIONEDCONTRACTBYNAME: {
                 JSONNAME.NAME: self.package_name,
                 JSONNAME.VERSION: self.version,

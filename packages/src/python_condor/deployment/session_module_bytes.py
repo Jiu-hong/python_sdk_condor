@@ -23,7 +23,7 @@ class SessionModuleBytes:
         return result
 
     def to_json(self):
-        result = {JSONNAME.SESSION: {
+        result = {JSONNAME.DEPLOY_SESSION: {
             JSONNAME.MODULEBYTES: {
                 JSONNAME.MODULE_BYTES: self.module_bytes.hex(),
                 JSONNAME.ARGS: self.runtime_args.to_json()

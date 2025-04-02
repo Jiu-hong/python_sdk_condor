@@ -99,7 +99,11 @@ class JsonName(object):
         return "scheduling"
 
     @constant
-    def SESSION():
+    def TRANSACTION_SESSION():
+        return "Session"
+
+    @constant
+    def DEPLOY_SESSION():
         return "session"
 
     @constant

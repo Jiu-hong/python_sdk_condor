@@ -1,7 +1,5 @@
-from python_condor.cl_values.cl_basetype import CLValue
-from python_condor.cl_values.cl_number import CLBool
-from python_condor.cl_values.cl_string import CLString
-from python_condor.constants.base import TAG, Length
+from .cl_basetype import CLValue
+from ..constants import TAG, Length
 
 
 class CLTupleBase(CLValue):
@@ -42,17 +40,6 @@ class CLTuple2(CLTupleBase):
                 f"Input tuple length is {len(data)}. Allowed CLTuple2 length is 2.")
 
 
-# CLValue.newCLTuple2((CLValue.newCLValueBool(true)), CLValue.newCLString("Hello")))
-# expected
-# 0a000000010500000048656c6c6f13000a
-# actual
-# 0a000000010500000048656c6c6f13000a
-# tuple2 = CLTuple2((CLBool(True), CLString("Hello")))
-# print("tuple2 to_json", tuple2.to_json())
-# print("tuple2 cl_value()", tuple2.cl_value())
-# a = CLTuple2((CLString("helloworld"),))
-
-
 class CLTuple3(CLTupleBase):
     tag = TAG.CLTuple3.value
 
@@ -61,32 +48,3 @@ class CLTuple3(CLTupleBase):
         if len(data) != Length.CLTuple3.value:
             raise ValueError(
                 f"Input tuple length is {len(data)}. Allowed CLTuple3 length is 3.")
-
-
-# CLValue.newCLTuple3((CLValue.newCLValueBool(true)), CLValue.newCLString("Hello"), CLValue.newCLInt32(10))
-# expected
-# 0e000000010500000048656c6c6f0a00000014000a01
-
-# a = CLTuple3((CLBool(True), CLString("Hello"), CLI32(10)))
-# print(a.to_json())
-# print(a.cl_value())
-# a = CLTuple2((CLU32(1), CLString("hello")))
-# print(a)
-# print(a.value())
-
-# a = CLTuple3((CLU32(1), CLString("hello"), CLU64(1)))
-# print(a)
-# print(a.value())
-# a = CLTuple3((CLU32(1), CLString("Hello, World!"), CLBool("true")))
-# print(a.serialize())
-# print(a)
-# print(a.serialize())
-# # todo
-# a = CLTuple2(())
-# print(a.serialize())
-# a = CLTuple2(1)
-# print(type(a))
-# a = CLTuple2((CLU8(3), CLString("Jim")))
-# print(a.serialize())
-# b = CLTuple2((CLU8(2), CLString("Jack")))
-# print(b.serialize())

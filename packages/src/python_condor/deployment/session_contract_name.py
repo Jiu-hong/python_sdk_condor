@@ -26,7 +26,7 @@ class SessionContractName:
         return result
 
     def to_json(self):
-        result = {JSONNAME.SESSION: {
+        result = {JSONNAME.DEPLOY_SESSION: {
             JSONNAME.STOREDCONTRACTBYNAME: {
                 JSONNAME.NAME: self.contract_name,
                 JSONNAME.ENTRYPOINT: self.entrypoint,

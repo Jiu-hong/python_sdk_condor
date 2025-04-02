@@ -35,7 +35,7 @@ class SessionContractHash:
         return result
 
     def to_json(self):
-        result = {JSONNAME.SESSION: {
+        result = {JSONNAME.DEPLOY_SESSION: {
             JSONNAME.STOREDCONTRACTBYHASH: {
                 JSONNAME.HASH: self.contract_hash,
                 JSONNAME.ENTRYPOINT: self.entrypoint,

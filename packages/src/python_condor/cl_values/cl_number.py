@@ -1,6 +1,6 @@
 from .cl_basetype import CLAtomic, CLValue
 from ..constants import RESULTHOLDER, TAG
-from ..exceptions import ExceptionExceedMaxValue
+from .exceptions import ExceptionExceedMaxValue
 
 
 class CLNumber(CLValue, CLAtomic):

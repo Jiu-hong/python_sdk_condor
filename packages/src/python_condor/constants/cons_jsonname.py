@@ -3,6 +3,30 @@ from .base import constant
 
 class JsonName(object):
     @constant
+    def PARSED():
+        return "parsed"
+
+    @constant
+    def BYTES():
+        return "bytes"
+
+    @constant
+    def CL_TYPE():
+        return "cl_type"
+
+    @constant
+    def DEPLOY():
+        return "deploy"
+
+    @constant
+    def HEADER():
+        return "header"
+
+    @constant
+    def ACCOUNT():
+        return "account"
+
+    @constant
     def APPROVALS():
         return "approvals"
 
@@ -121,6 +145,18 @@ class JsonName(object):
     @constant
     def PAYMENT_AMOUNT():
         return "payment_amount"
+
+    @constant
+    def GAS_PRICE():
+        return "gas_price"
+
+    @constant
+    def BODY_HASH():
+        return "body_hash"
+
+    @constant
+    def DEPENDENCIES():
+        return "dependencies"
 
     @constant
     def GAS_PRICE_TOLERACE():

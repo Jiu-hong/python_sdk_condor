@@ -13,11 +13,11 @@ from python_condor.utils import serialize_string
 
 
 class SessionPackageHash:
-    def __init__(self, package_hash_hex, version, entrypoint, runtime_args: NamedArg):
+    def __init__(self, package_hash_hex, version, entrypoint, runtime_args):
         self.package_hash_hex = package_hash_hex
         self.version = version
         self.entrypoint = entrypoint
-        self.runtime_args = runtime_args
+        self.runtime_args = NamedArg(runtime_args)
 
     def to_bytes(self):
         StoredPackageByNameTag = '03'
@@ -30,7 +30,7 @@ class SessionPackageHash:
         result = StoredPackageByNameTag + self.package_hash_hex + \
             version_bytes.hex() + \
             CLString(self.entrypoint).serialize().hex() + \
-            NamedArg(self.runtime_args).serialize()
+            self.runtime_args.serialize()
         return result
 
     def to_json(self):
@@ -47,21 +47,21 @@ class SessionPackageHash:
 
 class SessionPayment:
     def __init__(self, payment_amount):
-        self.payment_amount = payment_amount
+        self.payment_amount = NamedArg({"amount": CLU512(payment_amount)})
 
     def to_bytes(self):
         ModuleBytesTag = '00'
         # # modulebytes 0 -> '00000000'
         result = ModuleBytesTag + \
             '00000000' + \
-            NamedArg({"amount": CLU512(self.payment_amount)}).serialize()
+            self.payment_amount.serialize()
         return result
 
     def to_json(self):
         result = {"payment": {
             "ModuleBytes": {
                 "module_bytes": "",
-                "args": NamedArg({"amount": CLU512(self.payment_amount)}).to_json()
+                "args": self.payment_amount.to_json()
             }
         }}
         return result

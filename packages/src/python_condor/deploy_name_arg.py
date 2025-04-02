@@ -7,7 +7,10 @@
 #     return Ok(concat([name, value.unwrap()]));
 #   }
 
+from python_condor.constants.cons_jsonname import JsonName
 from .cl_values import *
+
+JSONNAME = JsonName()
 
 
 class NamedArg:
@@ -28,12 +31,12 @@ class NamedArg:
 
     def to_json(self):
         arg_list = []
-        for key, value in self.args:
+        for key, value in self.args.items():
             my_dict = {}
-            my_dict["cl_type"] = value.to_json()
-            my_dict["bytes"] = value.serialize().hex()
-            my_dict["parsed"] = value.value()
-            arg_list.append(key, my_dict)
+            my_dict[JSONNAME.CL_TYPE] = value.to_json()
+            my_dict[JSONNAME.BYTES] = value.serialize().hex()
+            my_dict[JSONNAME.PARSED] = value.value()
+            arg_list.append((key, my_dict))
         return arg_list
 
 

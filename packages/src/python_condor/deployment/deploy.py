@@ -18,7 +18,7 @@ PREFIX = AlgoKind()
 
 
 class Deploy:
-    def __init__(self, header: DeployHeader, payment: SessionPayment, session: SessionPackageHash, signers_keypaths_algo: list[(str, KeyAlgorithm)]):
+    def __init__(self, header: DeployHeader, payment: SessionPayment, session, signers_keypaths_algo: list[(str, KeyAlgorithm)]):
         self.header = header
         self.payment = payment
         self.session = session
@@ -92,5 +92,5 @@ payment = SessionPayment(2500000000)
 deploy = Deploy(header, payment, session_packagehash, [
                 ("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
 
-a = deploy.to_json()
-print("a:", json.dumps(a))
+# a = deploy.to_json()
+# print("a:", json.dumps(a))

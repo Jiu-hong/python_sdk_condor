@@ -11,6 +11,10 @@ JSONNAME = JsonName()
 
 class SessionPackageName:
     def __init__(self, package_name, version, entrypoint, runtime_args):
+        if package_name == "":
+            raise ValueError("The package name shouldn't be empty.")
+        if entrypoint == "":
+            raise ValueError("The entrypoint shouldn't be empty.")
         self.package_name = package_name
         self.version = version
         self.entrypoint = entrypoint

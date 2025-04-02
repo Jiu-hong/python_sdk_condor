@@ -1,3 +1,4 @@
+import re
 from python_condor.cl_values.cl_number import CLU512
 
 from python_condor.constants.cons_jsonname import JsonName
@@ -8,8 +9,18 @@ JSONNAME = JsonName()
 
 
 class SessionPackageHash:
-    def __init__(self, package_hash_hex, version, entrypoint, runtime_args):
-        self.package_hash_hex = package_hash_hex
+    def __init__(self, package_hash, version, entrypoint, runtime_args):
+        # check package_hash
+        regx = "([0-9a-z]{64})"
+        pattern = re.compile(regx)
+        result = pattern.fullmatch(package_hash)
+        if not isinstance(result, re.Match):
+            raise ValueError(
+                "package-hash should only contain alphabet and number(64 length)")
+        # check entrypoint
+        if entrypoint == "":
+            raise ValueError("The entrypoint shouldn't be empty.")
+        self.package_hash = package_hash
         self.version = version
         self.entrypoint = entrypoint
         self.runtime_args = DeployNamedArg(runtime_args)
@@ -25,7 +36,7 @@ class SessionPackageHash:
             version_bytes = int(1).to_bytes() + \
                 self.version.to_bytes(4, byteorder='little')
 
-        result = StoredPackageByHashTag + bytes.fromhex(self.package_hash_hex) + \
+        result = StoredPackageByHashTag + bytes.fromhex(self.package_hash) + \
             version_bytes + \
             serialize_string(self.entrypoint) + \
             self.runtime_args.serialize()
@@ -35,7 +46,7 @@ class SessionPackageHash:
     def to_json(self):
         result = {JSONNAME.SESSION: {
             JSONNAME.STOREDVERSIONEDCONTRACTBYHASH: {
-                JSONNAME.HASH: self.package_hash_hex,
+                JSONNAME.HASH: self.package_hash,
                 JSONNAME.VERSION: self.version,
                 JSONNAME.ENTRYPOINT: self.entrypoint,
                 JSONNAME.ARGS: self.runtime_args.to_json()
@@ -52,16 +63,16 @@ class SessionPackageHash:
 #     return h.hexdigest()
 
 # session part
-package_hash_hex = "051c3c2fef7fa8fa459c7e99717d566b723e30a17005100f58ceae130d168ef6"
+package_hash = "051c3c2fef7fa8fa459c7e99717d566b723e30a17005100f58ceae130d168ef6"
 entrypoint = "apple"
 # runtime_args = {"name": CLString("my_public_key"), "value": CLKey(
 #     "account-hash-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20")}
 runtime_args = {}
 session_packagehash = SessionPackageHash(
-    package_hash_hex, None, entrypoint, runtime_args)
+    package_hash, None, entrypoint, runtime_args)
 session_hexstring = session_packagehash.to_bytes()
 # session_hexstring = serialize_package_hash(
-#     package_hash_hex, None, entrypoint, runtime_args)
+#     package_hash, None, entrypoint, runtime_args)
 # payment part
 # payment_hexstring = SessionPayment(2500000000).to_bytes()
 # print("body_hash:")

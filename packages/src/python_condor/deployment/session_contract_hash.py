@@ -27,8 +27,8 @@ class SessionContractHash:
             raise ValueError(
                 "contract-hash should only contain alphabet and number(64 length)")
         # check entrypoint
-        if not isinstance(entrypoint, str):
-            raise TypeError("The entrypoint should be of type str.")
+        if entrypoint == "":
+            raise ValueError("The entrypoint shouldn't be empty.")
         self.contract_hash = contract_hash
         self.entrypoint = entrypoint
         self.runtime_args = DeployNamedArg(runtime_args)

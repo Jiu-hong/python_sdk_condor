@@ -1,8 +1,6 @@
 import pytest
 
-from python_condor import DeployNamedArg
-from python_condor.cl_values.cl_number import CLU256
-from python_condor.cl_values.cl_string import CLString
+from python_condor import DeployNamedArg, CLU256, CLString
 
 
 # ===== DeployNamedArg =====

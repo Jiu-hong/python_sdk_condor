@@ -1,8 +1,6 @@
 import pytest
 
-from python_condor import SessionContractHash
-from python_condor.cl_values.cl_number import CLU256
-from python_condor.cl_values.cl_string import CLString
+from python_condor import SessionContractHash, CLU256, CLString
 
 
 # ===== SessionContractHash =====
@@ -39,8 +37,8 @@ def test_session_contract_hash_incorrect_hash_length():
 # === check entrypoint incorrect type==
 def test_session_contract_hash_incorrect_entry_type():
     contract_hash = "596b8749bb9434fbb87b1dd0614d1ca3342bf60af9b33c9eea5cd4b49bdd106b"
-    entrypoint = 123
+    entrypoint = ""
     runtime_args = {"arg1": CLU256(123), "arg2": CLString("hello")}
-    with pytest.raises(TypeError, match="The entrypoint should be of type str"):
+    with pytest.raises(ValueError, match="The entrypoint shouldn't be empty."):
         _ = SessionContractHash(
             contract_hash, entrypoint, runtime_args)

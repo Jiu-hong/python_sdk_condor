@@ -18,6 +18,10 @@ JSONNAME = JsonName()
 
 class SessionContractName:
     def __init__(self, contract_name,  entrypoint, runtime_args):
+        if contract_name == "":
+            raise ValueError("The contract name shouldn't be empty.")
+        if entrypoint == "":
+            raise ValueError("The entrypoint shouldn't be empty.")
         self.contract_name = contract_name
         self.entrypoint = entrypoint
         self.runtime_args = DeployNamedArg(runtime_args)

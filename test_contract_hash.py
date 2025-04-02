@@ -19,7 +19,7 @@ header = DeployHeader(
 contract_hash = "596b8749bb9434fbb87b1dd0614d1ca3342bf60af9b33c9eea5cd4b49bdd106b"
 entrypoint = "apple"
 runtime_args = {"arg1": CLU256(123), "arg2": CLString("hello")}
-# runtime_args = {}
+
 session_packagehash = SessionContractHash(
     contract_hash, entrypoint, runtime_args)
 session_hexstring = session_packagehash.to_bytes()

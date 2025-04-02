@@ -1,8 +1,6 @@
+from ..constants.cons_jsonname import JsonName
+from ..utils import serialize_string
 
-from python_condor.constants.base import TAG
-from python_condor.constants.cons_jsonname import JsonName
-from python_condor.utils import serialize_string
-from python_condor.cl_values import *
 
 JSONNAME = JsonName()
 
@@ -37,8 +35,8 @@ class DeployNamedArg:
         return args_list
 
 
-a = DeployNamedArg({"amount": CLU256(123), "owner": CLU256(
-    456), 'recipient': CLString("hello")})
+# a = DeployNamedArg({"amount": CLU256(123), "owner": CLU256(
+#     456), 'recipient': CLString("hello")})
 # print(a.serialize())
 # 0300000006000000616d6f756e74200000007b0000000000000000000000000000000000000000000000000000000000000007050000006f776e657220000000c8010000000000000000000000000000000000000000000000000000000000000709000000726563697069656e74090000000500000068656c6c6f0a
 # expect 0300000006000000616d6f756e7402000000017b07050000006f776e65720300000002c8010709000000726563697069656e74090000000500000068656c6c6f0a

@@ -1,6 +1,6 @@
-from python_condor.cl_values.cl_number import CLU512
-from python_condor.constants.cons_jsonname import JsonName
-from python_condor.deployment.deploy_name_arg import DeployNamedArg
+from ..cl_values import CLU512
+from ..constants import JsonName
+from .deploy_name_arg import DeployNamedArg
 
 
 JSONNAME = JsonName()
@@ -15,6 +15,7 @@ class SessionPayment:
         ModuleBytesTag = int(0).to_bytes()
         # length is 0
         module_bytes_length = int(0).to_bytes(4, byteorder='little')
+        # module_bytes is null
         moduleBytes = b''
         result = ModuleBytesTag + module_bytes_length + \
             moduleBytes + \

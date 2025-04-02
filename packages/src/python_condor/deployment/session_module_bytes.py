@@ -1,6 +1,5 @@
-from python_condor.cl_values.cl_number import CLU512
-from python_condor.constants.cons_jsonname import JsonName
-from python_condor.deployment.deploy_name_arg import DeployNamedArg
+from ..constants import JsonName
+from .deploy_name_arg import DeployNamedArg
 
 
 JSONNAME = JsonName()

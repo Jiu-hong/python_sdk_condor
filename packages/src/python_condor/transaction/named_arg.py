@@ -26,7 +26,7 @@ class NamedArg:
 # b = a.to_byte_with_named_arg()
 
 # c = NamedArg("arg2", CLResult(
-#     Ok(CLString("ABC")), Err(CLU32(RESULTHOLDER())), True))
+#     Ok(CLString("ABC")), Err(CLU32(NoneHolder())), True))
 # d = c.to_byte_with_named_arg()
 # print("d is:", d.hex())
 # print("b is:", b.hex())

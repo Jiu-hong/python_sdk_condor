@@ -1,6 +1,6 @@
 import pytest
 
-from python_condor import CLU32, CLBool, CLOption, CLString, CLTuple1, CLTuple2, CLTuple3, RESULTHOLDER
+from python_condor import CLU32, CLBool, CLOption, CLString, CLTuple1, CLTuple2, CLTuple3, NoneHolder
 
 
 # ===== CLTuple1 =====
@@ -68,7 +68,7 @@ def test_cltuple2_out_of_range():
 
 
 cltuple3 = CLTuple3(
-    (CLU32(1), CLOption(None, CLString(RESULTHOLDER())), CLOption(CLBool(True))))
+    (CLU32(1), CLOption(None, CLString(NoneHolder())), CLOption(CLBool(True))))
 
 
 def test_cltuple3_serialize():

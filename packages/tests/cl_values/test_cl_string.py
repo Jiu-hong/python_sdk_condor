@@ -1,6 +1,6 @@
 import pytest
 
-from python_condor import RESULTHOLDER, CLString
+from python_condor import NoneHolder, CLString
 
 
 # ===== CLString =====
@@ -27,10 +27,10 @@ def test_clstring_to_json():
     result = clstring.to_json()
     assert result == "String"
 
-# ==== RESULTHOLDER
+# ==== NoneHolder
 
 
-result_holder_clstring = CLString(RESULTHOLDER())
+result_holder_clstring = CLString(NoneHolder())
 
 
 def test_result_holder_to_json():

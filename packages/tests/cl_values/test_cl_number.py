@@ -1,6 +1,6 @@
 import pytest
 
-from python_condor import CLI32, CLI64, CLU128, CLU16, CLU256, CLU32, CLU512, CLU64, CLU8, CLBool, RESULTHOLDER
+from python_condor import CLI32, CLI64, CLU128, CLU16, CLU256, CLU32, CLU512, CLU64, CLU8, CLBool, NoneHolder
 
 # ===== CLBool =====
 # True
@@ -58,10 +58,10 @@ def test_false_to_json():
     result = clbool_false.to_json()
     assert result == "Bool"
 
-# ==== RESULTHOLDER
+# ==== NoneHolder
 
 
-result_holder_clbool = CLBool(RESULTHOLDER())
+result_holder_clbool = CLBool(NoneHolder())
 
 
 def test_result_holder_to_json():
@@ -102,8 +102,8 @@ def test_cli32_out_of_range():
         _ = CLI32(-2**31 - 1)
 
 
-# ==== RESULTHOLDER
-result_holder_cli32 = CLI32(RESULTHOLDER())
+# ==== NoneHolder
+result_holder_cli32 = CLI32(NoneHolder())
 
 
 def test_result_holder_to_json():
@@ -143,8 +143,8 @@ def test_cli64_out_of_range():
         _ = CLI64(-2**63 - 1)
 
 
-# ==== RESULTHOLDER
-result_holder_cli64 = CLI64(RESULTHOLDER())
+# ==== NoneHolder
+result_holder_cli64 = CLI64(NoneHolder())
 
 
 def test_result_holder_to_json():
@@ -184,8 +184,8 @@ def test_clu8_out_of_range():
         _ = CLU8(-1)
 
 
-# ==== RESULTHOLDER
-result_holder_clu8 = CLU8(RESULTHOLDER())
+# ==== NoneHolder
+result_holder_clu8 = CLU8(NoneHolder())
 
 
 def test_result_holder_to_json():
@@ -234,8 +234,8 @@ def test_clu32_out_of_range():
         _ = CLU32(-1)
 
 
-# ==== RESULTHOLDER
-result_holder_clu32 = CLU32(RESULTHOLDER())
+# ==== NoneHolder
+result_holder_clu32 = CLU32(NoneHolder())
 
 
 def test_result_holder_to_json():
@@ -275,8 +275,8 @@ def test_clu64_out_of_range():
         _ = CLU64(-1)
 
 
-# ==== RESULTHOLDER
-result_holder_clu64 = CLU64(RESULTHOLDER())
+# ==== NoneHolder
+result_holder_clu64 = CLU64(NoneHolder())
 
 
 def test_result_holder_to_json():
@@ -316,8 +316,8 @@ def test_clu128_out_of_range():
         _ = CLU128(-1)
 
 
-# ==== RESULTHOLDER
-result_holder_clu128 = CLU128(RESULTHOLDER())
+# ==== NoneHolder
+result_holder_clu128 = CLU128(NoneHolder())
 
 
 def test_result_holder_to_json():
@@ -357,8 +357,8 @@ def test_clu256_out_of_range():
         _ = CLU256(-1)
 
 
-# ==== RESULTHOLDER
-result_holder_clu256 = CLU256(RESULTHOLDER())
+# ==== NoneHolder
+result_holder_clu256 = CLU256(NoneHolder())
 
 
 def test_result_holder_to_json():
@@ -398,8 +398,8 @@ def test_clu256_out_of_range():
         _ = CLU512(-1)
 
 
-# ==== RESULTHOLDER
-result_holder_clu512 = CLU512(RESULTHOLDER())
+# ==== NoneHolder
+result_holder_clu512 = CLU512(NoneHolder())
 
 
 def test_result_holder_to_json():

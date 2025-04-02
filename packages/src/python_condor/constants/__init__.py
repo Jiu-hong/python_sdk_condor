@@ -1,4 +1,4 @@
-from .base import RESULTHOLDER, TAG, Length
+from .base import NoneHolder, TAG, Length
 from .cons_jsonname import JsonName
 from .cons_scheduling import SchedulingKind
 from .cons_target import TargetKind

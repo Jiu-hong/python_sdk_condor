@@ -1,13 +1,13 @@
 import pytest
 from datetime import datetime
-from python_condor import TransactionV1Payload, TransactionEntryPoint, EntityAliasTarget, PricingMode, TransactionScheduling, CLOption, CLTuple3, CLString, CLBool, CLURef, RESULTHOLDER
+from python_condor import TransactionV1Payload, TransactionEntryPoint, EntityAliasTarget, PricingMode, TransactionScheduling, CLOption, CLTuple3, CLString, CLBool, CLURef, NoneHolder
 
 
 # ===== transaction v1payload =====
 
 args = {"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"))),
-    "arg2": CLOption(None, CLString(RESULTHOLDER()))}
+    "arg2": CLOption(None, CLString(NoneHolder()))}
 scheduling = TransactionScheduling()
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 pricing_mode = PricingMode("Classic", 200000000000)

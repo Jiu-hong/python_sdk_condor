@@ -1,6 +1,6 @@
 import pytest
 
-from python_condor import CLString, CLOption, RESULTHOLDER
+from python_condor import CLString, CLOption, NoneHolder
 
 
 # ===== CLOption(CLString) =====
@@ -28,8 +28,8 @@ def test_cloption_string_to_json():
     assert result == {"Option": "String"}
 
 
-# ==== RESULTHOLDER
-result_holder_cloption_string = CLOption(CLString(RESULTHOLDER()))
+# ==== NoneHolder
+result_holder_cloption_string = CLOption(CLString(NoneHolder()))
 
 
 def test_result_holder_to_json():
@@ -38,7 +38,7 @@ def test_result_holder_to_json():
 
 
 # ===== CLOption(None) =====
-cloption_none = CLOption(None, CLString(RESULTHOLDER()))
+cloption_none = CLOption(None, CLString(NoneHolder()))
 
 
 def test_cloption_string_serialize():

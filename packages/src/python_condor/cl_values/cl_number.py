@@ -1,12 +1,12 @@
 from .cl_basetype import CLAtomic, CLValue
-from ..constants import RESULTHOLDER, TAG
+from ..constants import NoneHolder, TAG
 from .exceptions import ExceptionExceedMaxValue
 
 
 class CLNumber(CLValue, CLAtomic):
 
     def __init__(self, data):
-        if not isinstance(data, int) and not isinstance(data, RESULTHOLDER):
+        if not isinstance(data, int) and not isinstance(data, NoneHolder):
             raise TypeError(
                 f"Invalid type of input: {type(data)} for CLNumber. Allowed value is {int}")
         super().__init__(data)
@@ -19,7 +19,7 @@ class CLBool(CLValue, CLAtomic):
     tag = TAG.CLBool.value
 
     def __init__(self, data):
-        if not isinstance(data, bool) and not isinstance(data, RESULTHOLDER):
+        if not isinstance(data, bool) and not isinstance(data, NoneHolder):
             raise TypeError(
                 f"Invalid type of input: {type(data)} for CLBool. Allowed value is {bool}")
         super().__init__(data)
@@ -340,9 +340,3 @@ class CLByteArray:
 
     def serialize(self):
         pass
-
-
-# a = CLU32(RESULTHOLDER())
-# b = CLString(RESULTHOLDER())
-# print("a:", a.to_json())
-# print("b:", b.to_json())

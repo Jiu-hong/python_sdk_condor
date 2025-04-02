@@ -1,13 +1,13 @@
 import pytest
 from result import Err, Ok
 
-from python_condor import CLU32, CLU64, CLBool, CLResult, CLTuple2, CLString, CLOption, RESULTHOLDER
+from python_condor import CLU32, CLU64, CLBool, CLResult, CLTuple2, CLString, CLOption, NoneHolder
 
 
 # ===== CLResult OK =====
 
 clresult_ok = CLResult(Ok(CLOption(CLTuple2((CLString("hello"), CLU64(123))))),
-                       Err(CLU32(RESULTHOLDER())), True)
+                       Err(CLU32(NoneHolder())), True)
 
 
 def test_clresult_ok_serialize():
@@ -33,7 +33,7 @@ def test_clresult_ok_to_json():
 
 # # ===== CLResult Err =====
 clresult_err = CLResult(
-    Ok(CLBool(RESULTHOLDER())), Err(CLU32(10)), False)
+    Ok(CLBool(NoneHolder())), Err(CLU32(10)), False)
 
 
 def test_clresult_err_serialize():

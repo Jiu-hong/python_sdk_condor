@@ -1,12 +1,12 @@
 from .cl_basetype import CLAtomic, CLValue
-from ..constants import RESULTHOLDER, TAG
+from ..constants import NoneHolder, TAG
 
 
 class CLString(CLValue, CLAtomic):
     tag = TAG.CLString.value
 
     def __init__(self, data: str) -> None:
-        if not isinstance(data, str) and not isinstance(data, RESULTHOLDER):
+        if not isinstance(data, str) and not isinstance(data, NoneHolder):
             raise TypeError(
                 f"Invalid type of input: {type(data)} for CLString. Allowed value is {str}")
 

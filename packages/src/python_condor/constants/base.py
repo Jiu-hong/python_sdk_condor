@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class RESULTHOLDER():
+class NoneHolder():
     pass
 
 

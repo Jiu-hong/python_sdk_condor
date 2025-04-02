@@ -3,6 +3,18 @@ from .base import constant
 
 class JsonName(object):
     @constant
+    def AMOUNT():
+        return "amount"
+
+    @constant
+    def STOREDVERSIONEDCONTRACTBYHASH():
+        return "StoredVersionedContractByHash"
+
+    @constant
+    def MILLISECONDS():
+        return "milliseconds"
+
+    @constant
     def PARSED():
         return "parsed"
 
@@ -51,8 +63,12 @@ class JsonName(object):
         return "is_install_upgrade"
 
     @constant
-    def MODULEBYTES():
+    def MODULE_BYTES():
         return "module_bytes"
+
+    @constant
+    def MODULEBYTES():
+        return "ModuleBytes"
 
     @constant
     def NATIVE():
@@ -72,7 +88,7 @@ class JsonName(object):
 
     @constant
     def SESSION():
-        return "Session"
+        return "session"
 
     @constant
     def SIGNATURE():
@@ -125,6 +141,10 @@ class JsonName(object):
     @constant
     def ADDR():
         return "addr"
+
+    @constant
+    def PAYMENT():
+        return "payment"
 
     @constant
     def FIELDS():

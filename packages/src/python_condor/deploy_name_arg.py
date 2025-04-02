@@ -1,46 +1,38 @@
-# export class NamedArg implements ToBytes {
-#   constructor(public name: string, public value: CLValue) {}
-
-#   public toBytes(): ToBytesResult {
-#     const name = toBytesString(this.name);
-#     const value = CLValueParsers.toBytesWithType(this.value);
-#     return Ok(concat([name, value.unwrap()]));
-#   }
-
 from python_condor.constants.cons_jsonname import JsonName
+from python_condor.utils import serialize_string
 from .cl_values import *
 
 JSONNAME = JsonName()
 
 
-class NamedArg:
+class DeployNamedArg:
     def __init__(self, args):
-        # print("args:", args)
         self.args = args
 
-    def serialize(self):
-        inner_serialize = ''
+    def serialize(self) -> bytes:
+        inner_serialize = b''
         for name, value in self.args.items():
-            s_name = CLString(name).serialize().hex()
+
+            s_name = serialize_string(name)
             inner_serialize += s_name
-            s_value = value.cl_value()
+            s_value = bytes.fromhex(value.cl_value())
             inner_serialize += s_value
-        list_length = '{:02x}'.format(
-            len(self.args)).ljust(8, '0')
+
+        list_length = int(len(self.args)).to_bytes(4, "little")
         return list_length + inner_serialize
 
     def to_json(self):
-        arg_list = []
+        args_list = []
         for key, value in self.args.items():
             my_dict = {}
             my_dict[JSONNAME.CL_TYPE] = value.to_json()
             my_dict[JSONNAME.BYTES] = value.serialize().hex()
             my_dict[JSONNAME.PARSED] = value.value()
-            arg_list.append((key, my_dict))
-        return arg_list
+            args_list.append((key, my_dict))
+        return args_list
 
 
-a = NamedArg({"amount": CLU256(123), "owner": CLU256(
+a = DeployNamedArg({"amount": CLU256(123), "owner": CLU256(
     456), 'recipient': CLString("hello")})
 # print(a.serialize())
 # 0300000006000000616d6f756e74200000007b0000000000000000000000000000000000000000000000000000000000000007050000006f776e657220000000c8010000000000000000000000000000000000000000000000000000000000000709000000726563697069656e74090000000500000068656c6c6f0a

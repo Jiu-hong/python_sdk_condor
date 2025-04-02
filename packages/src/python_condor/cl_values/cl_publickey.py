@@ -16,7 +16,7 @@ class CLPublicKey(CLValue, CLAtomic):
                 "publickey should be 01xxx(64 length) or 02xxx(66 length)")
         super().__init__(data)
 
-    def serialize(self):
+    def serialize(self) -> bytes:
         return bytes.fromhex(self.data)
 
     # def cl_value(self):

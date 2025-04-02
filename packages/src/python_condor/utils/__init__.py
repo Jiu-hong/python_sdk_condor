@@ -2,7 +2,7 @@ from result import Err, Ok
 from .call_table_serialization import CalltableSerialization
 
 
-def serialize_string(data):
+def serialize_string(data) -> bytes:
     content = bytearray(data, encoding="utf-8")
     bytes_len = int(len(content)).to_bytes(4, byteorder='little')
     return bytes_len+content

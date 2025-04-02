@@ -8,8 +8,11 @@ from hashlib import blake2b
 from python_condor.cl_values.cl_key import CLKey
 from python_condor.cl_values.cl_number import CLU512
 from python_condor.cl_values.cl_string import CLString
-from python_condor.deploy_name_arg import NamedArg
+from python_condor.constants.cons_jsonname import JsonName
+from python_condor.deploy_name_arg import DeployNamedArg
 from python_condor.utils import serialize_string
+
+JSONNAME = JsonName()
 
 
 class SessionPackageHash:
@@ -17,29 +20,33 @@ class SessionPackageHash:
         self.package_hash_hex = package_hash_hex
         self.version = version
         self.entrypoint = entrypoint
-        self.runtime_args = NamedArg(runtime_args)
+        self.runtime_args = DeployNamedArg(runtime_args)
 
-    def to_bytes(self):
-        StoredPackageByNameTag = '03'
+    def to_bytes(self) -> bytes:
+        # tag
+        StoredPackageByNameTag = int(3).to_bytes()
 
+        # version
         if self.version is None:
             version_bytes = int(0).to_bytes()
         else:
             version_bytes = int(1).to_bytes() + \
                 self.version.to_bytes(4, byteorder='little')
-        result = StoredPackageByNameTag + self.package_hash_hex + \
-            version_bytes.hex() + \
-            CLString(self.entrypoint).serialize().hex() + \
+
+        result = StoredPackageByNameTag + bytes.fromhex(self.package_hash_hex) + \
+            version_bytes + \
+            serialize_string(self.entrypoint) + \
             self.runtime_args.serialize()
+
         return result
 
     def to_json(self):
-        result = {"session": {
-            "StoredVersionedContractByHash": {
-                "hash": self.package_hash_hex,
-                "version": self.version,
-                "entry_point": self.entrypoint,
-                "args": self.runtime_args.to_json()
+        result = {JSONNAME.SESSION: {
+            JSONNAME.STOREDVERSIONEDCONTRACTBYHASH: {
+                JSONNAME.HASH: self.package_hash_hex,
+                JSONNAME.VERSION: self.version,
+                JSONNAME.ENTRYPOINT: self.entrypoint,
+                JSONNAME.ARGS: self.runtime_args.to_json()
             }
         }}
         return result
@@ -47,32 +54,33 @@ class SessionPackageHash:
 
 class SessionPayment:
     def __init__(self, payment_amount):
-        self.payment_amount = NamedArg({"amount": CLU512(payment_amount)})
+        self.payment_amount = DeployNamedArg(
+            {JSONNAME.AMOUNT: CLU512(payment_amount)})
 
-    def to_bytes(self):
-        ModuleBytesTag = '00'
-        # # modulebytes 0 -> '00000000'
+    def to_bytes(self) -> bytes:
+        ModuleBytesTag = int(0).to_bytes()
+        moduleBytes = bytes.fromhex("00000000")
         result = ModuleBytesTag + \
-            '00000000' + \
+            moduleBytes + \
             self.payment_amount.serialize()
         return result
 
     def to_json(self):
-        result = {"payment": {
-            "ModuleBytes": {
-                "module_bytes": "",
-                "args": self.payment_amount.to_json()
+        result = {JSONNAME.PAYMENT: {
+            JSONNAME.MODULEBYTES: {
+                JSONNAME.MODULE_BYTES: "",
+                JSONNAME.ARGS: self.payment_amount.to_json()
             }
         }}
         return result
 
 
-def hash_body(session_hexstring, payment_hexstring):
-    h = blake2b(digest_size=32)
-    session_bytes = bytes.fromhex(session_hexstring)
-    payment_bytes = bytes.fromhex(payment_hexstring)
-    h.update(payment_bytes + session_bytes)
-    return h.hexdigest()
+# def hash_body(session_hexstring, payment_hexstring):
+#     h = blake2b(digest_size=32)
+#     session_bytes = bytes.fromhex(session_hexstring)
+#     payment_bytes = bytes.fromhex(payment_hexstring)
+#     h.update(payment_bytes + session_bytes)
+#     return h.hexdigest()
 
 
 # session part
@@ -88,8 +96,8 @@ session_hexstring = session_packagehash.to_bytes()
 #     package_hash_hex, None, entrypoint, runtime_args)
 # payment part
 payment_hexstring = SessionPayment(2500000000).to_bytes()
-print("body_hash:")
+# print("body_hash:")
 # print(hash_body(payment_hexstring, session_hexstring))
-print(hash_body(session_hexstring, payment_hexstring))
+# print(hash_body(session_hexstring, payment_hexstring))
 # expect 557c9c0149aeb4fc886e0f9d361ef23103a12c86dd04a81845d178d09d872e67
 #        557c9c0149aeb4fc886e0f9d361ef23103a12c86dd04a81845d178d09d872e67

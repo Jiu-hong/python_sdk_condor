@@ -12,7 +12,7 @@ class CLString(CLValue, CLAtomic):
 
         super().__init__(data)
 
-    def serialize(self):
+    def serialize(self) -> bytes:
         content = bytearray(self.data, encoding="utf-8")
         bytes_len = int(len(content)).to_bytes(4, byteorder='little')
         return bytes_len+content

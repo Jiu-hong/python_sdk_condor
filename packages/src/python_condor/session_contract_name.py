@@ -47,8 +47,8 @@ session_hexstring = serialize_stored_name(
     contract_name, entrypoint, runtime_args)
 # payment part
 payment_hexstring = serialize_payment(2500000000)
-print("body_hash:")
+# print("body_hash:")
 # print(hash_body(payment_hexstring, session_hexstring))
-print(hash_body(session_hexstring, payment_hexstring))
+# print(hash_body(session_hexstring, payment_hexstring))
 # expect 557c9c0149aeb4fc886e0f9d361ef23103a12c86dd04a81845d178d09d872e67
 #        557c9c0149aeb4fc886e0f9d361ef23103a12c86dd04a81845d178d09d872e67

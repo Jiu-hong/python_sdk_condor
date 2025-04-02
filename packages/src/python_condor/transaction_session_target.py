@@ -30,7 +30,7 @@ class TransactionSessionTarget:
         result = {}
         result_inner = {}
         result_inner[JSONNAME.SESSION] = {JSONNAME.IS_INSTALL_UPGRADE: self.is_install_upgrade,
-                                          JSONNAME.MODULEBYTES: self.module_bytes.hex(), JSONNAME.RUNTIME: self.runtime}
+                                          JSONNAME.MODULE_BYTES: self.module_bytes.hex(), JSONNAME.RUNTIME: self.runtime}
         result[JSONNAME.TARGET] = result_inner
         return result
 

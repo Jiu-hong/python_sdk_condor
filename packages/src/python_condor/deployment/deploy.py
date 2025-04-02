@@ -4,10 +4,13 @@ import json
 from python_condor.constants import JsonName, AlgoKind
 from python_condor.cl_values.cl_number import CLU256
 from python_condor.cl_values.cl_string import CLString
-from python_condor.deploy_header import DeployHeader
+# from python_condor.deploy_header import DeployHeader
 
+from python_condor.deployment.deploy_header import DeployHeader
+from python_condor.deployment.session_package_hash import SessionPackageHash
+from python_condor.deployment.session_payment import SessionPayment
 from python_condor.keys.ecc_types import KeyAlgorithm
-from python_condor.session_package_hash import SessionPackageHash, SessionPayment
+# from python_condor.session_package_hash import SessionPackageHash, SessionPayment
 from python_condor.keys import get_key_pair_from_pem_file, get_signature, KeyAlgorithm
 
 JSONNAME = JsonName()

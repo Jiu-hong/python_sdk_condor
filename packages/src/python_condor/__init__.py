@@ -15,3 +15,5 @@ from .package_name_target import PackageNameTarget
 from .transaction_runtime import TransactionRuntime
 from .transaction_native_target import TransactionNativeTarget
 from .transaction_session_target import TransactionSessionTarget
+
+from .deployment import DeployNamedArg, DeployHeader, Deploy, SessionPackageHash, SessionContractHash, SessionPackageName, SessionContractName, SessionPayment

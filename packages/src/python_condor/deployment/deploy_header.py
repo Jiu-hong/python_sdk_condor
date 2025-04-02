@@ -1,9 +1,7 @@
 from datetime import datetime, timezone
 from hashlib import blake2b
 from python_condor.constants import JsonName
-from python_condor.cl_values.cl_number import CLU64
 from python_condor.cl_values.cl_publickey import CLPublicKey
-from python_condor.cl_values.cl_string import CLString
 from python_condor.utils import serialize_string
 
 JSONNAME = JsonName()

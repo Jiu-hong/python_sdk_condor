@@ -11,6 +11,18 @@ class JsonName(object):
         return "StoredVersionedContractByHash"
 
     @constant
+    def STOREDCONTRACTBYHASH():
+        return "StoredContractByHash"
+
+    @constant
+    def STOREDCONTRACTBYNAME():
+        return "StoredContractByName"
+
+    @constant
+    def STOREDVERSIONEDCONTRACTBYNAME():
+        return "StoredVersionedContractByName"
+
+    @constant
     def MILLISECONDS():
         return "milliseconds"
 

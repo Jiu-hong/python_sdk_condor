@@ -1,12 +1,17 @@
+
+from python_condor.constants.base import TAG
 from python_condor.constants.cons_jsonname import JsonName
 from python_condor.utils import serialize_string
-from .cl_values import *
+from python_condor.cl_values import *
 
 JSONNAME = JsonName()
 
 
 class DeployNamedArg:
     def __init__(self, args):
+        for arg_value in args.values():
+            if not hasattr(arg_value, "tag"):
+                raise ValueError("The value for NamedArg should be CLValue.")
         self.args = args
 
     def serialize(self) -> bytes:

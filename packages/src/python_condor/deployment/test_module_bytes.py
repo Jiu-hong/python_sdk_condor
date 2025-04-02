@@ -4,7 +4,7 @@ from python_condor.cl_values.cl_number import CLU256
 from python_condor.cl_values.cl_string import CLString
 from python_condor.deployment.deploy import Deploy
 from python_condor.deployment.deploy_header import DeployHeader
-from python_condor.deployment.session_modulebytes import SessionModuleBytes
+from python_condor.deployment.session_module_bytes import SessionModuleBytes
 from python_condor.deployment.session_payment import SessionPayment
 from python_condor.keys.ecc_types import KeyAlgorithm
 

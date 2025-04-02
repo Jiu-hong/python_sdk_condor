@@ -14,13 +14,11 @@ class CalltableSerialization:
     def to_bytes(self):
         calltableBytes = b''  # []
         payloadBytes = b''  # []
-        # calltableBytes += CLU32(len(self.fields)).serialize()
+
         calltableBytes += len(self.fields).to_bytes(4, byteorder='little')
 
         for field in self.fields:
-
             calltableBytes += field[0].to_bytes(2, byteorder='little')
-
             calltableBytes += field[1].to_bytes(4, byteorder='little')
             payloadBytes += field[2]
 

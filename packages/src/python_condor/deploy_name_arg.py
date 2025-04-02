@@ -26,6 +26,16 @@ class NamedArg:
             len(self.args)).ljust(8, '0')
         return list_length + inner_serialize
 
+    def to_json(self):
+        arg_list = []
+        for key, value in self.args:
+            my_dict = {}
+            my_dict["cl_type"] = value.to_json()
+            my_dict["bytes"] = value.serialize().hex()
+            my_dict["parsed"] = value.value()
+            arg_list.append(key, my_dict)
+        return arg_list
+
 
 a = NamedArg({"amount": CLU256(123), "owner": CLU256(
     456), 'recipient': CLString("hello")})

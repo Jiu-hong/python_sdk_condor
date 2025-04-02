@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from hashlib import blake2b
+import re
 from python_condor.constants import JsonName
 from python_condor.cl_values.cl_publickey import CLPublicKey
 from python_condor.utils import serialize_string
@@ -9,6 +10,25 @@ JSONNAME = JsonName()
 
 class DeployHeader:
     def __init__(self, account, chain_name, now=datetime.now(timezone.utc), ttl=30, gas_price=1):
+        # check account pattern
+        regx = "(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})"
+        pattern = re.compile(regx)
+        result = pattern.fullmatch(account)
+        if not isinstance(result, re.Match):
+            raise ValueError(
+                "account should be 01xxx(64 length) or 02xxx(66 length)")
+         # check chain-name
+        if chain_name == "":
+            raise ValueError("The chain_name shouldn't be empty.")
+        # check time
+        if not isinstance(now, datetime):
+            raise TypeError("time should be type datetime.datetime")
+        # check ttl
+        if not isinstance(ttl, int):
+            raise TypeError("ttl should be type int")
+        # check gas_price
+        if not isinstance(gas_price, int):
+            raise TypeError("gas_price should be type int")
         self.account = account
         self.chain_name = chain_name
         self.time = now

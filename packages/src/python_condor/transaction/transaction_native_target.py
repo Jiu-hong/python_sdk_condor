@@ -1,5 +1,5 @@
-from .constants import JsonName, RuntimeKind
-from .utils import CalltableSerialization
+from ..constants import JsonName, RuntimeKind
+from ..utils import CalltableSerialization
 
 JSONNAME = JsonName()
 RUNTIME = RuntimeKind()

@@ -1,4 +1,4 @@
-from .constants import JsonName, PricingModeKind
+from ..constants import JsonName, PricingModeKind
 from .payment_limit import PaymentLimited
 
 
@@ -50,8 +50,3 @@ class PricingMode:
                 # todo
                 pass
         return result
-
-
-pricing_mode = PricingMode("Classic", 123)
-a = pricing_mode.to_bytes()
-# print("a is:", a.hex())

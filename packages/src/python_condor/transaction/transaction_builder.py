@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .constants import EntryPointKind, InvocationKind, PricingModeKind, RuntimeKind, TargetKind
+from ..constants import EntryPointKind, InvocationKind, PricingModeKind, RuntimeKind, TargetKind
 from .entity_alias_target import EntityAliasTarget
 from .entity_target import EntityTarget
 from .package_hash_target import PackageHashTarget

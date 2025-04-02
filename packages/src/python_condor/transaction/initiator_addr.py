@@ -1,5 +1,5 @@
-from .utils import CalltableSerialization
-from .cl_values import CLPublicKey
+from ..cl_values import CLPublicKey
+from ..utils import CalltableSerialization
 
 
 class InitiatorAddr:

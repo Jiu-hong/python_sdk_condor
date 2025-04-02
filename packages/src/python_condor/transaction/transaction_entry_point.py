@@ -1,5 +1,5 @@
-from .constants import EntryPointKind, JsonName
-from .utils import CalltableSerialization, serialize_string
+from ..constants import EntryPointKind, JsonName
+from ..utils import CalltableSerialization, serialize_string
 
 ENTYPOINT = EntryPointKind()
 VALID_ALLOWD_ENTRY_POINTS = (

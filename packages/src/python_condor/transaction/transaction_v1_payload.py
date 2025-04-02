@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from .constants import JsonName
+from ..constants import JsonName
 from .entity_alias_target import EntityAliasTarget
 from .entity_target import EntityTarget
 from .initiator_addr import InitiatorAddr
@@ -11,7 +11,7 @@ from .payload_fields import PayloadFields
 from .pricing_mode import PricingMode
 from .transaction_entry_point import TransactionEntryPoint
 from .transaction_scheduling import TransactionScheduling
-from .utils import serialize_string, CalltableSerialization
+from ..utils import serialize_string, CalltableSerialization
 
 
 JSONNAME = JsonName()

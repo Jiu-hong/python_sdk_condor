@@ -1,6 +1,6 @@
 from hashlib import blake2b
 
-from .constants import JsonName
+from ..constants import JsonName
 from .entity_alias_target import EntityAliasTarget
 from .entity_target import EntityTarget
 from .named_arg import NamedArg

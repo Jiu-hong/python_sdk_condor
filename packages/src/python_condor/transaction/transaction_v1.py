@@ -1,7 +1,7 @@
 from hashlib import blake2b
 
-from .constants import JsonName, AlgoKind
-from .keys import get_key_pair_from_pem_file, get_signature, KeyAlgorithm
+from ..constants import JsonName, AlgoKind
+from ..keys import get_key_pair_from_pem_file, get_signature, KeyAlgorithm
 from .transaction_v1_payload import TransactionV1Payload
 
 

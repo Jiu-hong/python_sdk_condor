@@ -1,4 +1,4 @@
-from .utils import serialize_string
+from ..utils import serialize_string
 
 
 class NamedArg:

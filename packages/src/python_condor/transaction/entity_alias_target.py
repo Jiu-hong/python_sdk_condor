@@ -1,7 +1,6 @@
-from .utils import CalltableSerialization, serialize_string
-
+from ..constants import JsonName
 from .transaction_runtime import TransactionRuntime
-from .constants import JsonName
+from ..utils import CalltableSerialization, serialize_string
 
 JSONNAME = JsonName()
 

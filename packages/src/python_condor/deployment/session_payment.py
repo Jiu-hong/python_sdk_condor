@@ -13,8 +13,10 @@ class SessionPayment:
 
     def to_bytes(self) -> bytes:
         ModuleBytesTag = int(0).to_bytes()
-        moduleBytes = bytes.fromhex("00000000")
-        result = ModuleBytesTag + \
+        # length is 0
+        module_bytes_length = int(0).to_bytes(4, byteorder='little')
+        moduleBytes = b''
+        result = ModuleBytesTag + module_bytes_length + \
             moduleBytes + \
             self.payment_amount.serialize()
         return result

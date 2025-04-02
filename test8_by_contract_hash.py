@@ -1,9 +1,4 @@
-from python_condor import CLOption
-
-from python_condor import RESULTHOLDER
-from python_condor import EntityTarget
-
-from python_condor import TransactionScheduling, PricingMode,  TransactionEntryPoint, TransactionV1Payload, CLTuple3, CLString, CLBool, CLURef, TransactionV1, KeyAlgorithm, PutTransction
+from python_condor import CLOption, EntityTarget, RESULTHOLDER, TransactionScheduling, PricingMode,  TransactionEntryPoint, TransactionV1Payload, CLTuple3, CLString, CLBool, CLURef, TransactionV1, KeyAlgorithm, PutTransction
 
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 chainname = "integration-test"

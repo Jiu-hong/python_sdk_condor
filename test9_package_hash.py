@@ -7,7 +7,7 @@ chain_name = "integration-test"
 header = DeployHeader(
     account, chain_name)
 
-package_hash_hex = "051c3c2fef7fa8fa459c7e99717d566b723e30a17005100f58ceae130d168ef6"
+package_hash_hex = "40ad74eb43330f7fb496d6ea49df990e6583f51a01a7204a17a6217dbeb715d7"
 entrypoint = "apple"
 runtime_args = {"arg1": CLU256(123), "arg2": CLString("hello")}
 # runtime_args = {}

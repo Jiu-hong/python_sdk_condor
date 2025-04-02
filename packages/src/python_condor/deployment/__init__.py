@@ -1,6 +1,8 @@
-from .deploy_name_arg import DeployNamedArg
-from .deploy_header import DeployHeader
 from .deploy import Deploy
+from .deploy_builder import SessionContractHashBuilder, SessionContractNameBuilder, SessionPackageNameBuilder, SessionPackageHashBuilder, SessionModuleBytesBuilder
+from .deploy_header import DeployHeader
+from .deploy_name_arg import DeployNamedArg
+
 from .session_module_bytes import SessionModuleBytes
 from .session_package_hash import SessionPackageHash
 from .session_package_name import SessionPackageName

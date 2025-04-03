@@ -4,6 +4,18 @@ from .base import constant
 
 class RpcMethod(object):
     @constant
+    def STATE_GET_PACKAGE():
+        return "state_get_package"
+
+    @constant
+    def CHAIN_GET_ERA_SUMMARY():
+        return "chain_get_era_summary"
+
+    @constant
+    def STATE_GET_AUCTION_INFO_V2():
+        return "state_get_auction_info_v2"
+
+    @constant
     def STATE_GET_AUCTION_INFO():
         return "state_get_auction_info"
 

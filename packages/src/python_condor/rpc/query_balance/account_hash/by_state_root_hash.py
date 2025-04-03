@@ -19,7 +19,7 @@ class QueryBalanceMainPurseAccountHash:
                     "StateRootHash": state_root_hash
                 },
                 {
-                    "main_purse_under_account_hash": main_purse_under_account_hash
+                    "main_purse_under_account_hash": account_hash
                 }
             ]
         self.rpc_payload = {

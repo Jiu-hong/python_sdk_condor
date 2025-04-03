@@ -24,10 +24,10 @@ def check_contract_package_format(contract_package):
 
 def check_deploy_hash_format(deploy_hash):
     if deploy_hash is None:
-        raise ValueError("deploy_hash shouldn't be empty")
+        raise ValueError("transaction/deploy_hash shouldn't be empty")
     if not check_format(REGX_HASH, deploy_hash):
         raise ValueError(
-            "deploy_hash should be 64 length only containing alphabet and number")
+            "transaction/deploy_hash should be 64 length only containing alphabet and number")
 
 
 def check_account_hash_format(account_hash):

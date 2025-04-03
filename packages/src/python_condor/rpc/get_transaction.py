@@ -1,4 +1,6 @@
 import requests
+
+from python_condor.utils import check_deploy_hash_format
 from ..constants import RpcMethod
 
 
@@ -7,11 +9,15 @@ RPCMETHOD = RpcMethod()
 
 class GetTransction:
     def __init__(self, url, transaction_hash: str, transaction_flag: bool = True):
-        self.url = url
+        # check transaction/deploy_hash format
+        check_deploy_hash_format(transaction_hash)
+
         if transaction_flag:
             payload = {"Version1": transaction_hash}
         else:
             payload = {"Deploy": transaction_hash}
+
+        self.url = url
         self.rpc_payload = {
             "jsonrpc": "2.0",
             "id": 1,

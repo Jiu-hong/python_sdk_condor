@@ -3,9 +3,10 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "python_condor_sdk"
+name = "python_condor"
 version = "0.0.2"
 authors = [{ name = "Jiuhong Sun", email = "jiu.hong.sun@gmail.com" }]
+dependencies = ["cryptography", "ecdsa", "requests", "result"]
 description = "condor python package"
 readme = "README.md"
 requires-python = ">=3.8"

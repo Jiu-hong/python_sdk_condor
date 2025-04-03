@@ -13,7 +13,3 @@ class TargetKind(object):
     @constant
     def SESSION():
         return "session"
-
-
-# CONST = TargetKind()
-# print(CONST.NATIVE)

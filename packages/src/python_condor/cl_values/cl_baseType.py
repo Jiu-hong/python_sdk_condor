@@ -1,5 +1,4 @@
-
-from python_condor.utils import deep_value_v2
+from ..utils import deep_value_v2
 from ..constants import CLTypeName, TAG
 
 CONST = CLTypeName()

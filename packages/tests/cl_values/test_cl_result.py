@@ -1,4 +1,3 @@
-import pytest
 from result import Err, Ok
 
 from python_condor import CLU32, CLU64, CLBool, CLResult, CLTuple2, CLString, CLOption, NoneHolder

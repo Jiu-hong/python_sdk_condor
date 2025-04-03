@@ -1,5 +1,4 @@
 from datetime import datetime
-import pytest
 
 from python_condor import DeployHeader, Deploy, CLU256, CLString, KeyAlgorithm, SessionPackageHash, SessionPayment
 

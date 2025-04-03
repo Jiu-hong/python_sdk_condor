@@ -23,4 +23,4 @@ class CLResult(CLValue):
             case _:
                 # todo
                 # it should be result type
-                raise ValueError("the third field should be flag")
+                raise ValueError("the third field should be a flag")

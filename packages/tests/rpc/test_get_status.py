@@ -1,4 +1,3 @@
-
 from python_condor import GetStatus
 
 

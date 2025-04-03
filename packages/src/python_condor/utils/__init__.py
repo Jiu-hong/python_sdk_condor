@@ -1,7 +1,6 @@
 from result import Err, Ok
-from .call_table_serialization import CalltableSerialization
 import re
-
+from .call_table_serialization import CalltableSerialization
 
 REGX_PUBLICKEY = "(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})"
 REGX_HASH = "([0-9a-z]{64})"

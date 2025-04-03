@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from .deploy import Deploy
 from .deploy_header import DeployHeader
-from ..keys import KeyAlgorithm
 from .session_payment import SessionPayment
 from .session_contract_hash import SessionContractHash
 from .session_contract_name import SessionContractName
@@ -49,8 +48,8 @@ class SessionContractHashBuilder(DeployBuilder):
         session = SessionContractHash(
             self.contract_hash, self.entry_point, self.args)
         header = DeployHeader(self.account, self.chain_name)
-        deploy = Deploy(header, self.payment, session, [
-            ("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+        deploy = Deploy(header, self.payment, session,
+                        self.signers_keypaths_algo)
         return deploy.to_json()
 
 
@@ -71,8 +70,8 @@ class SessionContractNameBuilder(DeployBuilder):
         session = SessionContractName(
             self.contract_name, self.entry_point, self.args)
         header = DeployHeader(self.account, self.chain_name)
-        deploy = Deploy(header, self.payment, session, [
-            ("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+        deploy = Deploy(header, self.payment, session,
+                        self.signers_keypaths_algo)
         return deploy.to_json()
 
 
@@ -94,8 +93,8 @@ class SessionPackageNameBuilder(DeployBuilder):
         session = SessionPackageName(
             self.package_name, self.version, self.entry_point, self.args)
         header = DeployHeader(self.account, self.chain_name)
-        deploy = Deploy(header, self.payment, session, [
-            ("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+        deploy = Deploy(header, self.payment, session,
+                        self.signers_keypaths_algo)
         return deploy.to_json()
 
 
@@ -117,8 +116,8 @@ class SessionPackageHashBuilder(DeployBuilder):
         session = SessionPackageHash(
             self.package_hash, self.version, self.entry_point, self.args)
         header = DeployHeader(self.account, self.chain_name)
-        deploy = Deploy(header, self.payment, session, [
-            ("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+        deploy = Deploy(header, self.payment, session,
+                        self.signers_keypaths_algo)
         return deploy.to_json()
 
 
@@ -136,6 +135,6 @@ class SessionModuleBytesBuilder(DeployBuilder):
         session = SessionModuleBytes(
             self.module_bytes, self.args)
         header = DeployHeader(self.account, self.chain_name)
-        deploy = Deploy(header, self.payment, session, [
-            ("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+        deploy = Deploy(header, self.payment, session,
+                        self.signers_keypaths_algo)
         return deploy.to_json()

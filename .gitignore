@@ -8,6 +8,4 @@ dist
 ok*
 note*
 *json
-output**
-*pem
-__pycache__
+work

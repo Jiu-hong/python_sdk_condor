@@ -1,5 +1,3 @@
-import pytest
-
 from python_condor import SessionModuleBytes, CLU256, CLString
 
 

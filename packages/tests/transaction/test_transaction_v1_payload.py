@@ -1,4 +1,3 @@
-import pytest
 from datetime import datetime
 from python_condor import TransactionV1Payload, TransactionEntryPoint, EntityAliasTarget, PricingMode, TransactionScheduling, CLOption, CLTuple3, CLString, CLBool, CLURef, NoneHolder
 

@@ -74,16 +74,3 @@ class DeployHeader:
             JSONNAME.CHAIN_NAME: self.chain_name
         }}
         return result
-
-
-account = "0203c1e1349b0a5b34246bce27a68de90d842ace31221a363007e483301977611dfa"
-timestamp = "123"
-ttl = 30
-gas_price = 3
-body_hash = "889135da6f70c3e5832a43b358a4b634df9056d4f55c9486cc92249d2c3e386d"
-dependencies = "00"
-chain_name = "casper-test"
-# a = DeployHeader(account, timestamp, ttl, gas_price,
-#                  body_hash, dependencies, chain_name)
-# print("hash=>")
-# print(a.byteHash())

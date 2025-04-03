@@ -93,7 +93,3 @@ class CLTypeName(object):
     @constant
     def CLPublicKey():
         return "PublicKey"
-
-
-# CONST = CLTypeName()
-# print(CONST.CLPublicKey)

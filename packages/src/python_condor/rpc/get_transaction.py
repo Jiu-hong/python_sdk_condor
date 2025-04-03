@@ -1,6 +1,6 @@
 import requests
 
-from python_condor.utils import check_deploy_hash_format
+from ..utils import check_deploy_hash_format
 from ..constants import RpcMethod
 
 

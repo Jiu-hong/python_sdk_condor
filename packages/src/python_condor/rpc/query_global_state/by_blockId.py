@@ -1,6 +1,6 @@
 import requests
 
-from python_condor.utils import check_block_format, check_clkey_format, check_root_state_hash_format
+from ...utils import check_block_format, check_clkey_format
 from ...constants import RpcMethod
 
 

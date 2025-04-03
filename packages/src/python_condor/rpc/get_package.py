@@ -1,6 +1,6 @@
 import requests
 
-from python_condor.utils import check_block_format, check_contract_package_format
+from ..utils import check_block_format, check_contract_package_format
 from ..constants import RpcMethod
 
 

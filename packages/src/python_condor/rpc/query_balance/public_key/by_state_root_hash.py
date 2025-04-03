@@ -1,6 +1,6 @@
 import requests
 
-from python_condor.utils import REGX_PUBLICKEY, check_format, REGX_HASH, check_public_key_format, check_root_state_hash_format
+from ....utils import check_public_key_format, check_root_state_hash_format
 from ....constants import RpcMethod
 
 

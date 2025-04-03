@@ -37,9 +37,6 @@ class Length(Enum):
     CLTuple3 = 3
 
 
-# print("TAG.CLI64: ", TAG.CLI64.value, TAG.CLI64.name)
-
-
 def constant(f):
     def fset(self, value):
         raise TypeError

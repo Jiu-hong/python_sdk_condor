@@ -1,7 +1,7 @@
 
 import requests
 
-from python_condor.utils import check_public_key_format
+from ..utils import check_public_key_format
 from ..constants import RpcMethod
 
 

@@ -1,7 +1,6 @@
-import re
 import requests
 
-from python_condor.utils import check_account_hash_format, check_format, REGX_HASH, check_root_state_hash_format
+from ....utils import check_account_hash_format, check_root_state_hash_format
 from ....constants import RpcMethod
 
 

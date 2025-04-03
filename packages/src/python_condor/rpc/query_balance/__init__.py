@@ -1,0 +1,3 @@
+from .main_purse_under_account_hash import QueryBalanceMainPurseAccountHash
+from .main_purse_under_public_key import QueryBalanceMainPursePublicKey
+from .main_purse_under_purse_uref import QueryBalancePurseUref

@@ -4,6 +4,10 @@ from .base import constant
 
 class RpcMethod(object):
     @constant
+    def QUERY_BALANCE():
+        return "query_balance"
+
+    @constant
     def INFO_GET_PEERS():
         return "info_get_peers"
 
@@ -34,6 +38,10 @@ class RpcMethod(object):
     @constant
     def CHAIN_GET_BLOCK():
         return "chain_get_block"
+
+    @constant
+    def CHAIN_GET_STATE_ROOT_HASH():
+        return "chain_get_state_root_hash"
 
     @constant
     def CHAIN_GET_BLOCK_TRANSFERS():

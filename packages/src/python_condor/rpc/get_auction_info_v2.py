@@ -1,4 +1,6 @@
 import requests
+
+from python_condor.utils import check_block_format
 from ..constants import RpcMethod
 
 
@@ -7,7 +9,10 @@ RPCMETHOD = RpcMethod()
 
 class GetAuctionInfoV2:
     def __init__(self, url, block_id: int | str = None):
-        self.url = url
+
+        # check block id format
+        check_block_format(block_id)
+
         if block_id is None:
             params = {}
         elif isinstance(block_id, int):
@@ -26,6 +31,7 @@ class GetAuctionInfoV2:
             raise ValueError(
                 "the block_id should be str for `BlockHash` or int for `BlockHeight`")
 
+        self.url = url
         self.rpc_payload = {
             "jsonrpc": "2.0",
             "id": 1,

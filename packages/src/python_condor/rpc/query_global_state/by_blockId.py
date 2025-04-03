@@ -1,4 +1,6 @@
 import requests
+
+from python_condor.utils import check_block_format, check_root_state_hash_format
 from ...constants import RpcMethod
 
 
@@ -7,6 +9,10 @@ RPCMETHOD = RpcMethod()
 
 class QueryGlobalStateByBlockId:
     def __init__(self, url, key: str, block_id: int | str):
+
+        # check state root hash format
+        check_block_format(block_id)
+
         self.url = url
         # construct params
         if isinstance(block_id, int):

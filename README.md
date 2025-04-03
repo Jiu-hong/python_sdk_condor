@@ -1,4 +1,4 @@
-# The sdk for casper 2.0
+# Python sdk for Casper 2.0
 
 
 

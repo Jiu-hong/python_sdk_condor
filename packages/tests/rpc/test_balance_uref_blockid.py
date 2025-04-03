@@ -7,5 +7,5 @@ incorrectpurse = "xxx"
 incorrct_public_key = "7e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 url = "http://node.integration.casper.network:7777/rpc"
 query_global_state = QueryBalancePurseUrefByBlockId(
-    url, purse, "123")
+    url, purse, block_hash)
 print(query_global_state.run())

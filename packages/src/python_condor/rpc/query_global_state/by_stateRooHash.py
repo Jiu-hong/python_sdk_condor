@@ -1,6 +1,6 @@
 import requests
 
-from python_condor.utils import check_root_state_hash_format
+from python_condor.utils import check_clkey_format, check_root_state_hash_format
 from ...constants import RpcMethod
 
 
@@ -10,7 +10,7 @@ RPCMETHOD = RpcMethod()
 class QueryGlobalState:
     def __init__(self, url, key: str, state_root_hash: str = None):
         # check key format
-        # todo
+        check_clkey_format(key)
 
         # check state root hash format
         check_root_state_hash_format(state_root_hash)

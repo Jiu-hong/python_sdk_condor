@@ -7,3 +7,4 @@ from python_condor.cl_values.cl_tuple import CLTuple1, CLTuple2, CLTuple3
 from python_condor.cl_values.cl_list import CLList
 from python_condor.cl_values.cl_result import CLResult
 from python_condor.cl_values.cl_map import CLMap
+from python_condor.cl_values.cl_key import CLKey

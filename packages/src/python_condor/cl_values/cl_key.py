@@ -9,28 +9,19 @@ class CLKey(CLValue, CLAtomic):
         # match self.data:
         # account-hash-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20
         if self.data.startswith("account-hash-"):
-            return '00' + self.data.removeprefix('account-hash-')
+            result = '00' + self.data.removeprefix('account-hash-')
+            return bytes.fromhex(result)
         # hash-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20
         elif self.data.startswith("hash-"):
-            return '01'+self.data.removeprefix('hash-')
+            result = '01'+self.data.removeprefix('hash-')
+            return bytes.fromhex(result)
         # uref-0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20-005
         elif self.data.startswith("uref-"):
             temp = self.data.split('-')
-            return '02' + temp[1] + '{:02x}'.format(int(temp[2]))
+            result = '02' + temp[1] + '{:02x}'.format(int(temp[2]))
+            return bytes.fromhex(result)
         else:
             raise
-
-    def value(self):
-        return self.serialize()
-
-    def cl_value(self):
-
-        content = self.serialize()
-        bytes_len_hex = '{:02x}'.format(
-            int(len(content) / 2)).ljust(8, '0')
-        tag = '{:02x}'.format(self.tag)
-
-        return bytes_len_hex + content + tag
 
 
 a = CLKey(

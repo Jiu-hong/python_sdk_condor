@@ -13,6 +13,24 @@ def check_format(regx, data) -> bool:
     return isinstance(result, re.Match)
 
 
+def check_clkey_format(clkey):
+    if not clkey.startswith(("account-hash-", "hash-", "uref-")):
+        raise ValueError(
+            "clkey should start with 'account-hash-, hash-, uref-...'")
+
+    # key:account-hash-xxx
+    if clkey.startswith("account-hash"):
+        check_account_hash_format(clkey)
+    # key:hash-xxx
+    elif clkey.startswith("hash-"):
+        if not check_format(REGX_HASH, clkey.split("-")[1]):
+            raise ValueError(
+                "key::hash value should be 64 length only containing alphabet and number")
+    # key:uref-xxx
+    elif clkey.startswith("uref-"):
+        check_purse_format(clkey)
+
+
 def check_contract_package_format(contract_package):
     if not contract_package.startswith("contract-package-"):
         raise ValueError(

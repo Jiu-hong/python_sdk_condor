@@ -6,7 +6,7 @@ RPCMETHOD = RpcMethod()
 
 
 class QueryGlobalState:
-    def __init__(self, url, key: str, state_root_hash: None):
+    def __init__(self, url, key: str, state_root_hash: str = None):
         self.url = url
         # construct params
         if state_root_hash is None:

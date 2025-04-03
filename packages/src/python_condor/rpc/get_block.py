@@ -6,8 +6,10 @@ RPCMETHOD = RpcMethod()
 
 
 class GetBlock:
-    def __init__(self, url, block_id: int | str):
+    def __init__(self, url, block_id: int | str = None):
         self.url = url
+        if block_id is None:
+            params = {}
         if isinstance(block_id, int):
             params = {
                 "block_identifier": {

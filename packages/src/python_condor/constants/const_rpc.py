@@ -32,6 +32,10 @@ class RpcMethod(object):
         return "info_get_peers"
 
     @constant
+    def INFO_GET_REWARD():
+        return "info_get_reward"
+
+    @constant
     def INFO_GET_STATUS():
         return "info_get_status"
 

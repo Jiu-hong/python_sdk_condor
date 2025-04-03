@@ -4,6 +4,14 @@ from .base import constant
 
 class RpcMethod(object):
     @constant
+    def INFO_GET_PEERS():
+        return "info_get_peers"
+
+    @constant
+    def INFO_GET_STATUS():
+        return "info_get_status"
+
+    @constant
     def QUERY_GLOBAL_STATE():
         return "query_global_state"
 

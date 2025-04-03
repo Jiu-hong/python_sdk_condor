@@ -4,10 +4,8 @@ from ..constants import RpcMethod
 
 RPCMETHOD = RpcMethod()
 
-# chain_get_state_root_hash
 
-
-class GetStateRootHash:
+class GetAuctionInfo:
     def __init__(self, url, block_id: int | str = None):
         self.url = url
         if block_id is None:
@@ -31,7 +29,7 @@ class GetStateRootHash:
         self.rpc_payload = {
             "jsonrpc": "2.0",
             "id": 1,
-            "method": RPCMETHOD.CHAIN_GET_STATE_ROOT_HASH,
+            "method": RPCMETHOD.STATE_GET_AUCTION_INFO,
             "params": params}
 
     def run(self):

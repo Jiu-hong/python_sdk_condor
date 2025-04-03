@@ -5,7 +5,7 @@ from ...constants import RpcMethod
 RPCMETHOD = RpcMethod()
 
 
-class QueryGlobalStateByStateRootHash:
+class QueryGlobalState:
     def __init__(self, url, key: str, state_root_hash: None):
         self.url = url
         # construct params

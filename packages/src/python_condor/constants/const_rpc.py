@@ -4,6 +4,10 @@ from .base import constant
 
 class RpcMethod(object):
     @constant
+    def STATE_GET_AUCTION_INFO():
+        return "state_get_auction_info"
+
+    @constant
     def STATE_GET_ACCOUNT_INFO():
         return "state_get_account_info"
 

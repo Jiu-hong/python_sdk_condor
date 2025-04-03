@@ -5,7 +5,7 @@ from ...constants import RpcMethod
 RPCMETHOD = RpcMethod()
 
 
-class GetAccountInfoByAccountHashByBlockId:
+class GetAccountInfoByAccountHash:
     def __init__(self, url, account_hash: str, block_id: int | str):
         self.url = url
         if isinstance(block_id, int):

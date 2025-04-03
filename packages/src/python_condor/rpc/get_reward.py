@@ -10,7 +10,7 @@ class GetReward:
     def __init__(self, url, validator, delegator: str = None, era: int = None):
         if validator is None:
             raise ValueError("validator is required.")
-        self.url = url
+
         if era is None:
             params = {
                 "validator": validator,
@@ -25,6 +25,7 @@ class GetReward:
                 }
             }
 
+        self.url = url
         self.rpc_payload = {
             "jsonrpc": "2.0",
             "id": 1,

@@ -13,6 +13,23 @@ def check_format(regx, data) -> bool:
     return isinstance(result, re.Match)
 
 
+def check_contract_package_format(contract_package):
+    if not contract_package.startswith("contract-package-"):
+        raise ValueError(
+            "contract package should start with 'contract-package-'")
+    if not check_format(REGX_HASH, contract_package.split("-")[2]):
+        raise ValueError(
+            "contract-package value should be 64 length only containing alphabet and number")
+
+
+def check_deploy_hash_format(deploy_hash):
+    if deploy_hash is None:
+        raise ValueError("deploy_hash shouldn't be empty")
+    if not check_format(REGX_HASH, deploy_hash):
+        raise ValueError(
+            "deploy_hash should be 64 length only containing alphabet and number")
+
+
 def check_account_hash_format(account_hash):
     if not account_hash.startswith("account-hash-"):
         raise ValueError("account hash should start with 'account-hash-'")

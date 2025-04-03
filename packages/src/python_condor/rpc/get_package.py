@@ -1,4 +1,6 @@
 import requests
+
+from python_condor.utils import check_block_format, check_contract_package_format
 from ..constants import RpcMethod
 
 
@@ -6,14 +8,21 @@ RPCMETHOD = RpcMethod()
 
 
 class GetPackage:
-    def __init__(self, url, ContractPackageHash, block_id: int | str = None):
-        self.url = url
+    def __init__(self, url, contract_package: str, block_id: int | str = None):
+        # check contract_package format
+        check_contract_package_format(contract_package)
+        # check block id format
+        check_block_format(block_id)
+
         if block_id is None:
-            params = {}
+            params = {"package_identifier":
+                      {"ContractPackageHash": contract_package}
+                      }
+
         elif isinstance(block_id, int):
             params = [
                 {
-                    "ContractPackageHash": ContractPackageHash
+                    "ContractPackageHash": contract_package
                 },
                 {
                     "Height": block_id
@@ -22,7 +31,7 @@ class GetPackage:
         elif isinstance(block_id, str):
             params = [
                 {
-                    "ContractPackageHash": ContractPackageHash
+                    "ContractPackageHash": contract_package
                 },
                 {
                     "Hash": block_id
@@ -32,6 +41,7 @@ class GetPackage:
             raise ValueError(
                 "the block_id should be str for `BlockHash` or int for `BlockHeight`")
 
+        self.url = url
         self.rpc_payload = {
             "jsonrpc": "2.0",
             "id": 1,

@@ -1,5 +1,7 @@
 
 import requests
+
+from python_condor.utils import check_public_key_format
 from ..constants import RpcMethod
 
 
@@ -7,9 +9,20 @@ RPCMETHOD = RpcMethod()
 
 
 class GetReward:
-    def __init__(self, url, validator, delegator: str = None, era: int = None):
+    def __init__(self, url, validator: str, delegator: str = None, era: int = None):
+
         if validator is None:
             raise ValueError("validator is required.")
+
+        # check validator format
+        check_public_key_format(validator)
+
+        if delegator is not None:
+            # check delegator format
+            check_public_key_format(delegator)
+
+        if era is not None and not isinstance(era, int):
+            raise TypeError("era should be int")
 
         if era is None:
             params = {

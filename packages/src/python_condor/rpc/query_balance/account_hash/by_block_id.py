@@ -1,4 +1,6 @@
 import requests
+
+from python_condor.utils import REGX_HASH, check_account_hash_format, check_block_format, check_format
 from ....constants import RpcMethod
 
 
@@ -7,8 +9,17 @@ RPCMETHOD = RpcMethod()
 
 class QueryBalanceMainPurseAccountHashByBlockId:
     def __init__(self, url, account_hash: str, block_id: int | str = None):
-        self.url = url
-        if isinstance(block_id, int):
+        # check account_hash format
+        check_account_hash_format(account_hash)
+        # check block_id format
+        check_block_format(block_id)
+
+        if block_id is None:
+            params = {
+                "purse_identifier": {
+                    "main_purse_under_account_hash": account_hash
+                }}
+        elif isinstance(block_id, int):
             params = [
                 {
                     "BlockHeight": block_id
@@ -29,6 +40,8 @@ class QueryBalanceMainPurseAccountHashByBlockId:
         else:
             raise ValueError(
                 "the block_id should be str for `BlockHash` or int for `BlockHeight`")
+
+        self.url = url
         self.rpc_payload = {
             "jsonrpc": "2.0",
             "id": 1,

@@ -1,5 +1,56 @@
 from result import Err, Ok
 from .call_table_serialization import CalltableSerialization
+import re
+
+
+REGX_PUBLICKEY = "(01[0-9a-zA-Z]{64})|(02[0-9a-zA-Z]{66})"
+REGX_HASH = "([0-9a-z]{64})"
+
+
+def check_format(regx, data) -> bool:
+    pattern = re.compile(regx)
+    result = pattern.fullmatch(data)
+    return isinstance(result, re.Match)
+
+
+def check_account_hash_format(account_hash):
+    if not account_hash.startswith("account-hash-"):
+        raise ValueError("account hash should start with 'account-hash-'")
+    if not check_format(REGX_HASH, account_hash.split("-")[2]):
+        raise ValueError(
+            "account-hash value should be 64 length only containing alphabet and number")
+
+
+def check_purse_format(purse):
+    if not purse.startswith("uref-"):
+        raise ValueError("purse should start with 'uref-'")
+    if not purse.endswith(('000', '001', '002', '003', '004', '005', '006', '007')):
+        raise ValueError("uref should end with '000 - 007'")
+    if not check_format(REGX_HASH, purse.split("-")[1]):
+        raise ValueError(
+            "account-hash value should be 64 length only containing alphabet and number")
+
+
+def check_block_format(block_id):
+    if isinstance(block_id, str):
+        if not check_format(REGX_HASH, block_id):
+            raise ValueError(
+                "block-hash value should be 64 length only containing alphabet and number")
+
+
+def check_root_state_hash_format(state_root_hash):
+    if state_root_hash is not None:
+        if not isinstance(state_root_hash, str):
+            raise TypeError("state_root_hash should be type str")
+        if not check_format(REGX_HASH, state_root_hash):
+            raise ValueError(
+                "state_root_hash should be 64 length only containing alphabet and number")
+
+
+def check_public_key_format(public_key):
+    if not check_format(REGX_PUBLICKEY, public_key):
+        raise ValueError(
+            "publickey should be 01xxx(64 length) or 02xxx(66 length)")
 
 
 def serialize_string(data) -> bytes:

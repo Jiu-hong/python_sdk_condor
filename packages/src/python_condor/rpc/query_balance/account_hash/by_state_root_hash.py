@@ -1,4 +1,7 @@
+import re
 import requests
+
+from python_condor.utils import check_account_hash_format, check_format, REGX_HASH, check_root_state_hash_format
 from ....constants import RpcMethod
 
 
@@ -7,7 +10,11 @@ RPCMETHOD = RpcMethod()
 
 class QueryBalanceMainPurseAccountHash:
     def __init__(self, url, account_hash: str, state_root_hash: str = None):
-        self.url = url
+        # check account_hash format
+        check_account_hash_format(account_hash)
+        # check state root hash format
+        check_root_state_hash_format(state_root_hash)
+
         if state_root_hash is None:
             params = {
                 "purse_identifier": {
@@ -22,6 +29,8 @@ class QueryBalanceMainPurseAccountHash:
                     "main_purse_under_account_hash": account_hash
                 }
             ]
+
+        self.url = url
         self.rpc_payload = {
             "jsonrpc": "2.0",
             "id": 1,

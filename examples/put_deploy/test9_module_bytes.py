@@ -18,7 +18,7 @@ session_module_bytes = SessionModuleBytes(
 
 payment = SessionPayment(2500000000)
 deploy = Deploy(header, payment, session_module_bytes, [
-                ("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+                ("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
 
 
 url = "http://node.integration.casper.network:7777/rpc"

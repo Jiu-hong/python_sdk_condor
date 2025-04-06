@@ -21,7 +21,7 @@ payload = TransactionV1Payload(args, target1,
                                entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
 
 transaction = TransactionV1(
-    payload, [("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+    payload, [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
 url = "http://node.integration.casper.network:7777/rpc"
 
 

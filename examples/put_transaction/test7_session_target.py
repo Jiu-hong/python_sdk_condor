@@ -1,4 +1,5 @@
 from python_condor import CLList, CLMap, CLU32, CLU8, CLOption, CLTuple1, CLTuple2, NoneHolder, CLTuple3, CLString, CLBool, CLURef, KeyAlgorithm, PutTransction, SessionCallBuilder
+from python_condor.cl_values.cl_key import CLKey
 
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 chainname = "integration-test"
@@ -13,6 +14,9 @@ builder = SessionCallBuilder([(key_path, KeyAlgorithm.ED25519)])
 transaction_json = builder.runtime_args({"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"))),
     "arg2": CLOption(None, CLString(NoneHolder())),
+    "arg12": CLKey("era-001"),
+    "arg13": CLKey("transfer-23df36827bab18568e8077bf1151ed29497456e6bb0896371e9c1a244bcb30c9"),
+    "arg14": CLKey("era-summary-0000000000000000000000000000000000000000000000000000000000000000"),
     "arg3": CLTuple1(CLString("helloworld")),
     "arg4": CLTuple2((CLString("helloworld"), CLBool(True))),
     "arg5": CLTuple3(

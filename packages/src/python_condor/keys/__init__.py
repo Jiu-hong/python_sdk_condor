@@ -9,5 +9,4 @@ from .ecc import get_pvk_pem_from_bytes
 from .ecc import get_signature
 from .ecc import get_signature_from_pem_file
 from .ecc import is_signature_valid
-
 from .ecc import KeyAlgorithm

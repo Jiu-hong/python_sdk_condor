@@ -16,7 +16,7 @@ session_hexstring = session_packagehash.to_bytes()
 
 payment = SessionPayment(2500000000)
 deploy = Deploy(header, payment, session_packagehash, [
-                ("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+                ("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
 
 url = "http://node.integration.casper.network:7777/rpc"
 deploy_result = PutDeploy(url, deploy.to_json()).run()

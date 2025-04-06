@@ -16,7 +16,7 @@ transaction_v1payload = TransactionV1Payload(args, target1,
                                              entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test", 30, datetime.fromisoformat('2025-03-26T03:11:48.829Z'))
 
 transactionv1 = TransactionV1(
-    transaction_v1payload, [("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+    transaction_v1payload, [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
 
 transactionv1_json = {'transaction': {'Version1': {'approvals': [{'signature': '0141b5e6ee2b5784381844a55ffc274e68ffcc28fc4a99f409e66cfae034e16c04f77622f61d885316f90c64c4dd693c99e8716ebabc341143d23cd62f45dafb09',
                                                                   'signer': '017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5'}],

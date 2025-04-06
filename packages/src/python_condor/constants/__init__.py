@@ -9,3 +9,4 @@ from .const_prefix import AlgoKind
 from .const_pricing_mode import PricingModeKind
 from .const_rpc import RpcMethod
 from .const_runtime import RuntimeKind
+from .cons_bidaddr_tag import BidAddrTag

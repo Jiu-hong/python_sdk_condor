@@ -20,7 +20,7 @@ session_packagehash = SessionPackageHash(
 
 payment = SessionPayment(2500000000)
 deploy = Deploy(header, payment, session_packagehash, [
-                ("/Users/jh/mywork/python_sdk_condor/secret_key.pem", KeyAlgorithm.ED25519)])
+                ("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
 
 
 # === generate_body_hash() ===

@@ -33,7 +33,7 @@ def check_clkey_format(clkey):
 def check_contract_package_format(contract_package):
     if not contract_package.startswith("contract-package-"):
         raise ValueError(
-            "contract package should start with 'contract-package-'")
+            "contract-package should start with 'contract-package-'")
     if not check_format(REGX_HASH, contract_package.split("-")[2]):
         raise ValueError(
             "contract-package value should be 64 length only containing alphabet and number")

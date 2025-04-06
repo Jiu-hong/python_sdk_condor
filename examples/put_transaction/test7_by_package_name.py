@@ -11,8 +11,9 @@ initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d53
 chainname = "integration-test"
 
 
+key_path = "/Users/jh/mywork/python_sdk_condor/work/secret_key.pem"
 url = "http://node.integration.casper.network:7777/rpc"
-builder = ContractCallBuilder([("secret_key.pem", KeyAlgorithm.ED25519)])
+builder = ContractCallBuilder([(key_path, KeyAlgorithm.ED25519)])
 transaction_json = builder.runtime_args({"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"))),
     "arg2": CLOption(None, CLString(NoneHolder())),

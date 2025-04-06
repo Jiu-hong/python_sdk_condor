@@ -2,11 +2,14 @@ from python_condor import CLList, CLMap, CLU32, CLU8, CLOption, CLTuple1, CLTupl
 
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 chainname = "integration-test"
-f = open("wasm", "r")
+f = open("/Users/jh/mywork/python_sdk_condor/work/wasm", "r")
+f_empty = open("/Users/jh/mywork/python_sdk_condor/work/wasm_empty", "r")
 module_bytes = f.read()
+module_bytes_empty = f_empty.read()
+key_path = "/Users/jh/mywork/python_sdk_condor/work/secret_key.pem"
 
 url = "http://node.integration.casper.network:7777/rpc"
-builder = SessionCallBuilder([("secret_key.pem", KeyAlgorithm.ED25519)])
+builder = SessionCallBuilder([(key_path, KeyAlgorithm.ED25519)])
 transaction_json = builder.runtime_args({"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"))),
     "arg2": CLOption(None, CLString(NoneHolder())),
@@ -19,7 +22,7 @@ transaction_json = builder.runtime_args({"arg1": CLTuple3((CLString("hello"), CL
         2): CLOption(CLString("Jack")), CLU8(4): CLOption(CLString("Jane")), CLU8(1): CLOption(CLString("Jill"))})
 }). \
     chainname(chainname). \
-    module_bytes(module_bytes, True). \
+    module_bytes(module_bytes_empty, True). \
     from_publickey(initiatorAddr). \
     payment(2500000000).build()
 

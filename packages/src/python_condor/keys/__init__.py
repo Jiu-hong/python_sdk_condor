@@ -10,4 +10,4 @@ from .ecc import get_signature
 from .ecc import get_signature_from_pem_file
 from .ecc import is_signature_valid
 
-from .ecc_types import KeyAlgorithm
+from .ecc import KeyAlgorithm

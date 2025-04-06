@@ -25,7 +25,7 @@ class CLPublicKey(CLValue, CLAtomic):
     def serialize(self) -> bytes:
         return bytes.fromhex(self.data)
 
-    def get_account(self):
+    def get_account_hash(self):
         public_key_bytes = bytes.fromhex(self.data)
 
         as_bytes = \

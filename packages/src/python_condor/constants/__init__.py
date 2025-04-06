@@ -5,8 +5,9 @@ from .cons_target import TargetKind
 from .cons_type import CLTypeName
 from .const_entrypoint import EntryPointKind
 from .const_invocation import InvocationKind
-from .const_prefix import AlgoKind, Prefix
+from .const_prefix import AlgoKind
 from .const_pricing_mode import PricingModeKind
 from .const_rpc import RpcMethod
 from .const_runtime import RuntimeKind
 from .cons_bidaddr_tag import BidAddrTag
+from .const_key_type import ClKeyTAG, Prefix

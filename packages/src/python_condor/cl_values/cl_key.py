@@ -118,4 +118,4 @@ class CLKey(CLValue, CLAtomic):
 
         # message- 19 todo
         else:
-            raise
+            raise ValueError("invalid prefix")

@@ -21,9 +21,6 @@ def check_account_hash_format(account_hash):
 
 
 def check_bid_addr_format(bid_addr):
-    if not bid_addr.startswith("bid-addr-"):
-        raise ValueError(
-            "bid-addr should start with 'bid-addr-'")
     # check format of hash
     inner_value = bid_addr.removeprefix("bid-addr-")
     bid_addr_tag = inner_value[0:2]

@@ -1,4 +1,4 @@
-from ..constants.cons_jsonname import JsonName
+from ..constants import JsonName
 from ..utils import serialize_string
 
 

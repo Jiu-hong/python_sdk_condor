@@ -1,15 +1,3 @@
-# from enum import Enum
-# export enum BidAddrTag {
-#   UnifiedTag = 0,
-#   ValidatorTag,
-#   DelegatedAccountTag,
-#   DelegatedPurseTag,
-#   CreditTag,
-#   ReservedDelegationAccountTag,
-#   ReservedDelegationPurseTag,
-#   UnbondAccountTag,
-#   UnbondPurseTag
-# }
 from .base import constant
 
 

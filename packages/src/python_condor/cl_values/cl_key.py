@@ -1,7 +1,6 @@
-
-from ..utils import check_bid_addr_format
 from .cl_basetype import CLAtomic, CLValue
 from ..constants import TAG, Prefix, ClKeyTAG
+from ..utils import check_bid_addr_format
 
 PREFIX = Prefix()
 

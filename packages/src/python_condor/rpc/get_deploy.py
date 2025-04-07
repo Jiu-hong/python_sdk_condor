@@ -23,4 +23,5 @@ class GetDeploy:
 
     def run(self):
         x = requests.post(self.url, json=self.rpc_payload)
-        return x.json()
+        if x.status_code == requests.codes.ok:
+            return x.json()

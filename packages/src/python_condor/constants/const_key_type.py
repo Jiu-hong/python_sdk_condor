@@ -13,7 +13,7 @@ class ClKeyTAG(Enum):
     BID = 7
     WITHDRAW = 8
     DICTIONARY = 9
-    SYSTEM_CONTRACT_REGISTRY = 10
+    SYSTEM_ENTITY_REGISTRY = 10
     ERA_SUMMARY = 11
     UNBOND = 12
     CHAINSPEC_REGISTRY = 13
@@ -61,8 +61,8 @@ class Prefix(object):
         return "dictionary-"
 
     @constant
-    def SYSTEM_CONTRACT_REGISTRY():
-        return "system-contract-registry-"
+    def SYSTEM_ENTITY_REGISTRY():
+        return "system-entity-registry-"
 
     @constant
     def ERA_SUMMARY():

@@ -25,7 +25,6 @@ def check_clkey_bid_addr_format(bid_addr):
     inner_value = bid_addr.removeprefix("bid-addr-")
     bid_addr_tag = inner_value[0:2]
     hash_hex = inner_value[2:]
-    print("bid_addr_tag: ", bid_addr_tag)
 
     match bid_addr_tag:
         case BID_ADDR_TAG.UnifiedTag:
@@ -130,8 +129,9 @@ def check_clkey_format(clkey):
         check_purse_format(clkey)
 
     # key:bid-addr-xxx
-    elif clkey.startswith("bid-addr-"):
-        check_bid_addr_format(clkey)
+    # elif clkey.startswith("bid-addr-"):
+    #     check_bid_addr_format(clkey)
+    # todo
 
 
 def check_contract_package_format(contract_package):
@@ -164,7 +164,7 @@ def check_purse_format(purse):
         raise ValueError("uref should end with '000 - 007'")
     if not check_format(REGX_HASH, purse.split("-")[1]):
         raise ValueError(
-            "account-hash value should be 64 length only containing alphabet and number")
+            "uref value should be 64 length only containing alphabet and number")
 
 
 def check_root_state_hash_format(state_root_hash):

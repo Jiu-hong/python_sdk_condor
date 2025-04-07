@@ -1,4 +1,4 @@
-from python_condor.utils.cl_check_format import check_account_hash_format
+from python_condor.utils.cl_check_format import check_purse_format
 from .cl_basetype import CLAtomic, CLValue
 from ..constants import TAG, Prefix, ClKeyTAG
 from ..utils import check_clkey_bid_addr_format, check_clkey_hash_format
@@ -19,8 +19,7 @@ class CLKey(CLValue, CLAtomic):
             check_clkey_hash_format(hash_value)
 
         elif data.startswith(PREFIX.UREF):
-            hash_value = data.removeprefix(PREFIX.UREF)
-            check_clkey_hash_format(hash_value)
+            check_purse_format(data)
 
         elif data.startswith(PREFIX.TRANSFER):
             hash_value = data.removeprefix(PREFIX.TRANSFER)
@@ -29,12 +28,6 @@ class CLKey(CLValue, CLAtomic):
         elif data.startswith(PREFIX.DEPLOY):
             hash_value = data.removeprefix(PREFIX.DEPLOY)
             check_clkey_hash_format(hash_value)
-
-        elif data.startswith(PREFIX.ERA):
-            try:
-                int(data.removeprefix(PREFIX.ERA))
-            except:
-                raise ValueError("era value should be int")
 
         elif data.startswith(PREFIX.BALANCE):
             hash_value = data.removeprefix(PREFIX.BALANCE)
@@ -48,15 +41,21 @@ class CLKey(CLValue, CLAtomic):
             hash_value = data.removeprefix(PREFIX.DICTIONARY)
             check_clkey_hash_format(hash_value)
 
-        # system-contract-registry- tag 10
-        elif data.startswith(PREFIX.SYSTEM_CONTRACT_REGISTRY):
-            hash_value = data.removeprefix(PREFIX.SYSTEM_CONTRACT_REGISTRY)
+        # system-entity-registry- tag 10
+        elif data.startswith(PREFIX.SYSTEM_ENTITY_REGISTRY):
+            hash_value = data.removeprefix(PREFIX.SYSTEM_ENTITY_REGISTRY)
             check_clkey_hash_format(hash_value)
 
         # era-summary- tag 11
         elif data.startswith(PREFIX.ERA_SUMMARY):
             hash_value = data.removeprefix(PREFIX.ERA_SUMMARY)
             check_clkey_hash_format(hash_value)
+
+        elif data.startswith(PREFIX.ERA):
+            try:
+                int(data.removeprefix(PREFIX.ERA))
+            except:
+                raise ValueError("era value should be int")
 
         # unbond- tag 12
         elif data.startswith(PREFIX.UNBOND):
@@ -127,12 +126,6 @@ class CLKey(CLValue, CLAtomic):
             value = self.data.removeprefix(PREFIX.DEPLOY)
             return tag + bytes.fromhex(value)
 
-        elif self.data.startswith(PREFIX.ERA):
-            tag = int(ClKeyTAG.ERA.value).to_bytes()
-            era_int = int(self.data.removeprefix(PREFIX.ERA))
-            value = era_int.to_bytes(8, byteorder='little')
-            return tag + value
-
         elif self.data.startswith(PREFIX.BALANCE):
             tag = int(ClKeyTAG.BALANCE.value).to_bytes()
             value = self.data.removeprefix(PREFIX.BALANCE)
@@ -148,10 +141,10 @@ class CLKey(CLValue, CLAtomic):
             value = self.data.removeprefix(PREFIX.DICTIONARY)
             return tag + bytes.fromhex(value)
 
-        # system-contract-registry- tag 10
-        elif self.data.startswith(PREFIX.SYSTEM_CONTRACT_REGISTRY):
-            tag = int(ClKeyTAG.SYSTEM_CONTRACT_REGISTRY.value).to_bytes()
-            value = self.data.removeprefix(PREFIX.SYSTEM_CONTRACT_REGISTRY)
+        # system-entity-registry- tag 10
+        elif self.data.startswith(PREFIX.SYSTEM_ENTITY_REGISTRY):
+            tag = int(ClKeyTAG.SYSTEM_ENTITY_REGISTRY.value).to_bytes()
+            value = self.data.removeprefix(PREFIX.SYSTEM_ENTITY_REGISTRY)
             return tag + bytes.fromhex(value)
 
         # era-summary- tag 11
@@ -160,6 +153,11 @@ class CLKey(CLValue, CLAtomic):
             value = self.data.removeprefix(PREFIX.ERA_SUMMARY)
             return tag + bytes.fromhex(value)
 
+        elif self.data.startswith(PREFIX.ERA):
+            tag = int(ClKeyTAG.ERA.value).to_bytes()
+            era_int = int(self.data.removeprefix(PREFIX.ERA))
+            value = era_int.to_bytes(8, byteorder='little')
+            return tag + value
         # unbond- tag 12
         elif self.data.startswith(PREFIX.UNBOND):
             tag = int(ClKeyTAG.UNBOND.value).to_bytes()

@@ -95,3 +95,18 @@ class Prefix(object):
     @constant
     def BYTE_CODE():
         return "byte-code-"
+
+    @constant
+    def V1_WASM():
+        return "v1-wasm-"
+
+    @constant
+    def V2_WASM():
+        return "v2-wasm-"
+
+    @constant
+    def EMPTY():
+        return "empty-"
+# const V1_WASM_PREFIX: &str = "v1-wasm-";
+# const V2_WASM_PREFIX: &str = "v2-wasm-";
+# const EMPTY_PREFIX: &str = "empty-";

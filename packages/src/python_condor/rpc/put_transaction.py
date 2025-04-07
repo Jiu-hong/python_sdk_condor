@@ -15,5 +15,22 @@ class PutTransction:
             "params": transactionV1}
 
     def run(self):
-        x = requests.post(self.url, json=self.rpc_payload)
-        return x.json()
+        error = {}
+        try:
+            x = requests.post(self.url, json=self.rpc_payload)
+        except requests.exceptions.Timeout:
+            error = {"err": "..Timeout.."}
+            # Maybe set up for a retry, or continue in a retry loop
+        except requests.exceptions.TooManyRedirects:
+            error = {"err": "..TooManyRedirects.."}
+            # Tell the user their URL was bad and try a different one
+        except requests.exceptions.RequestException as e:
+            error = {"err": "..RequestException.."}
+        except requests.exceptions as e:
+            error = {"err": e}
+
+        else:
+            if x.status_code == requests.codes.ok:
+                return x.json()
+            else:
+                return error

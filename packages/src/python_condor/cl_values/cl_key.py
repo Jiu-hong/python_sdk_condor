@@ -1,7 +1,6 @@
-from python_condor.utils.cl_check_format import check_purse_format
 from .cl_basetype import CLAtomic, CLValue
 from ..constants import TAG, Prefix, ClKeyTAG
-from ..utils import check_clkey_bid_addr_format, check_clkey_hash_format
+from ..utils import check_clkey_bid_addr_format, check_clkey_hash_format, check_purse_format
 
 PREFIX = Prefix()
 
@@ -87,7 +86,15 @@ class CLKey(CLValue, CLAtomic):
 
         # byte-code- 18
         elif data.startswith(PREFIX.BYTE_CODE):
-            bytescode_hex = data.removeprefix(PREFIX.BYTE_CODE)
+            rest_hex = data.removeprefix(PREFIX.BYTE_CODE)
+            if rest_hex.startswith(PREFIX.V1_WASM):
+                bytescode_hex = rest_hex.removeprefix(PREFIX.V1_WASM)
+            elif rest_hex.startswith(PREFIX.V2_WASM):
+                bytescode_hex = rest_hex.removeprefix(PREFIX.V2_WASM)
+            elif rest_hex.startswith(PREFIX.EMPTY):
+                bytescode_hex = ""
+            else:
+                raise ValueError("invalid byte-code-xxx")
             try:
                 bytes.fromhex(bytescode_hex)
             except:
@@ -195,13 +202,18 @@ class CLKey(CLValue, CLAtomic):
             return tag + bytes.fromhex(value)
 
         # byte-code- 18
+
         elif self.data.startswith(PREFIX.BYTE_CODE):
             tag = int(ClKeyTAG.BYTE_CODE.value).to_bytes()
-            bytescode_hex = self.data.removeprefix(PREFIX.BYTE_CODE)
-            if len(bytescode_hex) > 0:
-                value = int(1).to_bytes(1) + bytes.fromhex(bytescode_hex)
+            rest_hex = self.data.removeprefix(PREFIX.BYTE_CODE)
+            if rest_hex.startswith(PREFIX.V1_WASM):
+                bytescode_hex = rest_hex.removeprefix(PREFIX.V1_WASM)
+                value = int(1).to_bytes() + bytes.fromhex(bytescode_hex)
+            elif rest_hex.startswith(PREFIX.V2_WASM):
+                bytescode_hex = rest_hex.removeprefix(PREFIX.V2_WASM)
+                value = int(2).to_bytes() + bytes.fromhex(bytescode_hex)
             else:
-                value = int(0).to_bytes(1)
+                value = int(0).to_bytes()
             return tag + value
 
         # message- 19 todo

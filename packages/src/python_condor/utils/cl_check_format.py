@@ -20,11 +20,12 @@ def check_account_hash_format(account_hash):
             "account-hash value should be 64 length only containing alphabet and number")
 
 
-def check_bid_addr_format(bid_addr):
+def check_clkey_bid_addr_format(bid_addr):
     # check format of hash
     inner_value = bid_addr.removeprefix("bid-addr-")
     bid_addr_tag = inner_value[0:2]
     hash_hex = inner_value[2:]
+    print("bid_addr_tag: ", bid_addr_tag)
 
     match bid_addr_tag:
         case BID_ADDR_TAG.UnifiedTag:
@@ -94,6 +95,14 @@ def check_bid_addr_format(bid_addr):
             if not check_format(REGX_HASH, validator_purse_hex):
                 raise ValueError(
                     "validator purse hash value should be 64 length only containing alphabet and number")
+        case _:
+            raise ValueError("not valid bid-addr prefix")
+
+
+def check_clkey_hash_format(hash_value):
+    if not check_format(REGX_HASH, hash_value):
+        raise ValueError(
+            "value should be 64 length only containing alphabet and number")
 
 
 def check_block_format(block_id):

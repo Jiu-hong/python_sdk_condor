@@ -1,3 +1,4 @@
+import pytest
 from python_condor import CLKey
 
 
@@ -53,3 +54,10 @@ def test_clkey_bid_addr_00_cl_value():
 def test_clkey_bid_addr_00_to_json():
     result = clkey_bid_addr_00.to_json()
     assert result == "Key"
+
+
+# === check invalid inner type
+def test_clkey_bid_addr_invalid_inner_value():
+    with pytest.raises(ValueError, match="not valid bid-addr prefix"):
+        _ = CLKey(
+            "bid-addr-306633f962155a7d46658adb36143f28668f530454fe788c927cecf62e5964a1")

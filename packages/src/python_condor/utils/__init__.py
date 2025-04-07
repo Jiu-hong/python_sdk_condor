@@ -1,4 +1,4 @@
 from .call_table_serialization import CalltableSerialization
 from .cl_serialize_string import serialize_string
-from .cl_check_format import check_account_hash_format, check_bid_addr_format, check_block_format, check_clkey_format, check_contract_package_format, check_deploy_hash_format, check_public_key_format, check_purse_format, check_root_state_hash_format
+from .cl_check_format import check_clkey_hash_format, check_account_hash_format, check_clkey_bid_addr_format, check_block_format, check_clkey_format, check_contract_package_format, check_deploy_hash_format, check_public_key_format, check_purse_format, check_root_state_hash_format
 from .cl_deep_value_v2 import deep_value_v2

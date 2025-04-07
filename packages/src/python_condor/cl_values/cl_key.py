@@ -1,12 +1,103 @@
+from python_condor.utils.cl_check_format import check_account_hash_format
 from .cl_basetype import CLAtomic, CLValue
 from ..constants import TAG, Prefix, ClKeyTAG
-from ..utils import check_bid_addr_format
+from ..utils import check_clkey_bid_addr_format, check_clkey_hash_format
 
 PREFIX = Prefix()
 
 
 class CLKey(CLValue, CLAtomic):
     tag = TAG.CLKey.value
+
+    def __init__(self, data):
+        if data.startswith(PREFIX.ACCOUNT_HASH):
+            hash_value = data.removeprefix(PREFIX.ACCOUNT_HASH)
+            check_clkey_hash_format(hash_value)
+
+        elif data.startswith(PREFIX.HASH):
+            hash_value = data.removeprefix(PREFIX.HASH)
+            check_clkey_hash_format(hash_value)
+
+        elif data.startswith(PREFIX.UREF):
+            hash_value = data.removeprefix(PREFIX.UREF)
+            check_clkey_hash_format(hash_value)
+
+        elif data.startswith(PREFIX.TRANSFER):
+            hash_value = data.removeprefix(PREFIX.TRANSFER)
+            check_clkey_hash_format(hash_value)
+
+        elif data.startswith(PREFIX.DEPLOY):
+            hash_value = data.removeprefix(PREFIX.DEPLOY)
+            check_clkey_hash_format(hash_value)
+
+        elif data.startswith(PREFIX.ERA):
+            try:
+                int(data.removeprefix(PREFIX.ERA))
+            except:
+                raise ValueError("era value should be int")
+
+        elif data.startswith(PREFIX.BALANCE):
+            hash_value = data.removeprefix(PREFIX.BALANCE)
+            check_clkey_hash_format(hash_value)
+
+        elif data.startswith(PREFIX.WITHDRAW):
+            hash_value = data.removeprefix(PREFIX.WITHDRAW)
+            check_clkey_hash_format(hash_value)
+
+        elif data.startswith(PREFIX.DICTIONARY):
+            hash_value = data.removeprefix(PREFIX.DICTIONARY)
+            check_clkey_hash_format(hash_value)
+
+        # system-contract-registry- tag 10
+        elif data.startswith(PREFIX.SYSTEM_CONTRACT_REGISTRY):
+            hash_value = data.removeprefix(PREFIX.SYSTEM_CONTRACT_REGISTRY)
+            check_clkey_hash_format(hash_value)
+
+        # era-summary- tag 11
+        elif data.startswith(PREFIX.ERA_SUMMARY):
+            hash_value = data.removeprefix(PREFIX.ERA_SUMMARY)
+            check_clkey_hash_format(hash_value)
+
+        # unbond- tag 12
+        elif data.startswith(PREFIX.UNBOND):
+            hash_value = data.removeprefix(PREFIX.UNBOND)
+            check_clkey_hash_format(hash_value)
+
+        # chainspec-registry- 13
+        elif data.startswith(PREFIX.CHAINSPEC_REGISTRY):
+            hash_value = data.removeprefix(PREFIX.CHAINSPEC_REGISTRY)
+            check_clkey_hash_format(hash_value)
+
+        # checksum-registry- 14
+        elif data.startswith(PREFIX.CHECKSUM_REGISTRY):
+            hash_value = data.removeprefix(PREFIX.CHECKSUM_REGISTRY)
+            check_clkey_hash_format(hash_value)
+
+            # bid-addr- 15
+        elif data.startswith(PREFIX.BID_ADDR):
+            check_clkey_bid_addr_format(data)
+
+        elif data.startswith(PREFIX.BID):
+            hash_value = data.removeprefix(PREFIX.BID)
+            check_clkey_hash_format(hash_value)
+
+        # package- 16
+        elif data.startswith(PREFIX.PACKAGE):
+            hash_value = data.removeprefix(PREFIX.PACKAGE)
+            check_clkey_hash_format(hash_value)
+
+        # byte-code- 18
+        elif data.startswith(PREFIX.BYTE_CODE):
+            bytescode_hex = data.removeprefix(PREFIX.BYTE_CODE)
+            try:
+                bytes.fromhex(bytescode_hex)
+            except:
+                raise ValueError("bytescode should be hex string")
+        # message- 19 todo
+        else:
+            raise ValueError("invalid prefix")
+
+        super().__init__(data)
 
     def serialize(self):
 
@@ -90,7 +181,6 @@ class CLKey(CLValue, CLAtomic):
         # bid-addr- 15
         elif self.data.startswith(PREFIX.BID_ADDR):
             tag = int(ClKeyTAG.BID_ADDR.value).to_bytes()
-            check_bid_addr_format(self.data)
             value = self.data.removeprefix(PREFIX.BID_ADDR)
             return tag + bytes.fromhex(value)
 

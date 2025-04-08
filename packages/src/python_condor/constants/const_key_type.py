@@ -116,6 +116,10 @@ class Prefix(object):
         return "named-key-"
 
     @constant
+    def BLOCK_GLOBAL():
+        return "block-"
+
+    @constant
     def V1_WASM():
         return "v1-wasm-"
 
@@ -142,3 +146,7 @@ class Prefix(object):
     @constant
     def CONTRACT():
         return "contract-"
+
+    @constant
+    def ENTRY_POINT():
+        return "entry-point-"

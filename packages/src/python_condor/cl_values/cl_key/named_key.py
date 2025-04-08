@@ -1,9 +1,12 @@
 from .entity_addr import EntityAddr
+from ...constants import Prefix
 from ...utils import check_clkey_hash_format
+
+PREFIX = Prefix()
 
 
 def check_named_key_format(data):
-    source = data.removeprefix("named-key-")
+    source = data.removeprefix(PREFIX.NAMED_KEY)
 
     parts = source.split('-')
     if len(parts) != 4:
@@ -18,7 +21,7 @@ def check_named_key_format(data):
 
 
 def serialize_named_key(data):
-    source = data.removeprefix("named-key-")
+    source = data.removeprefix(PREFIX.NAMED_KEY)
 
     parts = source.split('-')
 

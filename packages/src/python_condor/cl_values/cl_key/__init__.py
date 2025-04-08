@@ -1,4 +1,6 @@
-from python_condor.cl_values.cl_key.named_key import check_named_key_format, serialize_named_key
+from .block_global_key import check_block_global_key_format, serialize_block_global_key
+from .entry_point_key import check_entry_point_key_format, serialize_entry_point_key
+from .named_key import check_named_key_format, serialize_named_key
 from .byte_code_key import check_byte_code_key_format, serialize_bytes_code_key
 from .era_key import check_era_key_format, serialize_era_key
 from .message_key import check_message_key_format, serialize_message_key
@@ -97,7 +99,13 @@ class CLKey(CLValue, CLAtomic):
         # named-key- 20
         elif data.startswith(PREFIX.NAMED_KEY):
             check_named_key_format(data)
+            #
+        elif data.startswith(PREFIX.BLOCK_GLOBAL):
+            check_block_global_key_format(data)
 
+        # entrypoint- 23
+        elif data.startswith(PREFIX.ENTRY_POINT):
+            check_entry_point_key_format(data)
         else:
             raise ValueError("invalid prefix")
 
@@ -213,6 +221,17 @@ class CLKey(CLValue, CLAtomic):
         elif self.data.startswith(PREFIX.NAMED_KEY):
             tag = int(ClKeyTAG.NAMED_KEY.value).to_bytes()
             value = serialize_named_key(self.data)
+            return tag + value
+        # block- 21
+        elif self.data.startswith(PREFIX.BLOCK_GLOBAL):
+            tag = int(ClKeyTAG.BLOCK_GLOBAL.value).to_bytes()
+            value = serialize_block_global_key(self.data)
+            return tag + value
+
+        # entrypoint- 23
+        elif self.data.startswith(PREFIX.ENTRY_POINT):
+            tag = int(ClKeyTAG.ENTRY_POINT.value).to_bytes()
+            value = serialize_entry_point_key(self.data)
             return tag + value
         else:
             raise ValueError("invalid prefix")

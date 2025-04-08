@@ -25,6 +25,7 @@ def check_clkey_bid_addr_format(bid_addr):
     inner_value = bid_addr.removeprefix("bid-addr-")
     bid_addr_tag = inner_value[0:2]
     hash_hex = inner_value[2:]
+    print("bid_addr_tag: ", bid_addr_tag)
 
     match bid_addr_tag:
         case BID_ADDR_TAG.UnifiedTag:

@@ -20,7 +20,18 @@ class ClKeyTAG(Enum):
     CHECKSUM_REGISTRY = 14
     BID_ADDR = 15
     PACKAGE = 16
+    ADDRESSABLE_ENTITY = 17
     BYTE_CODE = 18
+#       Message,
+    MESSAGE = 19
+#   NamedKey,
+    NAMED_KEY = 20
+#   BlockGlobal,
+    BLOCK_GLOBAL = 21
+#   BalanceHold,
+    BALANCE_HOLD = 22
+#   EntryPoint
+    ENTRY_POINT = 23
 
 
 class Prefix(object):
@@ -97,6 +108,10 @@ class Prefix(object):
         return "byte-code-"
 
     @constant
+    def MESSAGE():
+        return "message-"
+
+    @constant
     def V1_WASM():
         return "v1-wasm-"
 
@@ -107,6 +122,19 @@ class Prefix(object):
     @constant
     def EMPTY():
         return "empty-"
-# const V1_WASM_PREFIX: &str = "v1-wasm-";
-# const V2_WASM_PREFIX: &str = "v2-wasm-";
-# const EMPTY_PREFIX: &str = "empty-";
+
+    @constant
+    def ENTITY():
+        return "entity-"
+
+    @constant
+    def SYSTEM():
+        return "system-"
+
+    @constant
+    def ACCOUNT():
+        return "account-"
+
+    @constant
+    def CONTRACT():
+        return "contract-"

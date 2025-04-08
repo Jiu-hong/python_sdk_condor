@@ -1,6 +1,11 @@
-from .cl_basetype import CLAtomic, CLValue
-from ..constants import TAG, Prefix, ClKeyTAG
-from ..utils import check_clkey_bid_addr_format, check_clkey_hash_format, check_purse_format
+from .byte_code_key import check_byte_code_key_format, serialize_bytes_code_key
+from .era_key import check_era_key_format, serialize_era_key
+
+from .message_key import check_message_key_format, serialize_message_key
+
+from ..cl_basetype import CLAtomic, CLValue
+from ...constants import TAG, Prefix, ClKeyTAG
+from ...utils import check_clkey_bid_addr_format, check_clkey_hash_format, check_purse_format
 
 PREFIX = Prefix()
 
@@ -51,10 +56,7 @@ class CLKey(CLValue, CLAtomic):
             check_clkey_hash_format(hash_value)
 
         elif data.startswith(PREFIX.ERA):
-            try:
-                int(data.removeprefix(PREFIX.ERA))
-            except:
-                raise ValueError("era value should be int")
+            check_era_key_format(data)
 
         # unbond- tag 12
         elif data.startswith(PREFIX.UNBOND):
@@ -86,27 +88,18 @@ class CLKey(CLValue, CLAtomic):
 
         # byte-code- 18
         elif data.startswith(PREFIX.BYTE_CODE):
-            rest_hex = data.removeprefix(PREFIX.BYTE_CODE)
-            if rest_hex.startswith(PREFIX.V1_WASM):
-                bytescode_hex = rest_hex.removeprefix(PREFIX.V1_WASM)
-            elif rest_hex.startswith(PREFIX.V2_WASM):
-                bytescode_hex = rest_hex.removeprefix(PREFIX.V2_WASM)
-            elif rest_hex.startswith(PREFIX.EMPTY):
-                bytescode_hex = ""
-            else:
-                raise ValueError("invalid byte-code-xxx")
-            try:
-                bytes.fromhex(bytescode_hex)
-            except:
-                raise ValueError("bytescode should be hex string")
-        # message- 19 todo
+            check_byte_code_key_format(data)
+
+        # message- 19
+        elif data.startswith(PREFIX.MESSAGE):
+            check_message_key_format(data)
+
         else:
             raise ValueError("invalid prefix")
 
         super().__init__(data)
 
     def serialize(self):
-
         if self.data.startswith(PREFIX.ACCOUNT_HASH):
             tag = int(ClKeyTAG.ACCOUNT_HASH.value).to_bytes()
             value = self.data.removeprefix(PREFIX.ACCOUNT_HASH)
@@ -162,9 +155,9 @@ class CLKey(CLValue, CLAtomic):
 
         elif self.data.startswith(PREFIX.ERA):
             tag = int(ClKeyTAG.ERA.value).to_bytes()
-            era_int = int(self.data.removeprefix(PREFIX.ERA))
-            value = era_int.to_bytes(8, byteorder='little')
+            value = serialize_era_key(self.data)
             return tag + value
+
         # unbond- tag 12
         elif self.data.startswith(PREFIX.UNBOND):
             tag = int(ClKeyTAG.UNBOND.value).to_bytes()
@@ -186,36 +179,32 @@ class CLKey(CLValue, CLAtomic):
         # bid-addr- 15
         elif self.data.startswith(PREFIX.BID_ADDR):
             tag = int(ClKeyTAG.BID_ADDR.value).to_bytes()
-            value = self.data.removeprefix(PREFIX.BID_ADDR)
-            return tag + bytes.fromhex(value)
+            value = bytes.fromhex(self.data.removeprefix(PREFIX.BID_ADDR))
+            return tag + value
 
         # bid tag 7 "bid-"
         elif self.data.startswith(PREFIX.BID):
             tag = int(ClKeyTAG.BID.value).to_bytes()
-            value = self.data.removeprefix(PREFIX.BID)
-            return tag + bytes.fromhex(value)
+            value = bytes.fromhex(self.data.removeprefix(PREFIX.BID))
+            return tag + value
 
         # package- 16
         elif self.data.startswith(PREFIX.PACKAGE):
             tag = int(ClKeyTAG.PACKAGE.value).to_bytes()
-            value = self.data.removeprefix(PREFIX.PACKAGE)
-            return tag + bytes.fromhex(value)
-
-        # byte-code- 18
-
-        elif self.data.startswith(PREFIX.BYTE_CODE):
-            tag = int(ClKeyTAG.BYTE_CODE.value).to_bytes()
-            rest_hex = self.data.removeprefix(PREFIX.BYTE_CODE)
-            if rest_hex.startswith(PREFIX.V1_WASM):
-                bytescode_hex = rest_hex.removeprefix(PREFIX.V1_WASM)
-                value = int(1).to_bytes() + bytes.fromhex(bytescode_hex)
-            elif rest_hex.startswith(PREFIX.V2_WASM):
-                bytescode_hex = rest_hex.removeprefix(PREFIX.V2_WASM)
-                value = int(2).to_bytes() + bytes.fromhex(bytescode_hex)
-            else:
-                value = int(0).to_bytes()
+            value = bytes.fromhex(self.data.removeprefix(PREFIX.PACKAGE))
             return tag + value
 
-        # message- 19 todo
+        # byte-code- 18
+        elif self.data.startswith(PREFIX.BYTE_CODE):
+            tag = int(ClKeyTAG.BYTE_CODE.value).to_bytes()
+            value = serialize_bytes_code_key(self.data)
+            return tag + value
+
+         # message- 19 todo
+        elif self.data.startswith(PREFIX.MESSAGE):
+            tag = int(ClKeyTAG.MESSAGE.value).to_bytes()
+            value = serialize_message_key(self.data)
+            return tag + value
+
         else:
             raise ValueError("invalid prefix")

@@ -43,6 +43,7 @@ class TransactionV1Payload:
             runtimeArgsBuffer).to_bytes(4, byteorder='little')
 
         runtimeArgsWithLength = lenth_runtimeArgsBuffer + runtimeArgsBuffer
+        print("runtimeArgsWithLength:", len(runtimeArgsBuffer))
 
         self.fields.addField(0, runtimeArgsWithLength)
 

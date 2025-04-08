@@ -1,9 +1,9 @@
 from .block_global_key import check_block_global_key_format, serialize_block_global_key
-from .entry_point_key import check_entry_point_key_format, serialize_entry_point_key
-from .named_key import check_named_key_format, serialize_named_key
 from .byte_code_key import check_byte_code_key_format, serialize_bytes_code_key
+from .entry_point_key import check_entry_point_key_format, serialize_entry_point_key
 from .era_key import check_era_key_format, serialize_era_key
 from .message_key import check_message_key_format, serialize_message_key
+from .named_key import check_named_key_format, serialize_named_key
 
 from ..cl_basetype import CLAtomic, CLValue
 from ...constants import TAG, Prefix, ClKeyTAG
@@ -112,42 +112,51 @@ class CLKey(CLValue, CLAtomic):
         super().__init__(data)
 
     def serialize(self):
+
+        # account_hash tag 0
         if self.data.startswith(PREFIX.ACCOUNT_HASH):
             tag = int(ClKeyTAG.ACCOUNT_HASH.value).to_bytes()
             value = self.data.removeprefix(PREFIX.ACCOUNT_HASH)
             return tag + bytes.fromhex(value)
 
+        # hash tag 1
         elif self.data.startswith(PREFIX.HASH):
             tag = int(ClKeyTAG.HASH.value).to_bytes()
             value = self.data.removeprefix(PREFIX.HASH)
             return tag + bytes.fromhex(value)
 
+        # uref tag 2
         elif self.data.startswith(PREFIX.UREF):
             tag = int(ClKeyTAG.UREF.value).to_bytes()
             temp = self.data.split('-')
             value = temp[1] + '{:02x}'.format(int(temp[2]))
             return tag + bytes.fromhex(value)
 
+        # transfer tag 3
         elif self.data.startswith(PREFIX.TRANSFER):
             tag = int(ClKeyTAG.TRANSFER.value).to_bytes()
             value = self.data.removeprefix(PREFIX.TRANSFER)
             return tag + bytes.fromhex(value)
 
+        # deploy tag 4
         elif self.data.startswith(PREFIX.DEPLOY):
             tag = int(ClKeyTAG.DEPLOY.value).to_bytes()
             value = self.data.removeprefix(PREFIX.DEPLOY)
             return tag + bytes.fromhex(value)
 
+        # balance tag 6
         elif self.data.startswith(PREFIX.BALANCE):
             tag = int(ClKeyTAG.BALANCE.value).to_bytes()
             value = self.data.removeprefix(PREFIX.BALANCE)
             return tag + bytes.fromhex(value)
 
+        # withdraw tag 8
         elif self.data.startswith(PREFIX.WITHDRAW):
             tag = int(ClKeyTAG.WITHDRAW.value).to_bytes()
             value = self.data.removeprefix(PREFIX.WITHDRAW)
             return tag + bytes.fromhex(value)
 
+        # dictionary tag 9
         elif self.data.startswith(PREFIX.DICTIONARY):
             tag = int(ClKeyTAG.DICTIONARY.value).to_bytes()
             value = self.data.removeprefix(PREFIX.DICTIONARY)
@@ -165,6 +174,7 @@ class CLKey(CLValue, CLAtomic):
             value = self.data.removeprefix(PREFIX.ERA_SUMMARY)
             return tag + bytes.fromhex(value)
 
+        # ERA tag 5
         elif self.data.startswith(PREFIX.ERA):
             tag = int(ClKeyTAG.ERA.value).to_bytes()
             value = serialize_era_key(self.data)
@@ -212,7 +222,7 @@ class CLKey(CLValue, CLAtomic):
             value = serialize_bytes_code_key(self.data)
             return tag + value
 
-         # message- 19 todo
+         # message- 19
         elif self.data.startswith(PREFIX.MESSAGE):
             tag = int(ClKeyTAG.MESSAGE.value).to_bytes()
             value = serialize_message_key(self.data)

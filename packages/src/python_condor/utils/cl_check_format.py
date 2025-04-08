@@ -102,7 +102,7 @@ def check_clkey_bid_addr_format(bid_addr):
 def check_clkey_hash_format(hash_value):
     if not check_format(REGX_HASH, hash_value):
         raise ValueError(
-            "value should be 64 length only containing alphabet and number")
+            "hash value should be 64 length only containing alphabet and number")
 
 
 def check_block_format(block_id):

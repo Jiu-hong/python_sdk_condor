@@ -112,6 +112,10 @@ class Prefix(object):
         return "message-"
 
     @constant
+    def NAMED_KEY():
+        return "named-key-"
+
+    @constant
     def V1_WASM():
         return "v1-wasm-"
 

@@ -1,45 +1,7 @@
 
-from python_condor.utils.cl_check_format import check_clkey_hash_format
-from ...constants import Prefix
+from .entity_addr import EntityAddr
+from ...utils import check_clkey_hash_format
 
-PREFIX = Prefix()
-
-
-class EntityAddr:
-    def __init__(self, data):
-        # check todo
-        # entity-contract-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a
-        if not data.startswith(PREFIX.ENTITY):
-            raise ValueError("data should start with 'entity-'")
-
-        entity_data = data.removeprefix(PREFIX.ENTITY)
-
-        if entity_data.startswith(PREFIX.SYSTEM):
-            hash_value = entity_data.removeprefix(PREFIX.SYSTEM)
-            check_clkey_hash_format(hash_value)
-
-        elif entity_data.startswith(PREFIX.ACCOUNT):
-            hash_value = entity_data.removeprefix(PREFIX.ACCOUNT)
-            check_clkey_hash_format(hash_value)
-
-        elif entity_data.startswith(PREFIX.CONTRACT):
-            hash_value = entity_data.removeprefix(PREFIX.CONTRACT)
-            check_clkey_hash_format(hash_value)
-
-        else:
-            raise ValueError(
-                "data should start with 'entity-system-', 'entity-account' or 'entity-contract'")
-
-        self.data = data
-
-    def serialize(self):
-        entity_data = self.data.removeprefix(PREFIX.ENTITY)
-        if entity_data.startswith(PREFIX.SYSTEM):
-            return int(0).to_bytes() + bytes.fromhex(entity_data.removeprefix(PREFIX.SYSTEM))
-        elif entity_data.startswith(PREFIX.ACCOUNT):
-            return int(1).to_bytes() + bytes.fromhex(entity_data.removeprefix(PREFIX.ACCOUNT))
-        elif entity_data.startswith(PREFIX.CONTRACT):
-            return int(2).to_bytes() + bytes.fromhex(entity_data.removeprefix(PREFIX.CONTRACT))
 
 # "message-topic-entity-contract-xxx-xxx"
 # message-entity-contract-xxx-xxx-f
@@ -71,7 +33,7 @@ def check_message_key_format(data):
             raise ValueError("the index should be an hexadecimal number")
 
     hash_addr = f"{parts[0]}-{parts[1]}-{parts[2]}"
-    _ = EntityAddr(hash_addr)  # check format
+    _ = EntityAddr(hash_addr)  # check entity_addr format
     check_clkey_hash_format(parts[3])
 
 

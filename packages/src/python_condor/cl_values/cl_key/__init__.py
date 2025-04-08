@@ -1,6 +1,6 @@
+from python_condor.cl_values.cl_key.named_key import check_named_key_format, serialize_named_key
 from .byte_code_key import check_byte_code_key_format, serialize_bytes_code_key
 from .era_key import check_era_key_format, serialize_era_key
-
 from .message_key import check_message_key_format, serialize_message_key
 
 from ..cl_basetype import CLAtomic, CLValue
@@ -93,6 +93,10 @@ class CLKey(CLValue, CLAtomic):
         # message- 19
         elif data.startswith(PREFIX.MESSAGE):
             check_message_key_format(data)
+
+        # named-key- 20
+        elif data.startswith(PREFIX.NAMED_KEY):
+            check_named_key_format(data)
 
         else:
             raise ValueError("invalid prefix")
@@ -205,6 +209,10 @@ class CLKey(CLValue, CLAtomic):
             tag = int(ClKeyTAG.MESSAGE.value).to_bytes()
             value = serialize_message_key(self.data)
             return tag + value
-
+        # named-key- 20
+        elif self.data.startswith(PREFIX.NAMED_KEY):
+            tag = int(ClKeyTAG.NAMED_KEY.value).to_bytes()
+            value = serialize_named_key(self.data)
+            return tag + value
         else:
             raise ValueError("invalid prefix")

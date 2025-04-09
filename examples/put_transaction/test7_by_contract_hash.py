@@ -4,9 +4,12 @@ from python_condor import CLTuple3, CLString, CLBool, CLURef, ContractCallBuilde
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 chainname = "integration-test"
 
-
+keys = [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem",
+         KeyAlgorithm.ED25519),
+        ("/Users/jh/mywork/python_sdk_condor/work/secret_key2.pem",
+         KeyAlgorithm.SECP256K1)]
 url = "http://node.integration.casper.network:7777/rpc"
-builder = ContractCallBuilder([("secret_key.pem", KeyAlgorithm.ED25519)])
+builder = ContractCallBuilder(keys)
 transaction_json = builder.runtime_args({"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"))),
     "arg2": CLOption(None, CLString(NoneHolder())),

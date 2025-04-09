@@ -45,6 +45,6 @@ transaction = TransactionV1(
 url = "http://node.integration.casper.network:7777/rpc"
 
 my_json = transaction.to_json()
-print(json.dumps(my_json))
+# print(json.dumps(my_json))
 transaction_result = PutTransction(url, my_json).run()
 print(transaction_result)

@@ -26,7 +26,8 @@ args = {"arg1": CLU32(1),
         "arg8": CLKey("entry-point-v1-entity-contract-53c02487fa9a4bb1cd3e27b849e942cddb97caacb357e5b6bc86f702b2e32dbb-3eba75fc27f0ec2786e09c09d72d61e4c28a86d44d8efc9911460d5438396481")
         }
 scheduling = TransactionScheduling()
-initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
+# initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
+initiatorAddr = "0203b3eb6ae40e21a9436b956aa8a3af5b7336340cfc6ec035db7aec6a4ff1cda22f"
 pricing_mode = PricingMode("Classic", 2500000000)
 target1 = EntityTarget(
     "VmCasperV1", "b5d048d4e3f892181c791f5362b33a6d3a36c720913fdc17bc099cab61923ee6")
@@ -36,10 +37,14 @@ entrypoint1 = TransactionEntryPoint("Custom", "test2")
 payload = TransactionV1Payload(args, target1,
                                entrypoint1, scheduling, initiatorAddr, pricing_mode, chainname)
 
+my_keys = [
+    # ("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519),
+    ("/Users/jh/mywork/python_sdk_condor/work/secret_key2.pem", KeyAlgorithm.SECP256K1)]
 transaction = TransactionV1(
-    payload, [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
+    payload, my_keys)
 url = "http://node.integration.casper.network:7777/rpc"
 
-# print(json.dumps(transaction.to_json()))
-transaction_result = PutTransction(url, transaction.to_json()).run()
+my_json = transaction.to_json()
+print(json.dumps(my_json))
+transaction_result = PutTransction(url, my_json).run()
 print(transaction_result)

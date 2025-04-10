@@ -45,14 +45,16 @@ def get_key_pair_from_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
 
 
 # incorrect
-def get_pvk_pem_from_bytes(pvk: bytes):
+def get_pvk_pem_from_bytes(sk_bytes: bytes):
     """Returns SECP256K1 private key (pem) from bytes.
 
     :param pvk: A private key derived from a generated key pair.
     :returns: PEM represenation of signing key.
 
     """
-    sk = SigningKey.from_string(pvk, curve=_CURVE)
+    # sk = SigningKey.from_string(sk_bytes, curve=_CURVE)
+    sk = SigningKey.from_string(
+        sk_bytes, curve=_CURVE, hashfunc=_HASH_FN)
 
     return sk.to_pem()
 
@@ -67,7 +69,7 @@ def get_signature(msg: bytes, sk_bytes: bytes) -> bytes:
 
     """
     sk = SigningKey.from_string(
-        sk_bytes, curve=ecdsa.SECP256k1, hashfunc=hashlib.sha256)
+        sk_bytes, curve=_CURVE, hashfunc=_HASH_FN)
     # return sk.sign_deterministic(msg, hashfunc=_HASH_FN)
     return _SECP256k1_PREFIX + sk.sign_deterministic(msg, sigencode=sigencode_string_canonize)
 

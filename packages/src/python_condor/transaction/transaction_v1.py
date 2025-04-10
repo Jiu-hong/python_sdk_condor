@@ -23,24 +23,22 @@ class TransactionV1:
     def to_json(self):
         # get hash
         transaction_hash = self.byteHash()
-
         # get signature
         approval_list = []
-        transaction_hash_here = transaction_hash
         for (signer_keypath, algo) in self.signers_keypaths_algo:
 
             (PrivateKeyBytes, PublicKeyBytes) = get_key_pair_from_pem_file(
                 signer_keypath, algo)
 
             sig = get_signature(bytes.fromhex(
-                transaction_hash_here), algo, PrivateKeyBytes).hex()
+                transaction_hash), algo, PrivateKeyBytes).hex()
             approval = {}
             approval[JSONNAME.SIGNER] = PublicKeyBytes.hex()
             approval[JSONNAME.SIGNATURE] = sig
             approval_list.append(approval)
         approvals = {JSONNAME.APPROVALS: approval_list}
         # hash
-        hash = {JSONNAME.HASH: transaction_hash_here}
+        hash = {JSONNAME.HASH: transaction_hash}
         # payload
         payload = self.payload.to_json()
 

@@ -124,7 +124,7 @@ def get_pvk_pem_from_hex_string(
     :returns : Private key in PEM format.
 
     """
-    return ALGOS[algo].get_pvk_pem_from_bytes(pvk)
+    return ALGOS[algo].get_pvk_pem_from_bytes(bytes.fromhex(pvk))
 
 
 def get_pvk_pem_file_from_bytes(

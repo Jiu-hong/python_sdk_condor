@@ -13,17 +13,17 @@ _ED25519_PREFIX = int(1).to_bytes()
 
 
 # correct
-def get_key_pair(seed: bytes = None) -> typing.Tuple[bytes, bytes]:
+def get_key_pair(private_key_bytes: bytes = None) -> typing.Tuple[bytes, bytes]:
     """Returns an ED25519 key pair, each key is a 32 byte array.
 
     :param seed: A seed used as input to deterministic key pair generation.
     :returns : 2 member tuple: (private key, public key)
 
     """
-    if seed is None:
+    if private_key_bytes is None:
         sk = ed25519.Ed25519PrivateKey.generate()
     else:
-        sk = ed25519.Ed25519PrivateKey.from_private_bytes(seed)
+        sk = ed25519.Ed25519PrivateKey.from_private_bytes(private_key_bytes)
 
     return _get_key_pair(sk)
 

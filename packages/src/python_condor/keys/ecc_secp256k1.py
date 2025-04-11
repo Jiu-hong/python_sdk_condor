@@ -1,3 +1,4 @@
+import base64
 import ecdsa
 import hashlib
 import typing
@@ -11,7 +12,6 @@ _HASH_FN = hashlib.sha256
 _SECP256k1_PREFIX = int(2).to_bytes()
 
 
-# correct
 def get_key_pair(private_key_bytes: bytes = None) -> typing.Tuple[bytes, bytes]:
     """Returns an SECP256K1 key pair, each key is a 32 byte array.
 
@@ -28,7 +28,6 @@ def get_key_pair(private_key_bytes: bytes = None) -> typing.Tuple[bytes, bytes]:
     return _get_key_pair(sk)
 
 
-# correct
 def get_key_pair_from_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
     """Returns an SECP256K1 key pair mapped from a PEM file representation of a private key.
 
@@ -44,22 +43,53 @@ def get_key_pair_from_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
     return (private_key_bytes, public_key_bytes)
 
 
-# incorrect
-def get_pvk_pem_from_bytes(sk_bytes: bytes):
-    """Returns SECP256K1 private key (pem) from bytes.
+def get_pvk_pem_from_bytes(private_key_bytes: bytes):
+    """
+    Convert bytes private key to EC PEM format
 
-    :param pvk: A private key derived from a generated key pair.
-    :returns: PEM represenation of signing key.
+    Args:
+        private_key_bytes (bytes): The private key in bytes format
+
+    Returns:
+        str: PEM formatted EC private key
+    """
+    try:
+        # Convert hex string to bytes
+        # private_key_bytes = bytes.fromhex(hex_string)
+
+        # Create ASN.1 structure for EC private key
+        asn1_sequence = (
+            b'\x30\x2e' +  # SEQUENCE, length 46
+            b'\x02\x01\x01' +  # INTEGER (1)
+            b'\x04\x20' + private_key_bytes +  # OCTET STRING (32 bytes)
+            b'\xa0\x07' +  # [0]
+            b'\x06\x05' +  # OBJECT IDENTIFIER
+            b'\x2b\x81\x04\x00\x0a'  # secp256k1 OID
+        )
+
+        # Convert to base64
+        b64_data = base64.b64encode(asn1_sequence).decode('ascii')
+
+        # Format PEM
+        pem = f"-----BEGIN EC PRIVATE KEY-----\n{b64_data}\n-----END EC PRIVATE KEY-----"
+        # return pem
+        return bytes(pem, 'utf-8')
+
+    except Exception as e:
+        raise Exception(f"Error converting hex to PEM: {str(e)}")
+
+
+def get_pvk_from_pem_file(fpath: str) -> bytes:
+    """Returns an SECP256K1 private key bytes mapped from a PEM file representation of a private key.
+
+    :param fpath: PEM file path.
+    :returns : bytes: private key
 
     """
-    # sk = SigningKey.from_string(sk_bytes, curve=_CURVE)
-    sk = SigningKey.from_string(
-        sk_bytes, curve=_CURVE, hashfunc=_HASH_FN)
+    sk = _get_signing_key_from_pem_file(fpath)
+    private_key_bytes = sk.to_string()
 
-    return sk.to_pem()
-
-
-# correct
+    return private_key_bytes
 
 
 def get_signature(msg: bytes, sk_bytes: bytes) -> bytes:
@@ -76,7 +106,6 @@ def get_signature(msg: bytes, sk_bytes: bytes) -> bytes:
     return _SECP256k1_PREFIX + sk.sign_deterministic(msg, sigencode=sigencode_string_canonize)
 
 
-# correct
 def get_signature_from_pem_file(msg: bytes, fpath: str) -> bytes:
     """Returns an SECP256K1 digital signature of data signed from a private key PEM file.
 
@@ -91,7 +120,6 @@ def get_signature_from_pem_file(msg: bytes, fpath: str) -> bytes:
     return _SECP256k1_PREFIX + sk.sign_deterministic(msg, sigencode=sigencode_string_canonize)
 
 
-# correct
 def is_signature_valid(msg: bytes, sig: bytes, pbk_bytes: bytes) -> bool:
     """Returns a flag indicating whether a signature was signed by a signing key
        associated with passed verification key.
@@ -110,7 +138,6 @@ def is_signature_valid(msg: bytes, sig: bytes, pbk_bytes: bytes) -> bool:
     return vk.verify(sig[1:], msg)
 
 
-# correct
 def _get_key_pair(sk: SigningKey) -> typing.Tuple[bytes, bytes]:
     """Returns key pair from a signing key.
 
@@ -119,7 +146,6 @@ def _get_key_pair(sk: SigningKey) -> typing.Tuple[bytes, bytes]:
     return private_key_bytes, _SECP256k1_PREFIX + sk.verifying_key.to_string("compressed")
 
 
-# correct
 def _get_signing_key_from_pem_file(fpath: str) -> SigningKey:
     """Returns a signing key mapped from a PEM file representation of a private key.
 

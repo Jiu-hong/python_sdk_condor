@@ -28,7 +28,6 @@ def get_key_pair(private_key_bytes: bytes = None) -> typing.Tuple[bytes, bytes]:
     return _get_key_pair(sk)
 
 
-# correct
 def get_key_pair_from_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
     """Returns an ED25519 key pair mapped from a PEM file representation of a private key.
 
@@ -41,7 +40,6 @@ def get_key_pair_from_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
     return get_key_pair(pvk)
 
 
-# correct
 def get_pvk_pem_from_bytes(pvk: bytes):
     """Returns ED25519 private key (pem) from bytes.
 
@@ -58,7 +56,6 @@ def get_pvk_pem_from_bytes(pvk: bytes):
     )
 
 
-# correct
 def get_pvk_from_pem_file(fpath: str) -> bytes:
     """Returns an ED25519 private key decoded from a PEM file.
 
@@ -77,7 +74,6 @@ def get_pvk_from_pem_file(fpath: str) -> bytes:
     return len(pvk) % _PVK_LENGTH == 0 and pvk[:_PVK_LENGTH] or pvk[-_PVK_LENGTH:]
 
 
-# correct
 def get_signature(msg: bytes, pvk: bytes) -> bytes:
     """Returns an ED25519 digital signature of data signed from a private key PEM file.
 
@@ -91,7 +87,6 @@ def get_signature(msg: bytes, pvk: bytes) -> bytes:
     return _ED25519_PREFIX + sk.sign(msg)
 
 
-# correct
 def get_signature_from_pem_file(msg: bytes, fpath: str) -> bytes:
     """Returns an ED25519 digital signature of data signed from a private key PEM file.
 
@@ -103,7 +98,6 @@ def get_signature_from_pem_file(msg: bytes, fpath: str) -> bytes:
     return get_signature(msg, get_pvk_from_pem_file(fpath))
 
 
-# correct
 def is_signature_valid(msg_hash: bytes, sig: bytes, pbk_bytes: bytes) -> bool:
     """Returns a flag indicating whether a signature was signed by a signing key.
 
@@ -122,7 +116,6 @@ def is_signature_valid(msg_hash: bytes, sig: bytes, pbk_bytes: bytes) -> bool:
         return True
 
 
-# correct
 def _get_key_pair(sk: ed25519.Ed25519PrivateKey) -> typing.Tuple[bytes, bytes]:
     """Returns key pair from a signing key.
 

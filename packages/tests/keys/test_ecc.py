@@ -1,4 +1,4 @@
-from python_condor.keys.ecc import KeyAlgorithm, get_pvk_pem_file_from_bytes, get_pvk_pem_from_hex_string, get_key_pair_from_hex_string, get_key_pair_from_bytes, get_pvk_pem_from_bytes, is_signature_valid, get_signature_from_pem_file, get_key_pair, get_signature, get_key_pair_from_pem_file
+from python_condor import KeyAlgorithm, get_pvk_from_pem_file, get_pvk_pem_file_from_bytes, get_pvk_pem_from_hex_string, get_key_pair_from_hex_string, get_key_pair_from_bytes, get_pvk_pem_from_bytes, is_signature_valid, get_signature_from_pem_file, get_key_pair, get_signature, get_key_pair_from_pem_file
 
 
 f1path = "/Users/jh/mywork/python_sdk_condor/work/secret_key.pem"
@@ -73,7 +73,6 @@ def test_get_pvk_pem_from_hex_string():
 def test_get_pvk_pem_file_from_bytes():
     name = get_pvk_pem_file_from_bytes(bytes.fromhex(
         private_key_hex_1), KeyAlgorithm.ED25519)
-    # print("name:", name)
 
     private_key, public_key = get_key_pair_from_pem_file(
         name, KeyAlgorithm.ED25519)
@@ -101,6 +100,11 @@ def test_is_signature_valid():
         f1path, KeyAlgorithm.ED25519)
     assert is_signature_valid(
         hash_bytes_1, KeyAlgorithm.ED25519, sig_bytes_1, public_key)
+
+
+def test_get_pvk_from_pem_file():
+    private_key = get_pvk_from_pem_file(f1path)
+    assert private_key == bytes.fromhex(private_key_hex_1)
 
 
 # === SECP256K1
@@ -137,18 +141,32 @@ def test_get_key_pair_from_pem_file_secp256k1():
 
 
 def test_get_pvk_pem_from_bytes_secp256k1():
-    # todo
-    pass
+    pem_file = get_pvk_pem_from_bytes(bytes.fromhex(
+        private_key_hex_2), KeyAlgorithm.SECP256K1)
+    with open(f2path, "rb") as fstream:
+        as_pem = fstream.read()
+
+    assert as_pem == pem_file
 
 
 def test_get_pvk_pem_from_hex_string_secp256k1():
-    # todo
-    pass
+    pem_file = get_pvk_pem_from_hex_string(
+        private_key_hex_2, KeyAlgorithm.SECP256K1)
+    with open(f2path, "rb") as fstream:
+        as_pem = fstream.read()
+
+    assert as_pem == pem_file
 
 
 def test_get_pvk_pem_file_from_bytes_secp256k1():
-    # todo
-    pass
+    name = get_pvk_pem_file_from_bytes(bytes.fromhex(
+        private_key_hex_2), KeyAlgorithm.SECP256K1)
+
+    private_key, public_key = get_key_pair_from_pem_file(
+        name, KeyAlgorithm.SECP256K1)
+    assert private_key.hex(
+    ) == private_key_hex_2
+    assert public_key.hex() == public_key_hex_2
 
 
 def test_get_signature_secp256k1():
@@ -170,3 +188,8 @@ def test_is_signature_valid_secp256k1():
         f2path, KeyAlgorithm.SECP256K1)
     assert is_signature_valid(
         hash_bytes_2, KeyAlgorithm.SECP256K1, sig_bytes_2, public_key)
+
+
+def test_get_pvk_from_pem_file_secp256k1():
+    private_key = get_pvk_from_pem_file(f2path, KeyAlgorithm.SECP256K1)
+    assert private_key == bytes.fromhex(private_key_hex_2)

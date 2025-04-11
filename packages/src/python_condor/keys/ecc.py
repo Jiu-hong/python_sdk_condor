@@ -198,5 +198,20 @@ def is_signature_valid(
     return ALGOS[algo].is_signature_valid(msg_hash, sig, vk)
 
 
+def get_pvk_from_pem_file(fpath: str,
+                          algo: KeyAlgorithm = DEFAULT_KEY_ALGO
+                          ) -> bytes:
+    """Returns an ECC key pair derived from a previously persisted PEM file.
+
+    :param fpath: PEM file path.
+    :param algo: Type of ECC algo used to generate private key.
+    :returns : 2 member tuple: (private key, public key)
+
+    """
+    pvk, _pbk = ALGOS[algo].get_key_pair_from_pem_file(fpath)
+
+    return pvk
+
+
 # Synonym.
 get_key_pair_from_seed = get_key_pair_from_bytes

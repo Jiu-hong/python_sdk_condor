@@ -23,8 +23,8 @@ payload = TransactionV1Payload(args, target1,
 
 transaction = TransactionV1(
     payload, [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
-# url = "http://node.integration.casper.network:7777/rpc"
-url = "http://34.217.53.198:7777/rpc"
+url = "http://node.integration.casper.network:7777/rpc"
+# url = "http://34.217.53.198:7777/rpc"
 
 
 transaction_result = PutTransction(url, transaction.to_json()).run()

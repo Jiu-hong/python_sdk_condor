@@ -1,4 +1,4 @@
-from python_condor.keys.ecc_secp256k1 import get_pvk_pem_from_bytes, is_signature_valid, get_signature_from_pem_file, get_key_pair, get_signature, get_key_pair_from_pem_file
+from python_condor.keys.ecc_secp256k1 import get_pvk_from_pem_file, get_pvk_pem_from_bytes, is_signature_valid, get_signature_from_pem_file, get_key_pair, get_signature, get_key_pair_from_pem_file
 
 
 fpath = "/Users/jh/mywork/python_sdk_condor/work/secret_key2.pem"
@@ -41,9 +41,13 @@ def test_is_signature_valid():
     assert is_signature_valid(hash_bytes, sig_bytes, public_key)
 
 
-# todo
 def test_get_pvk_pem_from_bytes():
-    private_key, _public_key = get_key_pair_from_pem_file(fpath)
+    pem_file = get_pvk_pem_from_bytes(bytes.fromhex(private_key_hex))
+    with open(fpath, "rb") as fstream:
+        as_pem = fstream.read()
+    assert as_pem == pem_file
 
-    a = get_pvk_pem_from_bytes(private_key)
-    print("a:", a)
+
+def test_get_pvk_from_pem_file():
+    private_key = get_pvk_from_pem_file(fpath)
+    assert private_key == bytes.fromhex(private_key_hex)

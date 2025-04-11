@@ -1,23 +1,32 @@
-import base64
-import ecdsa
-import hashlib
-import typing
-from ecdsa.util import sigencode_string_canonize
-from ecdsa import SigningKey
+"""ECC SECP256k1 cryptographic operations module.
 
-# Default ECC + associated Casper specific hashing function.
+This module provides functionality for SECP256k1 elliptic curve cryptography operations,
+including key pair generation, signing, and signature verification.
+"""
+
+from typing import Tuple
+import base64
+import hashlib
+
+import ecdsa
+from ecdsa import SigningKey
+from ecdsa.util import sigencode_string_canonize
+
+
+# Default ECC + associated Casper specific hashing function
 _CURVE = ecdsa.SECP256k1
 _HASH_FN = hashlib.sha256
-
 _SECP256k1_PREFIX = int(2).to_bytes()
 
 
-def get_key_pair(private_key_bytes: bytes = None) -> typing.Tuple[bytes, bytes]:
-    """Returns an SECP256K1 key pair, each key is a 32 byte array.
+def get_key_pair(private_key_bytes: bytes = None) -> Tuple[bytes, bytes]:
+    """Generate an SECP256K1 key pair.
 
-    :param private_key_bytes: Entropy source to be used when geenrating key pair.
-    :returns : 2 member tuple: (private key, public key)
+    Args:
+        private_key_bytes: Optional entropy source for key pair generation.
 
+    Returns:
+        A tuple containing (private key, public key) as 32 byte arrays.
     """
     if private_key_bytes is None:
         sk = SigningKey.generate(curve=_CURVE, hashfunc=_HASH_FN)
@@ -28,35 +37,36 @@ def get_key_pair(private_key_bytes: bytes = None) -> typing.Tuple[bytes, bytes]:
     return _get_key_pair(sk)
 
 
-def get_key_pair_from_pem_file(fpath: str) -> typing.Tuple[bytes, bytes]:
-    """Returns an SECP256K1 key pair mapped from a PEM file representation of a private key.
+def get_key_pair_from_pem_file(fpath: str) -> Tuple[bytes, bytes]:
+    """Get an SECP256K1 key pair from a PEM file.
 
-    :param fpath: PEM file path.
-    :returns : 2 member tuple: (private key, public key)
+    Args:
+        fpath: Path to the PEM file containing the private key.
 
+    Returns:
+        A tuple containing (private key, public key) as byte arrays.
     """
     sk = _get_signing_key_from_pem_file(fpath)
     private_key_bytes = sk.to_string()
-
     public_key_bytes = _SECP256k1_PREFIX + \
         sk.verifying_key.to_string("compressed")
+
     return (private_key_bytes, public_key_bytes)
 
 
-def get_pvk_pem_from_bytes(private_key_bytes: bytes):
-    """
-    Convert bytes private key to EC PEM format
+def get_pvk_pem_from_bytes(private_key_bytes: bytes) -> bytes:
+    """Convert a private key from bytes to EC PEM format.
 
     Args:
-        private_key_bytes (bytes): The private key in bytes format
+        private_key_bytes: The private key in bytes format.
 
     Returns:
-        str: PEM formatted EC private key
+        The PEM formatted EC private key as bytes.
+
+    Raises:
+        Exception: If conversion fails.
     """
     try:
-        # Convert hex string to bytes
-        # private_key_bytes = bytes.fromhex(hex_string)
-
         # Create ASN.1 structure for EC private key
         asn1_sequence = (
             b'\x30\x2e' +  # SEQUENCE, length 46
@@ -72,83 +82,94 @@ def get_pvk_pem_from_bytes(private_key_bytes: bytes):
 
         # Format PEM
         pem = f"-----BEGIN EC PRIVATE KEY-----\n{b64_data}\n-----END EC PRIVATE KEY-----"
-        # return pem
         return bytes(pem, 'utf-8')
 
     except Exception as e:
-        raise Exception(f"Error converting hex to PEM: {str(e)}")
+        raise Exception(f"Error converting bytes to PEM: {str(e)}")
 
 
 def get_pvk_from_pem_file(fpath: str) -> bytes:
-    """Returns an SECP256K1 private key bytes mapped from a PEM file representation of a private key.
+    """Get an SECP256K1 private key from a PEM file.
 
-    :param fpath: PEM file path.
-    :returns : bytes: private key
+    Args:
+        fpath: Path to the PEM file containing the private key.
 
+    Returns:
+        The private key as bytes.
     """
     sk = _get_signing_key_from_pem_file(fpath)
-    private_key_bytes = sk.to_string()
-
-    return private_key_bytes
+    return sk.to_string()
 
 
 def get_signature(msg: bytes, sk_bytes: bytes) -> bytes:
-    """Returns an SECP256K1 digital signature of data signed from a private key PEM file.
+    """Create an SECP256K1 digital signature.
 
-    :param msg: A bunch of bytes to be signed.
-    :param pvk: A private key derived from a generated key pair.
-    :returns: A digital signature.
+    Args:
+        msg: The message bytes to sign.
+        sk_bytes: The private key bytes to sign with.
 
+    Returns:
+        The digital signature as bytes.
     """
     sk = SigningKey.from_string(
         sk_bytes, curve=_CURVE, hashfunc=_HASH_FN)
-    # return sk.sign_deterministic(msg, hashfunc=_HASH_FN)
     return _SECP256k1_PREFIX + sk.sign_deterministic(msg, sigencode=sigencode_string_canonize)
 
 
 def get_signature_from_pem_file(msg: bytes, fpath: str) -> bytes:
-    """Returns an SECP256K1 digital signature of data signed from a private key PEM file.
+    """Create an SECP256K1 digital signature using a private key from a PEM file.
 
-    :param msg: A bunch of bytes to be signed.
-    :param fpath: PEM file path.
-    :returns: A digital signature.
+    Args:
+        msg: The message bytes to sign.
+        fpath: Path to the PEM file containing the private key.
 
+    Returns:
+        The digital signature as bytes.
     """
     sk = _get_signing_key_from_pem_file(fpath)
-
-    # return sk.sign_deterministic(msg, hashfunc=_HASH_FN)
     return _SECP256k1_PREFIX + sk.sign_deterministic(msg, sigencode=sigencode_string_canonize)
 
 
 def is_signature_valid(msg: bytes, sig: bytes, pbk_bytes: bytes) -> bool:
-    """Returns a flag indicating whether a signature was signed by a signing key
-       associated with passed verification key.
+    """Verify an SECP256K1 digital signature.
 
-    :param msg: A message that has apparently been signed.
-    :param sig: A digital signature.
-    :param pbk: Public key counterpart to generated private key.
-    :returns: A flag indicating whether a signature was indeed signed by the signing key.
+    Args:
+        msg: The original message that was signed.
+        sig: The digital signature to verify.
+        pbk_bytes: The public key bytes to verify against.
 
+    Returns:
+        True if the signature is valid, False otherwise.
     """
-    # vk = ecdsa.VerifyingKey.from_string(pbk_bytes, curve=_CURVE)
     vk = ecdsa.VerifyingKey.from_string(
         pbk_bytes[1:], hashfunc=_HASH_FN, curve=_CURVE)
-
-    # return vk.verify(sig, msg, hashfunc=_HASH_FN)
     return vk.verify(sig[1:], msg)
 
 
-def _get_key_pair(sk: SigningKey) -> typing.Tuple[bytes, bytes]:
-    """Returns key pair from a signing key.
+def _get_key_pair(sk: SigningKey) -> Tuple[bytes, bytes]:
+    """Generate a key pair from a signing key.
 
+    Args:
+        sk: The signing key to derive the key pair from.
+
+    Returns:
+        A tuple containing (private key, public key) as bytes.
     """
     private_key_bytes = sk.to_string()
     return private_key_bytes, _SECP256k1_PREFIX + sk.verifying_key.to_string("compressed")
 
 
 def _get_signing_key_from_pem_file(fpath: str) -> SigningKey:
-    """Returns a signing key mapped from a PEM file representation of a private key.
+    """Read a signing key from a PEM file.
 
+    Args:
+        fpath: Path to the PEM file containing the private key.
+
+    Returns:
+        The SigningKey object.
+
+    Raises:
+        Exception: If the file cannot be read or the key is invalid.
     """
     with open(fpath) as fstream:
         return SigningKey.from_pem(fstream.read(), _HASH_FN)

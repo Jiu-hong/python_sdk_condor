@@ -43,6 +43,6 @@ def test_clpublickey_get_account_secp256k1():
 
 # === check format
 def test_clpublickey_regex_pattern_not_match():
-    with pytest.raises(ValueError, match=r"publickey should be 01xxx\(64 length\) or 02xxx\(66 length\)"):
+    with pytest.raises(ValueError, match=r"Public key should be 01xxx\(64 length\) or 02xxx\(66 length\)"):
         _ = CLPublicKey(
             "123456")

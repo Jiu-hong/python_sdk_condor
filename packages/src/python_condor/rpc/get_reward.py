@@ -1,3 +1,10 @@
+"""Get reward RPC module.
+
+This module provides functionality for retrieving reward information from the Casper network
+via the info_get_reward RPC method.
+"""
+
+from typing import Dict, Any, Optional
 
 import requests
 
@@ -9,8 +16,26 @@ RPCMETHOD = RpcMethod()
 
 
 class GetReward:
-    def __init__(self, url, validator: str, delegator: str = None, era: int = None):
+    """Class for handling the info_get_reward RPC call.
 
+    This class allows retrieving reward information for validators and delegators
+    in the Casper network.
+    """
+
+    def __init__(self, url: str, validator: str, delegator: Optional[str] = None, era: Optional[int] = None) -> None:
+        """Initialize a GetReward instance.
+
+        Args:
+            url: The RPC endpoint URL.
+            validator: The public key of the validator to get rewards for.
+            delegator: Optional public key of the delegator to get rewards for.
+            era: Optional era number to get rewards for.
+
+        Raises:
+            ValueError: If validator is not provided or not in a valid format.
+            ValueError: If delegator is provided but not in a valid format.
+            TypeError: If era is provided but not an integer.
+        """
         if validator is None:
             raise ValueError("validator is required.")
 
@@ -43,9 +68,18 @@ class GetReward:
             "jsonrpc": "2.0",
             "id": 1,
             "method": RPCMETHOD.INFO_GET_REWARD,
-            "params": params}
+            "params": params
+        }
 
-    def run(self):
-        x = requests.post(self.url, json=self.rpc_payload)
-        if x.status_code == requests.codes.ok:
-            return x.json()
+    def run(self) -> Dict[str, Any]:
+        """Send the RPC request to get reward information.
+
+        Returns:
+            The JSON response from the RPC call containing the reward information.
+
+        Raises:
+            requests.exceptions.RequestException: If the RPC call fails.
+        """
+        response = requests.post(self.url, json=self.rpc_payload)
+        if response.status_code == requests.codes.ok:
+            return response.json()

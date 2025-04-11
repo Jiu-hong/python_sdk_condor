@@ -41,5 +41,6 @@ def test_deploy_get_approvals():
 # ====to_json() ===
 def test_deploy_to_json():
     result = deploy.to_json()
+    print("result:", result)
     assert result == {'deploy': {'hash': '25a945fc2882ae92e4ffe7b5301d57a6d0ee1ee203fd1aa133992f2e03341ad6', 'header': {'account': '017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5', 'timestamp': '2025-03-26T03:11:48.829Z', 'ttl': '30m', 'gas_price': 1, 'body_hash': 'cff3320bf0cfc054db512a86040528b730a229ec22c83b201e4daf0f6ead5832', 'dependencies': [], 'chain_name': 'integration-test'}, 'payment': {'ModuleBytes': {'module_bytes': '', 'args': [('amount', {'cl_type': 'U512', 'bytes': '0400f90295', 'parsed': 2500000000})]}}, 'session': {'StoredVersionedContractByHash': {'hash': '051c3c2fef7fa8fa459c7e99717d566b723e30a17005100f58ceae130d168ef6', 'version': None, 'entry_point': 'apple', 'args': [(
         'arg1', {'cl_type': 'U256', 'bytes': '017b', 'parsed': 123}), ('arg2', {'cl_type': 'String', 'bytes': '0500000068656c6c6f', 'parsed': 'hello'})]}}, 'approvals': [{'signer': '017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5', 'signature': '0117465156d2b48f96a9322d2c6c47945b5c568c2db34f24ec7449ca834b28ffd5f82b6dcfe183fee523c7c6a2577f71112921d18ff0d6ace3bc65ea6c011aeb0b'}]}}

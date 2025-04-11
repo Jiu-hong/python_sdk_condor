@@ -29,6 +29,6 @@ def test_clkey_era_to_json():
 
 # === check invalid inner type
 def test_clkey_era_invalid_inner_value():
-    with pytest.raises(ValueError, match="era value should be int"):
+    with pytest.raises(ValueError, match="era value should be decimal int"):
         _ = CLKey(
             "era-h12")

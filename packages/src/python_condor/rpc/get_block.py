@@ -1,3 +1,11 @@
+"""Get block RPC module.
+
+This module provides functionality for retrieving block information from the Casper network
+via the chain_get_block RPC method.
+"""
+
+from typing import Dict, Any, Optional, Union
+
 import requests
 
 from ..utils import check_block_format
@@ -8,7 +16,22 @@ RPCMETHOD = RpcMethod()
 
 
 class GetBlock:
-    def __init__(self, url, block_id: int | str = None):
+    """Class for handling the chain_get_block RPC call.
+
+    This class allows retrieving block information from the Casper network
+    using either a block height or hash.
+    """
+
+    def __init__(self, url: str, block_id: Optional[Union[int, str]] = None) -> None:
+        """Initialize a GetBlock instance.
+
+        Args:
+            url: The RPC endpoint URL.
+            block_id: Optional block identifier (height or hash).
+
+        Raises:
+            ValueError: If block_id is not a valid height or hash.
+        """
         # check block id format
         check_block_format(block_id)
 
@@ -35,9 +58,18 @@ class GetBlock:
             "jsonrpc": "2.0",
             "id": 1,
             "method": RPCMETHOD.CHAIN_GET_BLOCK,
-            "params": params}
+            "params": params
+        }
 
-    def run(self):
-        x = requests.post(self.url, json=self.rpc_payload)
-        if x.status_code == requests.codes.ok:
-            return x.json()
+    def run(self) -> Dict[str, Any]:
+        """Send the RPC request to get block information.
+
+        Returns:
+            The JSON response from the RPC call containing the block information.
+
+        Raises:
+            requests.exceptions.RequestException: If the RPC call fails.
+        """
+        response = requests.post(self.url, json=self.rpc_payload)
+        if response.status_code == requests.codes.ok:
+            return response.json()

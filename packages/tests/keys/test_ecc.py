@@ -116,10 +116,10 @@ def test_get_key_pair_from_bytes_secp256k1():
     assert public_key.hex() == "0202c8025b9d253d0bf5f48a96e8fdcecce3fd03731e7cdc47c6c7d297e75bc3ab11"
 
 
-def test_get_key_pair_from_base64():
-    # get_key_pair_from_base64()
-    # todo
-    pass
+# def test_get_key_pair_from_base64():
+#     # get_key_pair_from_base64()
+#     # todo
+#     pass
 
 
 def test_get_key_pair_from_hex_string_secp256k1():

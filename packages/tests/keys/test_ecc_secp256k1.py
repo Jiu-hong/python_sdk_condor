@@ -42,8 +42,8 @@ def test_is_signature_valid():
 
 
 # todo
-# def test_get_pvk_pem_from_bytes():
-#     private_key, _public_key = get_key_pair_from_pem_file(fpath)
+def test_get_pvk_pem_from_bytes():
+    private_key, _public_key = get_key_pair_from_pem_file(fpath)
 
-#     a = get_pvk_pem_from_bytes(private_key)
-#     print("a:", a)
+    a = get_pvk_pem_from_bytes(private_key)
+    print("a:", a)

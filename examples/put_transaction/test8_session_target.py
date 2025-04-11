@@ -11,9 +11,10 @@ scheduling = TransactionScheduling()
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 pricing_mode = PricingMode("Classic", 2500000000)
 
-f = open("wasm", "r")
+path = "/Users/jh/mywork/python_sdk_condor/work/wasm"
+f = open(path, "r")
 module_bytes = f.read()
-target1 = TransactionSessionTarget("VmCasperV1", module_bytes)
+target1 = TransactionSessionTarget("VmCasperV1", module_bytes, True)
 
 entrypoint1 = TransactionEntryPoint("Call")
 
@@ -22,7 +23,8 @@ payload = TransactionV1Payload(args, target1,
 
 transaction = TransactionV1(
     payload, [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
-url = "http://node.integration.casper.network:7777/rpc"
+# url = "http://node.integration.casper.network:7777/rpc"
+url = "http://34.217.53.198:7777/rpc"
 
 
 transaction_result = PutTransction(url, transaction.to_json()).run()

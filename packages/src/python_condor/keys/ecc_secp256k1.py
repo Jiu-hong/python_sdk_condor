@@ -60,6 +60,8 @@ def get_pvk_pem_from_bytes(sk_bytes: bytes):
 
 
 # correct
+
+
 def get_signature(msg: bytes, sk_bytes: bytes) -> bytes:
     """Returns an SECP256K1 digital signature of data signed from a private key PEM file.
 

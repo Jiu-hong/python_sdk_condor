@@ -8,8 +8,7 @@ from typing import Any, Dict, List,  Tuple, Union
 
 from result import Err, Ok
 
-from python_condor.constants.base import NoneHolder
-from ..constants import CLTypeName, TAG
+from ..constants import CLTypeName, TAG, NoneHolder
 
 
 CONST = CLTypeName()

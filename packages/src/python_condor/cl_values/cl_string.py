@@ -6,11 +6,11 @@ A string is a sequence of UTF-8 encoded characters that can be serialized and co
 
 from typing import Union
 
-from .cl_basetype import CLAtomic, CLValue
+from .cl_basetype import CLValue
 from ..constants import NoneHolder, TAG
 
 
-class CLString(CLValue, CLAtomic):
+class CLString(CLValue):
     """Class representing a string value in the Casper network.
 
     A string is a sequence of UTF-8 encoded characters that can be serialized

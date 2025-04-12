@@ -14,14 +14,14 @@ from .era_key import check_era_key_format, serialize_era_key
 from .message_key import check_message_key_format, serialize_message_key
 from .named_key import check_named_key_format, serialize_named_key
 
-from ..cl_basetype import CLAtomic, CLValue
+from ..cl_basetype import CLValue
 from ...constants import TAG, Prefix, ClKeyTAG
 from ...utils import check_clkey_bid_addr_format, check_clkey_hash_format, check_purse_format
 
 PREFIX = Prefix()
 
 
-class CLKey(CLValue, CLAtomic):
+class CLKey(CLValue):
     """Class for handling CL keys in the Casper network.
 
     CL keys can be of various types, each with its own format and validation rules.

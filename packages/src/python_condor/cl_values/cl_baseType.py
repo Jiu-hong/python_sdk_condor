@@ -56,12 +56,3 @@ class CLValue:
             Dictionary containing the JSON representation of this CL value.
         """
         return get_deep_json(self)
-
-
-class CLAtomic:
-    """Base class for atomic CL value types.
-
-    This class serves as a marker for atomic CL value types,
-    which are types that cannot be decomposed into smaller parts.
-    """
-    pass

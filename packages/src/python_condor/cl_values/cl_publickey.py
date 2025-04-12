@@ -8,7 +8,7 @@ import re
 from hashlib import blake2b
 from typing import Dict
 
-from .cl_basetype import CLAtomic, CLValue
+from .cl_basetype import CLValue
 from ..constants import TAG
 
 
@@ -19,7 +19,7 @@ ALGO_MAP: Dict[bytes, str] = {
 }
 
 
-class CLPublicKey(CLValue, CLAtomic):
+class CLPublicKey(CLValue):
     """Class representing a CL public key.
 
     This class handles public keys in the Casper network, supporting both

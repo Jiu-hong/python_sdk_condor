@@ -9,12 +9,12 @@ This module provides various number types for the Casper network, including:
 
 from typing import Union, Optional
 
-from .cl_basetype import CLAtomic, CLValue
+from .cl_basetype import CLValue
 from ..constants import NoneHolder, TAG
 from .exceptions import ExceptionExceedMaxValue
 
 
-class CLNumber(CLValue, CLAtomic):
+class CLNumber(CLValue):
     """Base class for all number types in the Casper network."""
 
     def __init__(self, data: Union[int, NoneHolder]) -> None:
@@ -40,7 +40,7 @@ class CLNumber(CLValue, CLAtomic):
         return self.data
 
 
-class CLBool(CLValue, CLAtomic):
+class CLBool(CLValue):
     """Class representing a boolean value in the Casper network."""
 
     tag = TAG.CLBool.value

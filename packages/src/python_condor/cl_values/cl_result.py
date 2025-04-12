@@ -8,7 +8,7 @@ from typing import Tuple
 
 from result import Err, Ok
 
-from ..cl_values.cl_basetype import CLValue
+from .cl_basetype import CLValue
 from ..constants import TAG, NoneHolder
 
 

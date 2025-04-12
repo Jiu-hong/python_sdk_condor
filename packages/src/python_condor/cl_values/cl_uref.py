@@ -4,11 +4,11 @@ This module provides the CLURef type for handling URef values in the Casper netw
 A URef is a unique reference to a value stored in the global state.
 """
 
-from .cl_basetype import CLAtomic, CLValue
+from .cl_basetype import CLValue
 from ..constants import TAG
 
 
-class CLURef(CLValue, CLAtomic):
+class CLURef(CLValue):
     """Class representing a URef value in the Casper network.
 
     A URef is a unique reference to a value stored in the global state.

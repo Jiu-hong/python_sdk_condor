@@ -19,7 +19,7 @@ class TransactionScheduling:
         match self.schedule_mode:
             case CONST.STANDARD:
                 table = CalltableSerialization()
-                table.addField(0, int(0).to_bytes())
+                table.add_field(0, int(0).to_bytes())
                 return table.to_bytes()
 
     # def serialize(self):

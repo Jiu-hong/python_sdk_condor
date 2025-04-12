@@ -24,26 +24,26 @@ class TransactionEntryPoint:
         table = CalltableSerialization()
         match self.entry_point:
             case ENTYPOINT.CALL:
-                table.addField(0, int(0).to_bytes())
+                table.add_field(0, int(0).to_bytes())
             case ENTYPOINT.CUSTOM:
-                table.addField(0, int(1).to_bytes()).addField(
+                table.add_field(0, int(1).to_bytes()).add_field(
                     1, serialize_string(self.arg))
             case ENTYPOINT.TRANSFER:
-                table.addField(0, int(2).to_bytes())
+                table.add_field(0, int(2).to_bytes())
             case ENTYPOINT.ADD_BID:
-                table.addField(0, int(3).to_bytes())
+                table.add_field(0, int(3).to_bytes())
             case ENTYPOINT.WITHDRAW_BID:
-                table.addField(0, int(4).to_bytes())
+                table.add_field(0, int(4).to_bytes())
             case ENTYPOINT.DELEGATE:
-                table.addField(0, int(5).to_bytes())
+                table.add_field(0, int(5).to_bytes())
             case ENTYPOINT.UNDELEGATE:
-                table.addField(0, int(6).to_bytes())
+                table.add_field(0, int(6).to_bytes())
             case ENTYPOINT.REDELEGATE:
-                table.addField(0, int(7).to_bytes())
+                table.add_field(0, int(7).to_bytes())
             case ENTYPOINT.ACTIVATE_BID:
-                table.addField(0, int(8).to_bytes())
+                table.add_field(0, int(8).to_bytes())
             case ENTYPOINT.CHANGEPUBLICKEY:
-                table.addField(0, int(9).to_bytes())
+                table.add_field(0, int(9).to_bytes())
 
         return table.to_bytes()
 

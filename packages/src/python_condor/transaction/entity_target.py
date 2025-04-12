@@ -21,12 +21,12 @@ class EntityTarget:
 
     def to_bytes(self):
         selftable = CalltableSerialization()
-        selftable.addField(0, int(0).to_bytes()).\
-            addField(1, bytes.fromhex(self.contract_hash))
+        selftable.add_field(0, int(0).to_bytes()).\
+            add_field(1, bytes.fromhex(self.contract_hash))
 
         table = CalltableSerialization()
-        table.addField(0, int(1).to_bytes()).addField(
-            1, selftable.to_bytes()).addField(
+        table.add_field(0, int(1).to_bytes()).add_field(
+            1, selftable.to_bytes()).add_field(
             2, TransactionRuntime(self.runtime).to_bytes())
         return table.to_bytes()
 

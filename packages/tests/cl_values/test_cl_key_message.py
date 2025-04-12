@@ -1,90 +1,140 @@
+"""Tests for CL (CasperLabs) message key functionality.
+
+This module contains test cases for the CLKey class when handling message keys,
+which represent message topics and entities in the Casper network.
+The tests cover two types of message keys:
+1. Message Topic keys (message-topic)
+2. Message Entity keys (message-entity)
+
+For each type, it tests:
+- Serialization
+- Value retrieval
+- CL value representation
+- JSON representation
+- Format validation
+- Hash validation
+- Index validation (for message entities)
+"""
+
 import pytest
 from python_condor import CLKey
 
+# Test data for message topic keys
+VALID_MESSAGE_TOPIC_KEY = (
+    "message-topic-entity-contract-"
+    "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a-"
+    "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a"
+)
+INVALID_TOPIC_SINGLE_HASH = "message-topic-entity-contract-xxx"
+INVALID_TOPIC_HASH_FORMAT = "message-topic-entity-contract-xxx-xxx"
 
-# ===== CLKey - message_topic =====
-clkey_message_topic = CLKey(
-    "message-topic-entity-contract-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a")
+# Test data for message entity keys
+VALID_MESSAGE_ENTITY_KEY = (
+    "message-entity-contract-"
+    "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a-"
+    "0202020202020202020202020202020202020202020202020202020202020202-f"
+)
+INVALID_ENTITY_SINGLE_HASH = "message-entity-contract-xxx"
+INVALID_ENTITY_TWO_HASHES = "message-entity-contract-xxx-xxx"
+INVALID_ENTITY_HASH_FORMAT = "message-entity-contract-xxx-xxx-1"
+INVALID_ENTITY_INDEX = (
+    "message-entity-contract-"
+    "2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a-"
+    "0202020202020202020202020202020202020202020202020202020202020202-?"
+)
+
+# === Message Topic Tests ===
 
 
-def test_clkey_message_topic_serialize():
-    result = clkey_message_topic.serialize().hex()
+def test_message_topic_serialization():
+    """Test serialization of message topic key."""
+    message_key = CLKey(VALID_MESSAGE_TOPIC_KEY)
+    result = message_key.serialize().hex()
     assert result == "13022a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a00"
 
 
-def test_clkey_message_topic_string_value():
-    result = clkey_message_topic.value()
-    assert result == "message-topic-entity-contract-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a"
+def test_message_topic_value():
+    """Test value retrieval of message topic key."""
+    message_key = CLKey(VALID_MESSAGE_TOPIC_KEY)
+    result = message_key.value()
+    assert result == VALID_MESSAGE_TOPIC_KEY
 
 
-def test_clkey_message_topic_cl_value():
-    result = clkey_message_topic.cl_value()
+def test_message_topic_cl_value():
+    """Test CL value representation of message topic key."""
+    message_key = CLKey(VALID_MESSAGE_TOPIC_KEY)
+    result = message_key.cl_value()
     assert result == "4300000013022a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a000b"
 
 
-def test_clkey_message_topic_to_json():
-    result = clkey_message_topic.to_json()
+def test_message_topic_to_json():
+    """Test JSON representation of message topic key."""
+    message_key = CLKey(VALID_MESSAGE_TOPIC_KEY)
+    result = message_key.to_json()
     assert result == "Key"
 
 
-# === check invalid inner type
-def test_clkey_message_topic_without_two_hashes():
+def test_invalid_topic_hash_count():
+    """Test validation of message topic key requiring two hashes."""
     with pytest.raises(ValueError, match="Key not valid. It should have a hash address and a topic hash."):
-        _ = CLKey(
-            "message-topic-entity-contract-xxx")
+        _ = CLKey(INVALID_TOPIC_SINGLE_HASH)
 
 
-def test_clkey_message_topic_invalid_hash_value():
+def test_invalid_topic_hash_format():
+    """Test validation of message topic key hash format."""
     with pytest.raises(ValueError, match="hash value should be 64 length only containing alphabet and number"):
-        _ = CLKey(
-            "message-topic-entity-contract-xxx-xxx")
+        _ = CLKey(INVALID_TOPIC_HASH_FORMAT)
 
 
-# ===== CLKey - message_entity =====
-clkey_message_topic_entity = CLKey(
-    "message-entity-contract-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a-0202020202020202020202020202020202020202020202020202020202020202-f")
+# === Message Entity Tests ===
 
-
-def test_clkey_message_topic_entity_serialize():
-    result = clkey_message_topic_entity.serialize().hex()
+def test_message_entity_serialization():
+    """Test serialization of message entity key."""
+    message_key = CLKey(VALID_MESSAGE_ENTITY_KEY)
+    result = message_key.serialize().hex()
     assert result == "13022a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a0202020202020202020202020202020202020202020202020202020202020202010f000000"
 
 
-def test_clkey_message_topic_entity_string_value():
-    result = clkey_message_topic_entity.value()
-    assert result == "message-entity-contract-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a-0202020202020202020202020202020202020202020202020202020202020202-f"
+def test_message_entity_value():
+    """Test value retrieval of message entity key."""
+    message_key = CLKey(VALID_MESSAGE_ENTITY_KEY)
+    result = message_key.value()
+    assert result == VALID_MESSAGE_ENTITY_KEY
 
 
-def test_clkey_message_topic_entity_cl_value():
-    result = clkey_message_topic_entity.cl_value()
+def test_message_entity_cl_value():
+    """Test CL value representation of message entity key."""
+    message_key = CLKey(VALID_MESSAGE_ENTITY_KEY)
+    result = message_key.cl_value()
     assert result == "4700000013022a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a0202020202020202020202020202020202020202020202020202020202020202010f0000000b"
 
 
-def test_clkey_message_topic_entity_to_json():
-    result = clkey_message_topic_entity.to_json()
+def test_message_entity_to_json():
+    """Test JSON representation of message entity key."""
+    message_key = CLKey(VALID_MESSAGE_ENTITY_KEY)
+    result = message_key.to_json()
     assert result == "Key"
 
 
-# === check invalid inner type
-def test_clkey_message_topic_entity_with_one_hashes_no_index():
+def test_invalid_entity_single_hash():
+    """Test validation of message entity key requiring three components."""
     with pytest.raises(ValueError, match="Key not valid. It should have a hash address, a topic hash, and a message index."):
-        _ = CLKey(
-            "message-entity-contract-xxx")
+        _ = CLKey(INVALID_ENTITY_SINGLE_HASH)
 
 
-def test_clkey_message_topic_entity_with_two_hashes_no_index():
+def test_invalid_entity_two_hashes():
+    """Test validation of message entity key requiring message index."""
     with pytest.raises(ValueError, match="Key not valid. It should have a hash address, a topic hash, and a message index."):
-        _ = CLKey(
-            "message-entity-contract-xxx-xxx")
+        _ = CLKey(INVALID_ENTITY_TWO_HASHES)
 
 
-def test_clkey_message_topic_entity_with_invalid_hashes():
+def test_invalid_entity_hash_format():
+    """Test validation of message entity key hash format."""
     with pytest.raises(ValueError, match="hash value should be 64 length only containing alphabet and number"):
-        _ = CLKey(
-            "message-entity-contract-xxx-xxx-1")
+        _ = CLKey(INVALID_ENTITY_HASH_FORMAT)
 
 
-def test_clkey_message_topic_entity_with_invalid_index():
+def test_invalid_entity_index_format():
+    """Test validation of message entity key index format."""
     with pytest.raises(ValueError, match="the index should be an hexadecimal number"):
-        _ = CLKey(
-            "message-entity-contract-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a-0202020202020202020202020202020202020202020202020202020202020202-?")
+        _ = CLKey(INVALID_ENTITY_INDEX)

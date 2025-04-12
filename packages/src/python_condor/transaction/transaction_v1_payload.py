@@ -73,27 +73,14 @@ class TransactionV1Payload:
         self.fields.addField(3, schedulingWithLength)
 
         table = CalltableSerialization()
-        # table.addField(0, InitiatorAddr(
-        #     self.initiatorAddr).to_bytes()).\
-        #     addField(1, CLU64(int(self.time.timestamp() * 1000)).serialize()). \
-        #     addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
-        #     addField(3, serialize_string(self.chainName)). \
-        #     addField(4, self.pricingMode.to_bytes()). \
-        #     addField(5, self.fields.to_bytes())
-        table.addField(0, InitiatorAddr(
+
+        table.add_field(0, InitiatorAddr(
             self.initiatorAddr).to_bytes()).\
-            addField(1, int(self.time.timestamp() * 1000).to_bytes(8, byteorder='little')). \
-            addField(2, (int(self.ttl) * 60000).to_bytes(8, byteorder='little')). \
-            addField(3, serialize_string(self.chainName)). \
-            addField(4, self.pricingMode.to_bytes()). \
-            addField(5, self.fields.to_bytes())
-        # table.addField(0, InitiatorAddr(
-        #     self.initiatorAddr).to_bytes()).\
-        #     addField(1, CLU64(int(datetime.fromisoformat('2025-03-26T03:11:48.829Z').timestamp() * 1000)).serialize()). \
-        #     addField(2, CLU64(int(self.ttl) * 60000).serialize()). \
-        #     addField(3, CLString(self.chainName).serialize()). \
-        #     addField(4, self.pricingMode.to_bytes()). \
-        #     addField(5, self.fields.to_bytes())
+            add_field(1, int(self.time.timestamp() * 1000).to_bytes(8, byteorder='little')). \
+            add_field(2, (int(self.ttl) * 60000).to_bytes(8, byteorder='little')). \
+            add_field(3, serialize_string(self.chainName)). \
+            add_field(4, self.pricingMode.to_bytes()). \
+            add_field(5, self.fields.to_bytes())
 
         return table.to_bytes()
 

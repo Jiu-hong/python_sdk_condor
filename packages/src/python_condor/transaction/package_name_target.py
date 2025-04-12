@@ -20,12 +20,12 @@ class PackageNameTarget:
         else:
             version_bytes = int(1).to_bytes() + \
                 (self.version).to_bytes(4, byteorder='little')
-        selftable.addField(0, int(3).to_bytes()).addField(
-            1, serialize_string(self.package_name)).addField(2, version_bytes)
+        selftable.add_field(0, int(3).to_bytes()).add_field(
+            1, serialize_string(self.package_name)).add_field(2, version_bytes)
 
         table = CalltableSerialization()
-        table.addField(0, int(1).to_bytes()).addField(
-            1, selftable.to_bytes()).addField(
+        table.add_field(0, int(1).to_bytes()).add_field(
+            1, selftable.to_bytes()).add_field(
             2, TransactionRuntime(self.runtime).to_bytes())
         return table.to_bytes()
 

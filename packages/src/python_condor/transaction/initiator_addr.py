@@ -9,7 +9,7 @@ class InitiatorAddr:
     def to_bytes(self):
         # account hash to do
         table = CalltableSerialization()
-        table.addField(0, int(0).to_bytes()).addField(
+        table.add_field(0, int(0).to_bytes()).add_field(
             1, CLPublicKey(self.address).serialize())
         return table.to_bytes()
 

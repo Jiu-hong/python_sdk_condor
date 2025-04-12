@@ -27,12 +27,12 @@ class EntityAliasTarget:
 
     def to_bytes(self):
         selftable = CalltableSerialization()
-        selftable.addField(0, int(1).to_bytes()).\
-            addField(1, serialize_string(self.contract_name))
+        selftable.add_field(0, int(1).to_bytes()).\
+            add_field(1, serialize_string(self.contract_name))
         # return table.to_bytes()
         table = CalltableSerialization()
-        table.addField(0, int(1).to_bytes()).addField(
-            1, selftable.to_bytes()).addField(
+        table.add_field(0, int(1).to_bytes()).add_field(
+            1, selftable.to_bytes()).add_field(
             2, TransactionRuntime(self.runtime).to_bytes())
         return table.to_bytes()
 

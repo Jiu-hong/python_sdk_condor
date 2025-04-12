@@ -8,7 +8,7 @@ RUNTIME = RuntimeKind()
 class TransactionNativeTarget:
     def to_bytes(self):
         table = CalltableSerialization()
-        table.addField(0, int(0).to_bytes())
+        table.add_field(0, int(0).to_bytes())
         return table.to_bytes()
 
     def to_json(self):

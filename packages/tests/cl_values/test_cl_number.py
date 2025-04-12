@@ -126,9 +126,9 @@ def test_cli32_to_json():
 
 def test_cli32_out_of_range():
     """Test CLI32 rejects values outside valid range."""
-    with pytest.raises(ValueError, match="The inner value for the number should be -2147483648 - 2147483647"):
+    with pytest.raises(ValueError, match="Value 2147483648 exceeds maximum 2147483647 for CLI32"):
         _ = CLI32(2**31)
-    with pytest.raises(ValueError, match="The inner value for the number should be -2147483648 - 2147483647"):
+    with pytest.raises(ValueError, match="Value -2147483649 below minimum -2147483648 for CLI32"):
         _ = CLI32(-2**31 - 1)
 
 
@@ -171,9 +171,9 @@ def test_cli64_to_json():
 
 def test_cli64_out_of_range():
     """Test CLI64 rejects values outside valid range."""
-    with pytest.raises(ValueError, match="The inner value for the number should be -9223372036854775808 - 9223372036854775807"):
+    with pytest.raises(ValueError, match="Value 9223372036854775808 exceeds maximum 9223372036854775807 for CLI64"):
         _ = CLI64(2**63)
-    with pytest.raises(ValueError, match="The inner value for the number should be -9223372036854775808 - 9223372036854775807"):
+    with pytest.raises(ValueError, match="Value -9223372036854775809 below minimum -9223372036854775808 for CLI64"):
         _ = CLI64(-2**63 - 1)
 
 
@@ -216,9 +216,9 @@ def test_clu8_to_json():
 
 def test_clu8_out_of_range():
     """Test CLU8 rejects values outside valid range."""
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 255"):
+    with pytest.raises(ValueError, match="Value 256 exceeds maximum 255 for CLU8"):
         _ = CLU8(256)
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 255"):
+    with pytest.raises(ValueError, match="Value -1 below minimum 0 for CLU8"):
         _ = CLU8(-1)
 
 
@@ -261,9 +261,9 @@ def test_clu32_to_json():
 
 def test_clu32_out_of_range():
     """Test CLU32 rejects values outside valid range."""
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 4294967295"):
+    with pytest.raises(ValueError, match="Value 4294967296 exceeds maximum 4294967295 for CLU32"):
         _ = CLU32(2**32)
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 4294967295"):
+    with pytest.raises(ValueError, match="Value -1 below minimum 0 for CLU32"):
         _ = CLU32(-1)
 
 
@@ -306,9 +306,9 @@ def test_clu64_to_json():
 
 def test_clu64_out_of_range():
     """Test CLU64 rejects values outside valid range."""
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 18446744073709551615"):
+    with pytest.raises(ValueError, match="Value 18446744073709551616 exceeds maximum 18446744073709551615 for CLU64"):
         _ = CLU64(2**64)
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 18446744073709551615"):
+    with pytest.raises(ValueError, match="Value -1 below minimum 0 for CLU64"):
         _ = CLU64(-1)
 
 
@@ -351,9 +351,9 @@ def test_clu128_to_json():
 
 def test_clu128_out_of_range():
     """Test CLU128 rejects values outside valid range."""
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 340282366920938463463374607431768211455"):
+    with pytest.raises(ValueError, match="Value 340282366920938463463374607431768211456 exceeds maximum 340282366920938463463374607431768211455 for CLU128"):
         _ = CLU128(2**128)
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 340282366920938463463374607431768211455"):
+    with pytest.raises(ValueError, match="Value -1 below minimum 0 for CLU128"):
         _ = CLU128(-1)
 
 
@@ -396,9 +396,9 @@ def test_clu256_to_json():
 
 def test_clu256_out_of_range():
     """Test CLU256 rejects values outside valid range."""
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 115792089237316195423570985008687907853269984665640564039457584007913129639935"):
+    with pytest.raises(ValueError, match="115792089237316195423570985008687907853269984665640564039457584007913129639936 exceeds maximum 115792089237316195423570985008687907853269984665640564039457584007913129639935 for CLU256"):
         _ = CLU256(2**256)
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 115792089237316195423570985008687907853269984665640564039457584007913129639935"):
+    with pytest.raises(ValueError, match="Value -1 below minimum 0 for CLU256"):
         _ = CLU256(-1)
 
 
@@ -441,9 +441,9 @@ def test_clu512_to_json():
 
 def test_clu512_out_of_range():
     """Test CLU512 rejects values outside valid range."""
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084095"):
+    with pytest.raises(ValueError, match="13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084096 exceeds maximum 13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084095 for CLU512"):
         _ = CLU512(2**512)
-    with pytest.raises(ValueError, match="The inner value for the number should be 0 - 13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084095"):
+    with pytest.raises(ValueError, match="Value -1 below minimum 0 for CLU512"):
         _ = CLU512(-1)
 
 

@@ -14,3 +14,4 @@ work
 .pytest_cache
 __pycache__
 dist
+test.py

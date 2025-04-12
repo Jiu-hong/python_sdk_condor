@@ -23,7 +23,6 @@ class PayloadFields:
         self.dict = {}
 
     def addField(self, index, bytes):
-        # self.dict[CLU16(index)] = bytes
         self.dict[index] = bytes
 
     def to_bytes(self):

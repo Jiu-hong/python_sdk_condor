@@ -186,41 +186,6 @@ class CLU8(CLNumber):
             raise ExceptionExceedMaxValue(str(self.data), "CLU8")
 
 
-class CLU16(CLNumber):
-    """Class representing a 16-bit unsigned integer in the Casper network."""
-
-    maxvalue = 2**16-1
-
-    def __init__(self, data: Union[int, NoneHolder]) -> None:
-        """Initialize a CL U16.
-
-        Args:
-            data: The integer value or NoneHolder.
-
-        Raises:
-            ValueError: If the value is outside the valid range.
-        """
-        if isinstance(data, int):
-            if data > CLU16.maxvalue or data < 0:
-                raise ValueError(
-                    f"The inner value for the number should be 0 - {CLU16.maxvalue}")
-        super().__init__(data)
-
-    def serialize(self) -> bytes:
-        """Serialize this U16 to bytes.
-
-        Returns:
-            2 bytes in little-endian order.
-
-        Raises:
-            ExceptionExceedMaxValue: If the value is outside the valid range.
-        """
-        if 0 <= self.data <= CLU16.maxvalue:
-            return self.data.to_bytes(2, byteorder='little')
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU16")
-
-
 class CLU32(CLNumber):
     """Class representing a 32-bit unsigned integer in the Casper network."""
 

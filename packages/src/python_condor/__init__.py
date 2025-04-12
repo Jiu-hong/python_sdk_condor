@@ -1,4 +1,4 @@
-from .cl_values import CLI32, CLI64, CLU128, CLU16, CLU256, CLU32, CLU64, CLU512, CLBool, CLU8, CLString, CLPublicKey, CLURef, CLOption, CLTuple1, CLTuple2, CLTuple3, CLList, CLResult, CLMap, CLKey
+from .cl_values import CLI32, CLI64, CLU128,  CLU256, CLU32, CLU64, CLU512, CLBool, CLU8, CLString, CLPublicKey, CLURef, CLOption, CLTuple1, CLTuple2, CLTuple3, CLList, CLResult, CLMap, CLKey
 from .constants import NoneHolder
 from .deployment import SessionContractHashBuilder, SessionContractNameBuilder, SessionPackageNameBuilder, SessionPackageHashBuilder, SessionModuleBytesBuilder, DeployNamedArg, DeployHeader, Deploy, SessionModuleBytes, SessionPackageHash, SessionContractHash, SessionPackageName, SessionContractName, SessionPayment
 from .keys import KeyAlgorithm, get_pvk_pem_from_hex_string, get_key_pair, get_key_pair_from_bytes, get_key_pair_from_hex_string, get_key_pair_from_pem_file, get_key_pair_from_pem_file, get_pvk_from_pem_file, get_pvk_pem_file_from_bytes, get_pvk_pem_from_bytes, get_signature, get_signature_from_pem_file, is_signature_valid

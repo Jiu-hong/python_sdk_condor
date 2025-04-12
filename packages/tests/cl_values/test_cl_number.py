@@ -1,6 +1,6 @@
 import pytest
 
-from python_condor import CLI32, CLI64, CLU128, CLU16, CLU256, CLU32, CLU512, CLU64, CLU8, CLBool, NoneHolder
+from python_condor import CLI32, CLI64, CLU128,  CLU256, CLU32, CLU512, CLU64, CLU8, CLBool, NoneHolder
 
 # ===== CLBool =====
 # True
@@ -191,15 +191,6 @@ result_holder_clu8 = CLU8(NoneHolder())
 def test_result_holder_to_json():
     result = result_holder_clu8.to_json()
     assert result == "U8"
-
-
-# ===== CLU16 =====
-clu16_value = CLU16(123)
-
-
-def test_clu16_serialize():
-    result = clu16_value.serialize().hex()
-    assert result == "7b00"
 
 
 # ===== CLU32 =====

@@ -1,155 +1,216 @@
+"""
+Tests for TransactionEntryPoint functionality.
+
+This module contains test cases for the TransactionEntryPoint class, which represents
+entry points in CasperLabs transactions. The tests verify:
+- Entry point creation for all supported types
+- Byte serialization
+- JSON serialization
+- Input validation for entry point types and names
+"""
+
 import pytest
 
 from python_condor import TransactionEntryPoint
 
 
-# ===== entrypoint_call =====
-entrypoint_call = TransactionEntryPoint("Call")
+# Test data setup
+CUSTOM_ENTRY_POINT_NAME = "test2"
 
 
-def test_entrypoint_call_to_bytes():
-    result = entrypoint_call.to_bytes().hex()
-    assert result == "010000000000000000000100000000"
+def create_test_entry_point(entry_point_type: str, name: str = None) -> TransactionEntryPoint:
+    """
+    Create a test entry point with sample data.
+
+    Args:
+        entry_point_type: Type of entry point (Call, Custom, Transfer, etc.)
+        name: Optional name for Custom entry point
+
+    Returns:
+        TransactionEntryPoint: A configured test entry point
+    """
+    return TransactionEntryPoint(entry_point_type, name)
 
 
-def test_entrypoint_call_to_json():
-    result = entrypoint_call.to_json()
-    assert result == {'entry_point': 'Call'}
+# Expected test results
+EXPECTED_CALL_BYTES = "010000000000000000000100000000"
+EXPECTED_CALL_JSON = {'entry_point': 'Call'}
+
+EXPECTED_CUSTOM_BYTES = "020000000000000000000100010000000a00000001050000007465737432"
+EXPECTED_CUSTOM_JSON = {'entry_point': {'Custom': CUSTOM_ENTRY_POINT_NAME}}
+
+EXPECTED_TRANSFER_BYTES = "010000000000000000000100000002"
+EXPECTED_TRANSFER_JSON = {'entry_point': 'Transfer'}
+
+EXPECTED_ADD_BID_BYTES = "010000000000000000000100000003"
+EXPECTED_ADD_BID_JSON = {'entry_point': 'Add_Bid'}
+
+EXPECTED_WITHDRAW_BID_BYTES = "010000000000000000000100000004"
+EXPECTED_WITHDRAW_BID_JSON = {'entry_point': 'Withdraw_Bid'}
+
+EXPECTED_DELEGATE_BYTES = "010000000000000000000100000005"
+EXPECTED_DELEGATE_JSON = {'entry_point': 'Delegate'}
+
+EXPECTED_UNDELEGATE_BYTES = "010000000000000000000100000006"
+EXPECTED_UNDELEGATE_JSON = {'entry_point': 'Undelegate'}
+
+EXPECTED_REDELEGATE_BYTES = "010000000000000000000100000007"
+EXPECTED_REDELEGATE_JSON = {'entry_point': 'Redelegate'}
+
+EXPECTED_ACTIVATE_BID_BYTES = "010000000000000000000100000008"
+EXPECTED_ACTIVATE_BID_JSON = {'entry_point': 'Activate_Bid'}
+
+EXPECTED_CHANGE_PUBLIC_KEY_BYTES = "010000000000000000000100000009"
+EXPECTED_CHANGE_PUBLIC_KEY_JSON = {'entry_point': 'ChangePublicKey'}
 
 
-# ===== entrypoint_custom =====
-entrypoint_custom = TransactionEntryPoint("Custom", "test2")
+def test_entry_point_call_to_bytes():
+    """Test byte serialization of Call entry point."""
+    entry_point = create_test_entry_point("Call")
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_CALL_BYTES
 
 
-def test_entrypoint_custom_to_bytes():
-    result = entrypoint_custom.to_bytes().hex()
-    assert result == "020000000000000000000100010000000a00000001050000007465737432"
+def test_entry_point_call_to_json():
+    """Test JSON serialization of Call entry point."""
+    entry_point = create_test_entry_point("Call")
+    result = entry_point.to_json()
+    assert result == EXPECTED_CALL_JSON
 
 
-def test_entrypoint_custom_to_json():
-    result = entrypoint_custom.to_json()
-    assert result == {'entry_point': {'Custom': "test2"}}
+def test_entry_point_custom_to_bytes():
+    """Test byte serialization of Custom entry point."""
+    entry_point = create_test_entry_point("Custom", CUSTOM_ENTRY_POINT_NAME)
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_CUSTOM_BYTES
 
 
-# ===== entrypoint_Transfer =====
-entrypoint_transfer = TransactionEntryPoint("Transfer")
+def test_entry_point_custom_to_json():
+    """Test JSON serialization of Custom entry point."""
+    entry_point = create_test_entry_point("Custom", CUSTOM_ENTRY_POINT_NAME)
+    result = entry_point.to_json()
+    assert result == EXPECTED_CUSTOM_JSON
 
 
-def test_entrypoint_transfer_to_bytes():
-    result = entrypoint_transfer.to_bytes().hex()
-    assert result == "010000000000000000000100000002"
+def test_entry_point_transfer_to_bytes():
+    """Test byte serialization of Transfer entry point."""
+    entry_point = create_test_entry_point("Transfer")
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_TRANSFER_BYTES
 
 
-def test_entrypoint_transfer_to_json():
-    result = entrypoint_transfer.to_json()
-    assert result == {'entry_point': 'Transfer'}
+def test_entry_point_transfer_to_json():
+    """Test JSON serialization of Transfer entry point."""
+    entry_point = create_test_entry_point("Transfer")
+    result = entry_point.to_json()
+    assert result == EXPECTED_TRANSFER_JSON
 
 
-# ===== entrypoint_Add_Bid =====
-entrypoint_add_bid = TransactionEntryPoint("Add_Bid")
+def test_entry_point_add_bid_to_bytes():
+    """Test byte serialization of Add_Bid entry point."""
+    entry_point = create_test_entry_point("Add_Bid")
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_ADD_BID_BYTES
 
 
-def test_entrypoint_add_bid_to_bytes():
-    result = entrypoint_add_bid.to_bytes().hex()
-    assert result == "010000000000000000000100000003"
+def test_entry_point_add_bid_to_json():
+    """Test JSON serialization of Add_Bid entry point."""
+    entry_point = create_test_entry_point("Add_Bid")
+    result = entry_point.to_json()
+    assert result == EXPECTED_ADD_BID_JSON
 
 
-def test_entrypoint_add_bid_to_json():
-    result = entrypoint_add_bid.to_json()
-    assert result == {'entry_point': 'Add_Bid'}
+def test_entry_point_withdraw_bid_to_bytes():
+    """Test byte serialization of Withdraw_Bid entry point."""
+    entry_point = create_test_entry_point("Withdraw_Bid")
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_WITHDRAW_BID_BYTES
 
 
-# ===== entrypoint_Withdraw_Bid =====
-entrypoint_withdraw_bid = TransactionEntryPoint("Withdraw_Bid")
+def test_entry_point_withdraw_bid_to_json():
+    """Test JSON serialization of Withdraw_Bid entry point."""
+    entry_point = create_test_entry_point("Withdraw_Bid")
+    result = entry_point.to_json()
+    assert result == EXPECTED_WITHDRAW_BID_JSON
 
 
-def test_entrypoint_withdraw_bid_to_bytes():
-    result = entrypoint_withdraw_bid.to_bytes().hex()
-    assert result == "010000000000000000000100000004"
+def test_entry_point_delegate_to_bytes():
+    """Test byte serialization of Delegate entry point."""
+    entry_point = create_test_entry_point("Delegate")
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_DELEGATE_BYTES
 
 
-def test_entrypoint_withdraw_bid_to_json():
-    result = entrypoint_withdraw_bid.to_json()
-    assert result == {'entry_point': 'Withdraw_Bid'}
+def test_entry_point_delegate_to_json():
+    """Test JSON serialization of Delegate entry point."""
+    entry_point = create_test_entry_point("Delegate")
+    result = entry_point.to_json()
+    assert result == EXPECTED_DELEGATE_JSON
 
 
-# ===== entrypoint_Delegate =====
-entrypoint_delegate = TransactionEntryPoint("Delegate")
+def test_entry_point_undelegate_to_bytes():
+    """Test byte serialization of Undelegate entry point."""
+    entry_point = create_test_entry_point("Undelegate")
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_UNDELEGATE_BYTES
 
 
-def test_entrypoint_delegate_to_bytes():
-    result = entrypoint_delegate.to_bytes().hex()
-    assert result == "010000000000000000000100000005"
+def test_entry_point_undelegate_to_json():
+    """Test JSON serialization of Undelegate entry point."""
+    entry_point = create_test_entry_point("Undelegate")
+    result = entry_point.to_json()
+    assert result == EXPECTED_UNDELEGATE_JSON
 
 
-def test_entrypoint_delegate_to_json():
-    result = entrypoint_delegate.to_json()
-    assert result == {'entry_point': 'Delegate'}
+def test_entry_point_redelegate_to_bytes():
+    """Test byte serialization of Redelegate entry point."""
+    entry_point = create_test_entry_point("Redelegate")
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_REDELEGATE_BYTES
 
 
-# ===== entrypoint_Undelegate =====
-entrypoint_undelegate = TransactionEntryPoint("Undelegate")
+def test_entry_point_redelegate_to_json():
+    """Test JSON serialization of Redelegate entry point."""
+    entry_point = create_test_entry_point("Redelegate")
+    result = entry_point.to_json()
+    assert result == EXPECTED_REDELEGATE_JSON
 
 
-def test_entrypoint_undelegate_to_bytes():
-    result = entrypoint_undelegate.to_bytes().hex()
-    assert result == "010000000000000000000100000006"
+def test_entry_point_activate_bid_to_bytes():
+    """Test byte serialization of Activate_Bid entry point."""
+    entry_point = create_test_entry_point("Activate_Bid")
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_ACTIVATE_BID_BYTES
 
 
-def test_entrypoint_undelegate_to_json():
-    result = entrypoint_undelegate.to_json()
-    assert result == {'entry_point': 'Undelegate'}
+def test_entry_point_activate_bid_to_json():
+    """Test JSON serialization of Activate_Bid entry point."""
+    entry_point = create_test_entry_point("Activate_Bid")
+    result = entry_point.to_json()
+    assert result == EXPECTED_ACTIVATE_BID_JSON
 
 
-# ===== entrypoint_Redelegate =====
-entrypoint_redelegate = TransactionEntryPoint("Redelegate")
+def test_entry_point_change_public_key_to_bytes():
+    """Test byte serialization of ChangePublicKey entry point."""
+    entry_point = create_test_entry_point("ChangePublicKey")
+    result = entry_point.to_bytes().hex()
+    assert result == EXPECTED_CHANGE_PUBLIC_KEY_BYTES
 
 
-def test_entrypoint_redelegate_to_bytes():
-    result = entrypoint_redelegate.to_bytes().hex()
-    assert result == "010000000000000000000100000007"
+def test_entry_point_change_public_key_to_json():
+    """Test JSON serialization of ChangePublicKey entry point."""
+    entry_point = create_test_entry_point("ChangePublicKey")
+    result = entry_point.to_json()
+    assert result == EXPECTED_CHANGE_PUBLIC_KEY_JSON
 
 
-def test_entrypoint_redelegate_to_json():
-    result = entrypoint_redelegate.to_json()
-    assert result == {'entry_point': 'Redelegate'}
-
-
-# ===== entrypoint_Activate_Bid =====
-entrypoint_activate_bid = TransactionEntryPoint("Activate_Bid")
-
-
-def test_entrypoint_activate_bid_to_bytes():
-    result = entrypoint_activate_bid.to_bytes().hex()
-    assert result == "010000000000000000000100000008"
-
-
-def test_entrypoint_activate_bid_to_json():
-    result = entrypoint_activate_bid.to_json()
-    assert result == {'entry_point': 'Activate_Bid'}
-
-
-# ===== entrypoint_ChangePublicKey =====
-entrypoint_change_publickey = TransactionEntryPoint("ChangePublicKey")
-
-
-def test_entrypoint_change_publickey_to_bytes():
-    result = entrypoint_change_publickey.to_bytes().hex()
-    assert result == "010000000000000000000100000009"
-
-
-def test_entrypoint_change_publickey_to_json():
-    result = entrypoint_change_publickey.to_json()
-    assert result == {'entry_point': 'ChangePublicKey'}
-
-
-# === check entrypoint out of range==
-def test_entrypoint_out_of_range():
+def test_entry_point_invalid_type():
+    """Test validation of entry point type."""
     with pytest.raises(ValueError, match=r"Invalid input: somegthingelse. Allowed values are: \('Call', 'Custom', 'Transfer', 'Add_Bid', 'Withdraw_Bid', 'Delegate', 'Undelegate', 'Redelegate', 'Activate_Bid', 'ChangePublicKey'\)"):
         _ = TransactionEntryPoint("somegthingelse")
 
 
-# === check entrypoint name empty for Custom==
-def test_entrypoint_out_of_range():
+def test_entry_point_custom_empty_name():
+    """Test validation of Custom entry point name."""
     with pytest.raises(ValueError, match="Entrypoint name cannot be empty for Custom."):
         _ = TransactionEntryPoint("Custom")

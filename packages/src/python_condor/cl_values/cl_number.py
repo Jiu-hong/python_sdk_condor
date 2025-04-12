@@ -11,7 +11,6 @@ from typing import Union, Optional
 
 from .cl_basetype import CLValue
 from ..constants import NoneHolder, TAG
-from .exceptions import ExceptionExceedMaxValue
 
 
 class CLBool(CLValue):
@@ -95,14 +94,8 @@ class CLI32(CLNumber):
 
         Returns:
             4 bytes in little-endian order.
-
-        Raises:
-            ExceptionExceedMaxValue: If the value is outside the valid range.
         """
-        if CLI32.minvalue <= self.data <= CLI32.maxvalue:
-            return self.data.to_bytes(4, byteorder='little', signed=True)
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLI32")
+        return self.data.to_bytes(4, byteorder='little', signed=True)
 
 
 class CLI64(CLNumber):
@@ -117,14 +110,8 @@ class CLI64(CLNumber):
 
         Returns:
             8 bytes in little-endian order.
-
-        Raises:
-            ExceptionExceedMaxValue: If the value is outside the valid range.
         """
-        if CLI64.minvalue <= self.data <= CLI64.maxvalue:
-            return self.data.to_bytes(8, byteorder='little', signed=True)
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLI64")
+        return self.data.to_bytes(8, byteorder='little', signed=True)
 
 
 class CLU8(CLNumber):
@@ -139,14 +126,8 @@ class CLU8(CLNumber):
 
         Returns:
             A single byte.
-
-        Raises:
-            ExceptionExceedMaxValue: If the value is outside the valid range.
         """
-        if 0 <= self.data <= CLU8.maxvalue:
-            return self.data.to_bytes(1, byteorder='little')
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU8")
+        return self.data.to_bytes(1, byteorder='little')
 
 
 class CLU32(CLNumber):
@@ -161,14 +142,8 @@ class CLU32(CLNumber):
 
         Returns:
             4 bytes in little-endian order.
-
-        Raises:
-            ExceptionExceedMaxValue: If the value is outside the valid range.
         """
-        if 0 <= self.data <= CLU32.maxvalue:
-            return self.data.to_bytes(4, byteorder='little')
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU32")
+        return self.data.to_bytes(4, byteorder='little')
 
 
 class CLU64(CLNumber):
@@ -184,13 +159,8 @@ class CLU64(CLNumber):
         Returns:
             8 bytes in little-endian order.
 
-        Raises:
-            ExceptionExceedMaxValue: If the value is outside the valid range.
         """
-        if 0 <= self.data <= CLU64.maxvalue:
-            return self.data.to_bytes(8, byteorder='little')
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU64")
+        return self.data.to_bytes(8, byteorder='little')
 
 
 class CLBigNumber(CLNumber):
@@ -230,20 +200,6 @@ class CLU128(CLBigNumber):
     minvalue = 0
     tag = TAG.CLU128.value
 
-    def serialize(self) -> bytes:
-        """Serialize this U128 to bytes.
-
-        Returns:
-            Bytes representation of this U128.
-
-        Raises:
-            ExceptionExceedMaxValue: If the value is outside the valid range.
-        """
-        if 0 <= self.data <= CLU128.maxvalue:
-            return super().serialize()
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU128")
-
 
 class CLU256(CLBigNumber):
     """Class representing a 256-bit unsigned integer in the Casper network."""
@@ -252,20 +208,6 @@ class CLU256(CLBigNumber):
     minvalue = 0
     tag = TAG.CLU256.value
 
-    def serialize(self) -> bytes:
-        """Serialize this U256 to bytes.
-
-        Returns:
-            Bytes representation of this U256.
-
-        Raises:
-            ExceptionExceedMaxValue: If the value is outside the valid range.
-        """
-        if 0 <= self.data <= CLU256.maxvalue:
-            return super().serialize()
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU256")
-
 
 class CLU512(CLBigNumber):
     """Class representing a 512-bit unsigned integer in the Casper network."""
@@ -273,20 +215,6 @@ class CLU512(CLBigNumber):
     maxvalue = 2**512-1
     minvalue = 0
     tag = TAG.CLU512.value
-
-    def serialize(self) -> bytes:
-        """Serialize this U512 to bytes.
-
-        Returns:
-            Bytes representation of this U512.
-
-        Raises:
-            ExceptionExceedMaxValue: If the value is outside the valid range.
-        """
-        if 0 <= self.data <= CLU512.maxvalue:
-            return super().serialize()
-        else:
-            raise ExceptionExceedMaxValue(str(self.data), "CLU512")
 
 
 class Unit:

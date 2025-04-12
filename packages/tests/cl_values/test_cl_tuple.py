@@ -46,11 +46,11 @@ TUPLE2_DATA = {
 # CLTuple3 test data
 TUPLE3_DATA = {
     'u32_value': 1,
-    'option_string': CLOption(None, CLString(NoneHolder())),
+    'option_string': CLOption(CLString(NoneHolder())),
     'option_bool': CLOption(CLBool(True)),
     'valid_tuple': CLTuple3((
         CLU32(1),
-        CLOption(None, CLString(NoneHolder())),
+        CLOption(CLString(NoneHolder())),
         CLOption(CLBool(True))
     )),
 }

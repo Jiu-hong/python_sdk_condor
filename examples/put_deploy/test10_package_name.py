@@ -7,15 +7,16 @@ chainname = "integration-test"
 
 
 url = "http://node.integration.casper.network:7777/rpc"
-deploy_builder = SessionPackageNameBuilder(
-    [("secret_key.pem", KeyAlgorithm.ED25519)])
+keys = [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem",
+         KeyAlgorithm.ED25519)]
+deploy_builder = SessionPackageNameBuilder(keys)
 deploy_json = deploy_builder.runtime_args({"arg1": CLTuple3((CLString("hello"), CLBool(True), CLURef(
     "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007"))),
-    "arg2": CLOption(None, CLString(NoneHolder())),
+    "arg2": CLOption(CLString(NoneHolder())),
     "arg3": CLTuple1(CLString("helloworld")),
     "arg4": CLTuple2((CLString("helloworld"), CLBool(True))),
     "arg5": CLTuple3(
-    (CLU32(1), CLOption(None, CLString(NoneHolder())), CLOption(CLBool(True)))),
+    (CLU32(1), CLOption(CLString(NoneHolder())), CLOption(CLBool(True)))),
     "arg6": CLList([CLOption(CLString("hello")), CLOption(CLString("world"))]),
     "arg7": CLMap({CLU8(3): CLOption(CLString("Jim")), CLU8(
         2): CLOption(CLString("Jack")), CLU8(4): CLOption(CLString("Jane")), CLU8(1): CLOption(CLString("Jill"))})

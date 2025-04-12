@@ -1,10 +1,11 @@
-from python_condor import CLU512, CLPublicKey, TransactionNativeTarget, TransactionScheduling, PricingMode,  TransactionEntryPoint, TransactionV1Payload, TransactionV1, KeyAlgorithm, PutTransction
+from python_condor import CLU512, CLPublicKey, TransactionNativeTarget, TransactionScheduling, PricingMode,  TransactionEntryPoint, TransactionV1Payload, TransactionV1, KeyAlgorithm, PutTransaction
 
 
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 chainname = "integration-test"
 
-
+keys = [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem",
+         KeyAlgorithm.ED25519)]
 args = {"target": CLPublicKey(
     "01bb63a712307a193309f181820a10ac8287dc3c853a659e0b5220f7f7732c8c61"), "amount": CLU512(2500000000)}
 scheduling = TransactionScheduling()
@@ -18,9 +19,9 @@ payload = TransactionV1Payload(args, target1,
                                entrypoint1, scheduling, initiatorAddr, pricing_mode, "integration-test")
 
 transaction = TransactionV1(
-    payload, [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
+    payload, keys)
 url = "http://node.integration.casper.network:7777/rpc"
 
 
-transaction_result = PutTransction(url, transaction.to_json()).run()
+transaction_result = PutTransaction(url, transaction.to_json()).run()
 print(transaction_result)

@@ -6,6 +6,8 @@ An option can either contain a value (Some) or be empty (None).
 
 from typing import Union
 
+from result import Err, Ok
+
 
 from .cl_basetype import CLValue
 from ..constants import TAG, NoneHolder
@@ -26,6 +28,10 @@ def check_non_holder(data) -> bool:
                 for k, v in data.items():
                     for x in (k, v):
                         return check_non_holder(x)
+            elif isinstance(data, Ok):
+                return check_non_holder(data.ok_value)
+            elif isinstance(data, Err):
+                return check_non_holder(data.err_value)
             else:
                 return check_non_holder(data.data)
 
@@ -39,7 +45,7 @@ class CLOption(CLValue):
 
     tag = TAG.CLOption.value
 
-    def __init__(self, *data: Union[CLValue, None]) -> None:
+    def __init__(self, data: Union[CLValue, NoneHolder]) -> None:
         """Initialize a CL option.
 
         Args:
@@ -51,22 +57,22 @@ class CLOption(CLValue):
             TypeError: If the input is not a CLValue or None.
         """
         # Some
-        if len(data) == 1:
-            if not isinstance(data[0], CLValue):
+        if not check_non_holder(data):
+            # if len(data) == 1:
+            if not isinstance(data, CLValue):
                 raise TypeError(
                     "Input type should be CLValue for CLOption")
             self.flag = 1  # 1 - some, 0 - none
-            self.data = data[0]
-            # check if there is any NoneHolder() in some value
-            if check_non_holder(data) == True:
-                raise TypeError("Some type shouldn't included NoneHolder")
-            # None
-        elif len(data) == 2:
-            if data[0] is not None and not check_non_holder(data[1]):
-                raise TypeError(
-                    "Input type should be None with NoneHolder or CLValue for CLOption")
+            # # check if there is any NoneHolder() in some value
+            # if check_non_holder(data) == True:
+            #     raise TypeError("Some type shouldn't included NoneHolder")
+        # None
+        else:
+            # if data[0] is not None and not check_non_holder(data[1]):
+            #     raise TypeError(
+            #         "Input type should be None with NoneHolder or CLValue for CLOption")
             self.flag = 0
-            self.data = data
+        self.data = data
 
     def serialize(self) -> bytes:
         """Serialize this option to bytes.

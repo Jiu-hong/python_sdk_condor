@@ -71,7 +71,7 @@ ERR_EXPECTED = {
     'json': {'Result': {'err': 'U32', 'ok': 'Bool'}}
 }
 
-# === Ok Variant Tests ===
+# == = Ok Variant Tests == =
 
 
 def test_ok_result_serialization():
@@ -135,7 +135,7 @@ def test_invalid_ok_type():
 def test_invalid_err_type():
     """Test validation of Err type input."""
     with pytest.raises(ValueError, match=r"err value should be Err\(clvalue\)"):
-        _ = CLResult(Ok(CLBool(NoneHolder())), Err((NoneHolder())), False)
+        _ = CLResult(Ok(CLBool(NoneHolder())), Err(123), False)
 
 
 def test_invalid_result_type():

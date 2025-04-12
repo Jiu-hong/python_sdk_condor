@@ -1,4 +1,4 @@
-from python_condor import CLU512, CLPublicKey, TransactionSessionTarget, TransactionScheduling, PricingMode,  TransactionEntryPoint, TransactionV1Payload, TransactionV1, KeyAlgorithm, PutTransction
+from python_condor import CLU512, CLPublicKey, TransactionSessionTarget, TransactionScheduling, PricingMode,  TransactionEntryPoint, TransactionV1Payload, TransactionV1, KeyAlgorithm, PutTransaction
 
 
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
@@ -27,5 +27,5 @@ url = "http://node.integration.casper.network:7777/rpc"
 # url = "http://34.217.53.198:7777/rpc"
 
 
-transaction_result = PutTransction(url, transaction.to_json()).run()
+transaction_result = PutTransaction(url, transaction.to_json()).run()
 print(transaction_result)

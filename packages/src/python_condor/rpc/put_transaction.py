@@ -14,7 +14,7 @@ from ..constants import RpcMethod
 RPCMETHOD = RpcMethod()
 
 
-class PutTransction:
+class PutTransaction:
     """Class for handling the account_put_transaction RPC call.
 
     This class allows sending transactions to the Casper network and
@@ -22,7 +22,7 @@ class PutTransction:
     """
 
     def __init__(self, url: str, transactionV1: Dict[str, Any]) -> None:
-        """Initialize a PutTransction instance.
+        """Initialize a PutTransaction instance.
 
         Args:
             url: The RPC endpoint URL.

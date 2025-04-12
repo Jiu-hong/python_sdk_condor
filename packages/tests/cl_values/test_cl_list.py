@@ -40,7 +40,7 @@ TEST_INSTANCES = {
         CLOption(CLString("hello")),
         CLOption(CLString("world")),
     ]),
-    'empty': CLList([], CLOption(None, CLString(NoneHolder()))),
+    'empty': CLList([], CLOption(CLString(NoneHolder()))),
     'single': CLList([CLOption(CLString("test"))]),
     'numbers': CLList([CLU32(1), CLU32(2), CLU32(3)]),
 }

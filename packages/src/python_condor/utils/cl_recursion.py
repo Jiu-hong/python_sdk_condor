@@ -7,6 +7,8 @@ including extracting tags, converting to JSON format, and handling nested data s
 from typing import Any, Dict, List,  Tuple, Union
 
 from result import Err, Ok
+
+from python_condor.constants.base import NoneHolder
 from ..constants import CLTypeName, TAG
 
 
@@ -36,7 +38,8 @@ def get_cl_tags(self) -> bytes:
             return tag + get_cl_tags(self.data[1])
 
         # if clresult type
-        if isinstance(self.data[-1], bool):
+        # if isinstance(self.data[-1], bool):
+        if self.tag == TAG.CLResult.value:
             # get both ok and err tag
             return tag + get_cl_tags(self.data[0].ok_value) + get_cl_tags(self.data[1].err_value)
         # get all the tuple elements' tag
@@ -53,7 +56,7 @@ def get_cl_tags(self) -> bytes:
             tuple_value = list(self.data.items())[0]  # tuple
             return tag + b''.join([get_cl_tags(x) for x in tuple_value])
         else:
-            return tag + get_cl_tags(self.inner_type)
+            return tag + b''.join([get_cl_tags(x) for k, v in self.inner_type.items() for x in (k, v)])
 
     else:
         return tag
@@ -96,7 +99,8 @@ def get_deep_json(self) -> Dict[str, Any]:
             return {json_type: {'key': get_deep_json(tuple_value[0]),
                                 'value': get_deep_json(tuple_value[1])}}
         else:
-            return {json_type: get_deep_json(self.inner_type)}
+            return {json_type: {'key': get_deep_json(list(self.inner_type.keys())[0]),
+                                'value': get_deep_json(list(self.inner_type.values())[0])}}
 
     else:
         return json_type
@@ -115,7 +119,7 @@ def get_deep_value(self) -> Union[None, int, str, List[Dict[str, Any]], Tuple[An
     Returns:
         The extracted value in its appropriate Python type.
     """
-    result: Any = ""
+    result = ""
     if isinstance(self, (int, str)):
         result = self
         if isinstance(self, str):
@@ -144,7 +148,7 @@ def get_deep_value(self) -> Union[None, int, str, List[Dict[str, Any]], Tuple[An
         result = get_deep_value(self.ok_value)
     elif isinstance(self, Err):
         result = get_deep_value(self.err_value)
-    elif self is None:
+    elif self is None or isinstance(self, NoneHolder):
         result = None
     else:
         result = get_deep_value(self.data)

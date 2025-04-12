@@ -3,9 +3,8 @@
 This module contains test cases for the CLOption class, which represents optional
 values in the Casper network. The tests cover four main scenarios:
 1. Some value (CLString)
-2. None value with type information
-3. NoneHolder for type information only
-4. Invalid inputs and type validation
+2. NoneHolder for type information only
+3. Invalid inputs and type validation
 
 For each success scenario, it tests:
 - Serialization
@@ -21,7 +20,7 @@ from python_condor import CLOption, CLString, NoneHolder, CLU32
 TEST_DATA = {
     'string_value': "helloworld",
     'some_option': CLOption(CLString("helloworld")),
-    'none_option': CLOption(None, CLString(NoneHolder())),
+    'none_option': CLOption(CLString(NoneHolder())),
 }
 
 # === Expected Values ===
@@ -67,42 +66,33 @@ def test_some_option_to_json():
     assert result == JSON_EXPECTED
 
 
-# === None Value Tests ===
+# === None  Tests ===
 
 def test_none_option_serialization():
-    """Test serialization of None value with type information."""
+    """Test serialization of NoneHolder with type information."""
     result = TEST_DATA['none_option'].serialize().hex()
     assert result == NONE_EXPECTED['serialized']
 
 
 def test_none_option_value():
-    """Test value retrieval of None value with type information."""
+    """Test value retrieval of NoneHolder with type information."""
     result = TEST_DATA['none_option'].value()
     assert result == NONE_EXPECTED['value']
 
 
 def test_none_option_cl_value():
-    """Test CL value representation of None value with type information."""
+    """Test CL value representation of NoneHolder with type information."""
     result = TEST_DATA['none_option'].cl_value()
     assert result == NONE_EXPECTED['cl_value']
 
 
 def test_none_option_to_json():
-    """Test JSON representation of None value with type information."""
+    """Test JSON representation of NoneHolder with type information."""
     result = TEST_DATA['none_option'].to_json()
     assert result == JSON_EXPECTED
 
 
-# === NoneHolder Tests ===
-
-def test_holder_option_type_for_some():
-    """Test NoneHolder value for some."""
-    with pytest.raises(TypeError, match="Some type shouldn't included NoneHolder"):
-        _ = CLOption(CLString(NoneHolder()))
-
 # === Validation Tests ===
-
-
 def test_invalid_option_type():
     """Test validation of option type input."""
     with pytest.raises(TypeError, match="Input type should be CLValue for CLOption"):

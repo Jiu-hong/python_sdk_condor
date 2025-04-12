@@ -36,8 +36,8 @@ from .get_reward import GetReward
 from .get_state_root_hash import GetStateRootHash
 
 # Transaction operations
-from .get_transaction import GetTransction
-from .put_transaction import PutTransction
+from .get_transaction import GetTransaction
+from .put_transaction import PutTransaction
 
 # Query balance operations
 from .query_balance.account_hash.by_block_id import QueryBalanceMainPurseAccountHashByBlockId

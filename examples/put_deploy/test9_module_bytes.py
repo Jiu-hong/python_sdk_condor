@@ -7,7 +7,8 @@ chain_name = "integration-test"
 header = DeployHeader(
     account, chain_name)
 
-f = open("/Users/jh/mywork/python_sdk_condor/wasm")
+
+f = open("/Users/jh/mywork/python_sdk_condor/work/wasm", "r")
 module_bytes = f.read()
 
 runtime_args = {"arg1": CLU256(123), "arg2": CLString("hello")}
@@ -17,8 +18,9 @@ session_module_bytes = SessionModuleBytes(
 
 
 payment = SessionPayment(2500000000)
-deploy = Deploy(header, payment, session_module_bytes, [
-                ("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem", KeyAlgorithm.ED25519)])
+keys = [("/Users/jh/mywork/python_sdk_condor/work/secret_key.pem",
+         KeyAlgorithm.ED25519)]
+deploy = Deploy(header, payment, session_module_bytes, keys)
 
 
 url = "http://node.integration.casper.network:7777/rpc"

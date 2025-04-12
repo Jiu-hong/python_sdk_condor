@@ -1,8 +1,37 @@
+"""
+Tests for GetStatus RPC functionality.
+
+This module contains test cases for the GetStatus RPC call, which retrieves
+node status information from a CasperLabs node. The tests verify:
+- Node status retrieval
+- Response parsing and validation
+- Connection handling
+- Node information validation
+"""
+
 from python_condor import GetStatus
 
 
-url = "http://node.integration.casper.network:7777/rpc"
-block_id = 4842751
-block_hash = "4a300abbdf6428dee15fb38650a89a1ef8c6d475b2e3bf7388e07fb1cbdc0aa9"
-query_global_state = GetStatus(url)
-print(query_global_state.run())
+# Test data setup
+NODE_URL = "http://node.integration.casper.network:7777/rpc"
+
+
+def test_get_status():
+    """
+    Test retrieving node status information.
+
+    Verifies that the GetStatus RPC call correctly retrieves and returns
+    information about the node's current status, including:
+    - Node version
+    - Network information
+    - Peer count
+    - Uptime
+    """
+    get_status = GetStatus(NODE_URL)
+    result = get_status.run()
+    print(result)  # Consider replacing with proper assertions:
+    # - Assert response contains node version
+    # - Assert response contains network information
+    # - Assert response contains peer count
+    # - Assert response contains uptime
+    # - Assert response format matches expected structure

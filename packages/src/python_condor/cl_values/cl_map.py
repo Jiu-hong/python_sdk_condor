@@ -34,7 +34,14 @@ class CLMap(CLValue):
             raise ValueError(
                 "it should be a dict without specifying type or empty dict sepcifying type")
         # check type if consistent
-        if len(data) != 0:
+        if len(data) == 0:
+            if not isinstance(inner_type, dict):
+                raise ValueError("the type for clmap should be dict")
+            for key, value in inner_type.items():
+                if not isinstance(key, CLValue) or not isinstance(value, CLValue):
+                    raise TypeError(
+                        f"The inner key and value should be CLValue")
+        else:
             for key, value in data.items():
                 if not isinstance(key, CLValue) or not isinstance(value, CLValue):
                     raise TypeError(
@@ -67,6 +74,7 @@ class CLMap(CLValue):
             inner_tuple = [CLTuple2(x) for x in self.data.items()]
             return CLList(inner_tuple)
         else:
+            # empty dict
             return CLList([], self.inner_type)
 
     def serialize(self) -> bytes:

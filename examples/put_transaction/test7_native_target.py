@@ -1,4 +1,4 @@
-from python_condor import CLU512, CLPublicKey, KeyAlgorithm, PutTransction, NativeBuilder
+from python_condor import CLU512, CLPublicKey, KeyAlgorithm, PutTransaction, NativeBuilder
 
 initiatorAddr = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
 chainname = "integration-test"
@@ -13,8 +13,8 @@ transaction_json = builder.runtime_args(args). \
     chainname(chainname). \
     entry_point("Transfer"). \
     from_publickey(initiatorAddr). \
-    payment(50000000).build()
+    payment(2500000000).build()
 
 
-transaction_result = PutTransction(url, transaction_json).run()
+transaction_result = PutTransaction(url, transaction_json).run()
 print(transaction_result)

@@ -15,7 +15,7 @@ from ..constants import RpcMethod
 RPCMETHOD = RpcMethod()
 
 
-class GetTransction:
+class GetTransaction:
     """Class for handling the info_get_transaction RPC call.
 
     This class allows retrieving transaction information from the Casper network

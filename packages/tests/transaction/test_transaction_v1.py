@@ -45,7 +45,7 @@ def create_test_transaction() -> TransactionV1:
             CLURef(
                 "uref-fb6d7dd568bb45bd7433498c37fabf0883f8e5700c08a6541530d3425f66f17f-007")
         )),
-        "arg2": CLOption(None, CLString(NoneHolder()))
+        "arg2": CLOption(CLString(NoneHolder()))
     }
 
     # Configure transaction components

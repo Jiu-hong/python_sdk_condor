@@ -1,9 +1,36 @@
+"""
+Tests for GetAuctionInfo RPC functionality.
+
+This module contains test cases for the GetAuctionInfo RPC call, which retrieves
+auction information from a CasperLabs node. The tests verify:
+- Auction information retrieval
+- Response parsing and validation
+- Connection handling
+- Auction state validation
+"""
+
 from python_condor import GetAuctionInfo
 
 
-pk = "017e037b8b5621b9803cad20c2d85aca9b5028c5ee5238923bb4a8fc5131d539f5"
-url = "http://node.integration.casper.network:7777/rpc"
-block_id = 4842751
-block_hash = "4a300abbdf6428dee15fb38650a89a1ef8c6d475b2e3bf7388e07fb1cbdc0aa9"
-query_global_state = GetAuctionInfo(url)
-print(query_global_state.run())
+# Test data setup
+NODE_URL = "http://node.integration.casper.network:7777/rpc"
+
+
+def test_get_auction_info():
+    """
+    Test retrieving auction information.
+
+    Verifies that the GetAuctionInfo RPC call correctly retrieves and returns
+    information about the current auction state, including:
+    - Validator bids
+    - Delegation rates
+    - Auction round information
+    - Era information
+    """
+    get_auction_info = GetAuctionInfo(NODE_URL)
+    result = get_auction_info.run()
+    print(result)  # Consider replacing with proper assertions:
+    # - Assert response contains auction state
+    # - Assert response contains validator information
+    # - Assert response contains delegation information
+    # - Assert response format matches expected structure

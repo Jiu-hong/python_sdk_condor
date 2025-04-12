@@ -31,7 +31,6 @@ MAP_DATA = {
 
 
 VALID_MAP = CLMap(MAP_DATA)
-EMPTY_MAP = CLMap({}, CLOption(None, CLU32(NoneHolder())))
 
 # Expected values for assertions
 EXPECTED_SERIALIZED = "040000000101040000004a696c6c0201040000004a61636b0301030000004a696d0401040000004a616e65"
@@ -59,12 +58,23 @@ REGULAR_EXPECTED = {
     'json': EXPECTED_JSON,
 }
 
+EMPTY_MAP = CLMap(
+    {}, {CLOption(CLU32(NoneHolder())): CLString(NoneHolder())})
+
 # Expected values for empty map
 EMPTY_EXPECTED = {
     'serialized': "00000000",
-    'cl_value': "0400000000000000110d04",
+    'cl_value': "0400000000000000110d040a",
     'value': [],
-    'json': {'Map': {'Option': 'U32'}},
+}
+
+EMPTY_EXPECTED_JSON = {
+    "Map": {
+        "key": {
+            "Option": "U32"
+        },
+        "value": "String"
+    }
 }
 
 
@@ -115,7 +125,7 @@ def test_empty_map_cl_value():
 def test_empty_map_to_json():
     """Test JSON representation of empty map value."""
     result = EMPTY_MAP.to_json()
-    assert result == EMPTY_EXPECTED['json']
+    assert result == EMPTY_EXPECTED_JSON
 
 #
 

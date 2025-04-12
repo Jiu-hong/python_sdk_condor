@@ -1,7 +1,7 @@
 import json
 
 from result import Err, Ok
-from python_condor import CLOption, EntityTarget, NoneHolder, TransactionScheduling, PricingMode,  TransactionEntryPoint, TransactionV1Payload, CLTuple3, CLString, CLBool, CLURef, TransactionV1, KeyAlgorithm, PutTransction
+from python_condor import CLOption, EntityTarget, NoneHolder, TransactionScheduling, PricingMode,  TransactionEntryPoint, TransactionV1Payload, CLTuple3, CLString, CLBool, CLURef, TransactionV1, KeyAlgorithm, PutTransaction
 from python_condor.cl_values.cl_key import CLKey
 from python_condor.cl_values.cl_number import CLU32, CLU64
 from python_condor.cl_values.cl_result import CLResult
@@ -46,5 +46,5 @@ url = "http://node.integration.casper.network:7777/rpc"
 
 my_json = transaction.to_json()
 # print(json.dumps(my_json))
-transaction_result = PutTransction(url, my_json).run()
+transaction_result = PutTransaction(url, my_json).run()
 print(transaction_result)

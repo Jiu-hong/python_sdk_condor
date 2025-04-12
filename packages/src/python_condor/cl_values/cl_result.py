@@ -35,12 +35,6 @@ def check_non_holder(data) -> bool:
                 return check_non_holder(data.data)
 
 
-def check_ok_error_value(data) -> bool:
-    if isinstance(data, CLValue):
-        return True
-    return False
-
-
 class CLResult(CLValue):
     """Class representing a CL result type.
 
@@ -65,35 +59,35 @@ class CLResult(CLValue):
         # data[0]:ok value
         # data[1]:err value
         # data[2]: true or false
-        if len(data) < 3:
-            raise ValueError(
-                "the data should contain ok value, err value and bool flag")
+        if not (check_non_holder(data[1]) and check_non_holder(data[0])):
+            if len(data) < 3:
+                raise ValueError(
+                    "the data should contain ok value, err value and bool flag")
 
-        if not isinstance(data[2], bool):
-            raise TypeError("the third field should be bool flag")
+            if not isinstance(data[2], bool):
+                raise TypeError("the third field should be bool flag")
 
-        # check ok value:
+            # check ok value:
 
-        if data[2] == True:
-            # ok value.
-            if not isinstance(data[0], Ok):
-                raise ValueError("Ok value should be Ok(...)")
-            if not check_ok_error_value(data[0].ok_value):
-                print("check_ok_error_value(data[0]):",
-                      check_ok_error_value(data[0].ok_value)), data[0]
-                raise ValueError("ok value should be Ok(clvalue)")
-            # data[0] shouldn't be non_holder. err value data[1] should be non_holder
-            if not check_non_holder(data[1]) or check_non_holder(data[0]):
-                raise ValueError("ok value construct incorrect")
-        else:
-            # err value
-            if not isinstance(data[1], Err):
-                raise ValueError("Err value should be Err(...)")
-            if not check_ok_error_value(data[1].err_value):
-                raise ValueError("err value should be Err(clvalue)")
-            # err value
-            if not check_non_holder(data[0]) or check_non_holder(data[1]):
-                raise ValueError("error value construct incorrect")
+            if data[2] == True:
+                # ok value.
+                if not isinstance(data[0], Ok):
+                    raise ValueError("Ok value should be Ok(...)")
+                if not isinstance(data[0].ok_value, CLValue):
+
+                    raise ValueError("ok value should be Ok(clvalue)")
+                # data[0] shouldn't be non_holder. err value data[1] should be non_holder
+                if not check_non_holder(data[1]) or check_non_holder(data[0]):
+                    raise ValueError("ok value construct incorrect")
+            else:
+                # err value
+                if not isinstance(data[1], Err):
+                    raise ValueError("Err value should be Err(...)")
+                if not isinstance(data[1].err_value, CLValue):
+                    raise ValueError("err value should be Err(clvalue)")
+                # err value
+                if not check_non_holder(data[0]) or check_non_holder(data[1]):
+                    raise ValueError("error value construct incorrect")
 
         self.data = data
 

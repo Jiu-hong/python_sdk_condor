@@ -13,22 +13,25 @@ mappings in the Casper network. The tests verify:
 import pytest
 
 from python_condor import (
-    CLList,
     CLMap,
     CLOption,
     CLString,
     CLU32,
-    CLU8,
+    CLU8, NoneHolder
 )
 
 # Test data for CLMap
+
 MAP_DATA = {
     CLU8(3): CLOption(CLString("Jim")),
     CLU8(2): CLOption(CLString("Jack")),
     CLU8(4): CLOption(CLString("Jane")),
     CLU8(1): CLOption(CLString("Jill")),
 }
+
+
 VALID_MAP = CLMap(MAP_DATA)
+EMPTY_MAP = CLMap({}, CLOption(None, CLU32(NoneHolder())))
 
 # Expected values for assertions
 EXPECTED_SERIALIZED = "040000000101040000004a696c6c0201040000004a61636b0301030000004a696d0401040000004a616e65"
@@ -46,6 +49,22 @@ EXPECTED_JSON = {
             "Option": "String"
         }
     }
+}
+
+# Expected values for regular map
+REGULAR_EXPECTED = {
+    'serialized': EXPECTED_SERIALIZED,
+    'cl_value': EXPECTED_CL_VALUE,
+    'value': EXPECTED_VALUE,
+    'json': EXPECTED_JSON,
+}
+
+# Expected values for empty map
+EMPTY_EXPECTED = {
+    'serialized': "00000000",
+    'cl_value': "0400000000000000110d04",
+    'value': [],
+    'json': {'Map': {'Option': 'U32'}},
 }
 
 
@@ -73,13 +92,62 @@ def test_map_to_json():
     assert result == EXPECTED_JSON
 
 
-def test_invalid_list_type():
-    """Test validation of list type input."""
-    with pytest.raises(TypeError, match="Invalid type of input: <class 'python_condor.cl_values.cl_string.CLString'> for CLList. Allowed value is <class 'list'>"):
-        _ = CLList(CLString("helloworld"))
+# === Empty map Tests ===
+
+def test_empty_map_serialization():
+    """Test serialization of empty map value."""
+    result = EMPTY_MAP.serialize().hex()
+    assert result == EMPTY_EXPECTED['serialized']
 
 
-def test_inconsistent_list_elements():
-    """Test validation of list element type consistency."""
-    with pytest.raises(TypeError, match="types aren't consistent in the elements"):
-        _ = CLList([CLString("helloworld"), CLU32(123)])
+def test_empty_map_value():
+    """Test value retrieval of empty map value."""
+    result = EMPTY_MAP.value()
+    assert result == EMPTY_EXPECTED['value']
+
+
+def test_empty_map_cl_value():
+    """Test CL value representation of empty map value."""
+    result = EMPTY_MAP.cl_value()
+    assert result == EMPTY_EXPECTED['cl_value']
+
+
+def test_empty_map_to_json():
+    """Test JSON representation of empty map value."""
+    result = EMPTY_MAP.to_json()
+    assert result == EMPTY_EXPECTED['json']
+
+#
+
+
+def test_invalid_map_type():
+    """Test validation of map type input."""
+    with pytest.raises(TypeError, match="inner type should be map"):
+        _ = CLMap(CLString("helloworld"))
+
+
+def test_inconsistent_map_key_types():
+    """Test validation of map key type consistency."""
+    with pytest.raises(TypeError, match="key types aren't consistent in the elements"):
+        _ = CLMap({
+            CLU32(1): CLOption(CLString("hello")),
+            CLU8(2): CLOption(CLString("123"))
+        })
+
+
+def test_inconsistent_map_value_types():
+    """Test validation of map value type consistency."""
+    with pytest.raises(TypeError, match="value types aren't consistent in the elements"):
+        _ = CLMap({
+            CLU8(1): CLOption(CLString("hello")),
+            CLU8(2): CLOption(CLU32(123))
+        })
+
+
+def test_non_clvalue_map_key_value_types():
+    """Test validation of map value type clvalue."""
+    with pytest.raises(TypeError, match="The inner key and value should be CLValue"):
+        _ = CLMap({
+            CLU8(1): None,
+            CLU8(2): CLOption(CLU32(123))
+        })

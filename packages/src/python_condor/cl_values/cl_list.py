@@ -8,6 +8,7 @@ from typing import List, Any
 
 from .cl_basetype import CLValue
 from ..constants import TAG
+from ..utils import get_cl_tags
 
 
 class CLList(CLValue):
@@ -19,7 +20,7 @@ class CLList(CLValue):
 
     tag = TAG.CLList.value
 
-    def __init__(self, data: List[Any]) -> None:
+    def __init__(self, data: List[Any], inner_type=None) -> None:
         """Initialize a CL list.
 
         Args:
@@ -32,12 +33,25 @@ class CLList(CLValue):
         if not isinstance(data, list):
             raise TypeError(
                 f"Invalid type of input: {type(data)} for CLList. Allowed value is {list}")
-        base_type = type(data[0])
+
+        if (inner_type != None and len(data) != 0) or (inner_type == None and len(data) == 0):
+            print("inner_type:", inner_type)
+            print("data:", data)
+            raise ValueError(
+                "it should be a list without specifying type or empty list sepcifying type")
         # check type if consistent
-        for element in data[1:]:
-            if type(element) != base_type:
-                raise TypeError(f"types aren't consistent in the elements")
+        if len(data) != 0:
+            for x in data:
+                if not isinstance(x, CLValue):
+                    raise TypeError(f"The inner type should be CLValue")
+
+            # base_type = type(data[0])
+            base_type = get_cl_tags(data[0])
+            for element in data[1:]:
+                if get_cl_tags(element) != base_type:
+                    raise TypeError(f"types aren't consistent in the elements")
         super().__init__(data)
+        self.inner_type = inner_type
 
     def serialize(self) -> bytes:
         """Serialize this CL list to bytes.
@@ -64,5 +78,8 @@ class CLList(CLValue):
         Returns:
             A new CLList containing the sorted elements.
         """
-        self.data.sort(key=lambda x: x.serialize())
-        return CLList(self.data)
+        if len(self.data) > 0:
+            self.data.sort(key=lambda x: x.serialize())
+            return CLList(self.data)
+        else:
+            return CLList([], self.inner_type)

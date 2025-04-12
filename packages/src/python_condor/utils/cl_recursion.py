@@ -4,7 +4,7 @@ This module provides functions for recursively processing CL values in the Caspe
 including extracting tags, converting to JSON format, and handling nested data structures.
 """
 
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List,  Tuple, Union
 
 from result import Err, Ok
 from ..constants import CLTypeName, TAG
@@ -43,11 +43,18 @@ def get_cl_tags(self) -> bytes:
         return tag + b''.join([get_cl_tags(x) for x in self.data])
     elif isinstance(self.data, list):
         # get all the list elements' tag
-        return tag + get_cl_tags(self.data[0])
+        if len(self.data) > 0:
+            return tag + get_cl_tags(self.data[0])
+        else:
+            return tag + get_cl_tags(self.inner_type)
     elif isinstance(self.data, dict):
-        # get first element in dict
-        tuple_value = list(self.data.items())[0]  # tuple
-        return tag + b''.join([get_cl_tags(x) for x in tuple_value])
+        if len(self.data) > 0:
+            # get first element in dict
+            tuple_value = list(self.data.items())[0]  # tuple
+            return tag + b''.join([get_cl_tags(x) for x in tuple_value])
+        else:
+            return tag + get_cl_tags(self.inner_type)
+
     else:
         return tag
 
@@ -78,11 +85,19 @@ def get_deep_json(self) -> Dict[str, Any]:
                                 'err': get_deep_json(self.data[1].err_value)}}
         return {json_type: [get_deep_json(x) for x in self.data]}
     elif isinstance(self.data, list):
-        return {json_type: get_deep_json(self.data[0])}
+        if len(self.data) > 0:
+            return {json_type: get_deep_json(self.data[0])}
+        else:
+            return {json_type: get_deep_json(self.inner_type)}
+
     elif isinstance(self.data, dict):
-        tuple_value = list(self.data.items())[0]  # tuple
-        return {json_type: {'key': get_deep_json(tuple_value[0]),
-                            'value': get_deep_json(tuple_value[1])}}
+        if len(self.data) > 0:
+            tuple_value = list(self.data.items())[0]  # tuple
+            return {json_type: {'key': get_deep_json(tuple_value[0]),
+                                'value': get_deep_json(tuple_value[1])}}
+        else:
+            return {json_type: get_deep_json(self.inner_type)}
+
     else:
         return json_type
 

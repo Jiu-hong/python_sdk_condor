@@ -4,10 +4,30 @@ This module provides the CLOption type for handling optional values in the Caspe
 An option can either contain a value (Some) or be empty (None).
 """
 
-from typing import Optional, Union
+from typing import Union
+
 
 from .cl_basetype import CLValue
-from ..constants import TAG
+from ..constants import TAG, NoneHolder
+
+
+def check_non_holder(data) -> bool:
+
+    if isinstance(data, int) or isinstance(data, str):
+        return False
+    else:
+        if isinstance(data, NoneHolder):
+            return True
+        else:
+            if isinstance(data, tuple | list):
+                for x in data:
+                    return check_non_holder(x)
+            elif isinstance(data, dict):
+                for k, v in data.items():
+                    for x in (k, v):
+                        return check_non_holder(x)
+            else:
+                return check_non_holder(data.data)
 
 
 class CLOption(CLValue):
@@ -37,11 +57,14 @@ class CLOption(CLValue):
                     "Input type should be CLValue for CLOption")
             self.flag = 1  # 1 - some, 0 - none
             self.data = data[0]
-        # None
+            # check if there is any NoneHolder() in some value
+            if check_non_holder(data) == True:
+                raise TypeError("Some type shouldn't included NoneHolder")
+            # None
         elif len(data) == 2:
-            if data[0] is not None:
+            if data[0] is not None and not check_non_holder(data[1]):
                 raise TypeError(
-                    "Input type should be None or CLValue for CLOption")
+                    "Input type should be None with NoneHolder or CLValue for CLOption")
             self.flag = 0
             self.data = data
 

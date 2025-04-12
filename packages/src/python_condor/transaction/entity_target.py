@@ -1,58 +1,117 @@
+"""
+Entity Target module for handling CasperLabs entity targets.
+
+This module provides functionality for creating and managing entity targets in transactions.
+Entity targets are used for:
+- Targeting contracts by their hash
+- Managing runtime environment configuration
+- Supporting stored contract references
+
+The module supports:
+- Contract hash validation (64-character hex string)
+- Runtime configuration
+- Serialization to bytes and JSON
+"""
+
 import re
+from typing import Dict, Any
 
 from ..constants import JsonName
 from .transaction_runtime import TransactionRuntime
 from ..utils import CalltableSerialization
 
 
+# Constants for entity target configuration
 JSONNAME = JsonName()
 
 
 class EntityTarget:
+    """
+    Represents an entity target in a CasperLabs transaction.
+
+    An entity target is used to reference a contract by its hash.
+    It supports:
+    - Contract hash specification (64-character hex string)
+    - Runtime environment configuration
+    - Stored contract references
+
+    Attributes:
+        contract_hash (str): The hash of the contract in hex format
+        runtime (str): The runtime environment to use
+    """
+
     def __init__(self, runtime: str, contract_hash: str):
+        """
+        Initialize an entity target.
+
+        Args:
+            runtime (str): The runtime environment to use
+            contract_hash (str): The hash of the contract in hex format
+
+        Raises:
+            ValueError: If the contract hash is not a valid 64-character hex string
+        """
+        # Validate contract hash format
         regx = "([0-9a-z]{64})"
         pattern = re.compile(regx)
         result = pattern.fullmatch(contract_hash)
         if not isinstance(result, re.Match):
             raise ValueError(
                 "contract-hash should only contain alphabet and number(64 length)")
+
         self.contract_hash = contract_hash
         self.runtime = runtime
 
-    def to_bytes(self):
-        selftable = CalltableSerialization()
-        selftable.add_field(0, int(0).to_bytes()).\
-            add_field(1, bytes.fromhex(self.contract_hash))
+    def to_bytes(self) -> bytes:
+        """
+        Serialize the entity target to bytes.
 
+        The serialization includes:
+        - Target type (1 for stored)
+        - Contract hash
+        - Runtime configuration
+
+        Returns:
+            bytes: The serialized entity target
+        """
+        # Create inner table for entity target
+        selftable = CalltableSerialization()
+        selftable.add_field(0, int(0).to_bytes()) \
+            .add_field(1, bytes.fromhex(self.contract_hash))
+
+        # Create outer table for stored target
         table = CalltableSerialization()
-        table.add_field(0, int(1).to_bytes()).add_field(
-            1, selftable.to_bytes()).add_field(
-            2, TransactionRuntime(self.runtime).to_bytes())
+        table.add_field(0, int(1).to_bytes()) \
+            .add_field(1, selftable.to_bytes()) \
+            .add_field(2, TransactionRuntime(self.runtime).to_bytes())
         return table.to_bytes()
 
-    def to_json(self):
-        result = {}
-        result_2 = {}
-        result_3 = {}
-        result_4 = {}
-        result_4[JSONNAME.BYHASH] = self.contract_hash
-        result_3[JSONNAME.ID] = result_4
-        result_3[JSONNAME.RUNTIME] = self.runtime
-        result_2[JSONNAME.STORED] = result_3
-        result[JSONNAME.TARGET] = result_2
-        return result
+    def to_json(self) -> Dict[str, Any]:
+        """
+        Convert the entity target to a JSON representation.
 
+        The JSON structure follows the format:
+        {
+            "target": {
+                "Stored": {
+                    "id": {
+                        "ByHash": "<contract_hash>"
+                    },
+                    "runtime": "<runtime>"
+                }
+            }
+        }
 
-# By contract hash
-# f3469257d7c361b80def54eda2a7ca794e9280229287bd9c997e1980485648d8
-# "target": {
-#     "Stored": {
-#         "id": {
-#             "ByHash": "7af6303b6e7d8f0fc0b5e9510034d9c818b30c7db43b2ef6e5f595357270451e"
-#         },
-#         "runtime": "VmCasperV1"
-#     }
-# }
-# a = EntityTarget(
-#     "7af6303b6e7d8f0fc0b5e9510034d9c818b30c7db43b2ef6e5f595357270451e")
-# print(a.to_json())
+        Returns:
+            Dict[str, Any]: The JSON representation of the entity target
+        """
+        return {
+            JSONNAME.TARGET: {
+                JSONNAME.STORED: {
+                    JSONNAME.ID: {
+                        JSONNAME.BYHASH: self.contract_hash
+                    },
+                    JSONNAME.RUNTIME: self.runtime
+                }
+            }
+        }

@@ -37,7 +37,7 @@ def check_byte_code_key_format(data: str) -> NoReturn:
     elif rest_hex.startswith(PREFIX.EMPTY):
         bytescode_hex = ""
     else:
-        raise ValueError("invalid byte-code-xxx")
+        raise ValueError("invalid prefix byte-code-xxx")
 
     try:
         bytes.fromhex(bytescode_hex)

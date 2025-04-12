@@ -1,35 +1,65 @@
+"""Tests for CL (CasperLabs) dictionary key functionality.
+
+This module contains test cases for the CLKey class when handling dictionary keys,
+which represent dictionary hashes in the Casper network. It tests:
+- Serialization
+- Value retrieval
+- CL value representation
+- JSON representation
+- Format validation
+"""
+
 import pytest
 from python_condor import CLKey
 
+# === Test Data ===
+# Valid dictionary key for testing
+VALID_DICTIONARY_KEY = "dictionary-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a"
 
-# ===== CLKey - dictionary =====
+# Invalid dictionary key for testing validation
+INVALID_DICTIONARY_KEY = "dictionary-1234"
 
-clkey_dictionary = CLKey(
-    "dictionary-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a")
+# === Expected Values ===
+EXPECTED = {
+    "serialized": "092a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a",
+    "cl_value": "21000000092a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a0b",
+    "json": "Key"
+}
 
-
-def test_clkey_dictionary_serialize():
-    result = clkey_dictionary.serialize().hex()
-    assert result == "092a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a"
-
-
-def test_clkey_dictionary_string_value():
-    result = clkey_dictionary.value()
-    assert result == "dictionary-2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a"
-
-
-def test_clkey_dictionary_cl_value():
-    result = clkey_dictionary.cl_value()
-    assert result == "21000000092a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a0b"
+# === Valid Dictionary Key Tests ===
 
 
-def test_clkey_dictionary_to_json():
-    result = clkey_dictionary.to_json()
-    assert result == "Key"
+def test_dictionary_key_serialization():
+    """Test serialization of dictionary key."""
+    dictionary_key = CLKey(VALID_DICTIONARY_KEY)
+    result = dictionary_key.serialize().hex()
+    assert result == EXPECTED["serialized"]
 
 
-# === check invalid inner type
-def test_clkey_dictionary_invalid_inner_value():
-    with pytest.raises(ValueError, match="value should be 64 length only containing alphabet and number"):
-        _ = CLKey(
-            "dictionary-1234")
+def test_dictionary_key_value():
+    """Test value retrieval of dictionary key."""
+    dictionary_key = CLKey(VALID_DICTIONARY_KEY)
+    result = dictionary_key.value()
+    assert result == VALID_DICTIONARY_KEY
+
+
+def test_dictionary_key_cl_value():
+    """Test CL value representation of dictionary key."""
+    dictionary_key = CLKey(VALID_DICTIONARY_KEY)
+    result = dictionary_key.cl_value()
+    assert result == EXPECTED["cl_value"]
+
+
+def test_dictionary_key_to_json():
+    """Test JSON representation of dictionary key."""
+    dictionary_key = CLKey(VALID_DICTIONARY_KEY)
+    result = dictionary_key.to_json()
+    assert result == EXPECTED["json"]
+
+
+# === Invalid Dictionary Key Tests ===
+def test_invalid_dictionary_key_format():
+    """Test dictionary key format validation."""
+    error_msg = "value should be 64 length only containing alphabet and number"
+    with pytest.raises(ValueError, match=error_msg):
+        _ = CLKey(INVALID_DICTIONARY_KEY)

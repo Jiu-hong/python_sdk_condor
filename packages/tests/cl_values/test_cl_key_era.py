@@ -12,21 +12,28 @@ which represent specific eras in the Casper network. It tests:
 import pytest
 from python_condor import CLKey
 
-# Test data
+# === Test Data ===
+# Valid era key for testing
 VALID_ERA_KEY = "era-42"
+
+# Invalid era key for testing validation
 INVALID_ERA_KEY = "era-h12"
 
+# === Expected Values ===
+EXPECTED = {
+    "serialized": "052a00000000000000",
+    "cl_value": "09000000052a000000000000000b",
+    "json": "Key"
+}
 
-# ===== CLKey - era =====
-clkey_era = CLKey(
-    "era-42")
+# === Valid Era Key Tests ===
 
 
 def test_era_key_serialization():
     """Test serialization of era key."""
     era_key = CLKey(VALID_ERA_KEY)
     result = era_key.serialize().hex()
-    assert result == "052a00000000000000"
+    assert result == EXPECTED["serialized"]
 
 
 def test_era_key_value():
@@ -40,18 +47,19 @@ def test_era_key_cl_value():
     """Test CL value representation of era key."""
     era_key = CLKey(VALID_ERA_KEY)
     result = era_key.cl_value()
-    assert result == "09000000052a000000000000000b"
+    assert result == EXPECTED["cl_value"]
 
 
 def test_era_key_to_json():
     """Test JSON representation of era key."""
     era_key = CLKey(VALID_ERA_KEY)
     result = era_key.to_json()
-    assert result == "Key"
+    assert result == EXPECTED["json"]
 
 
-# === check invalid inner type
+# === Invalid Era Key Tests ===
 def test_invalid_era_key_format():
     """Test era key format validation."""
-    with pytest.raises(ValueError, match="era value should be decimal int"):
+    error_msg = "era value should be decimal int"
+    with pytest.raises(ValueError, match=error_msg):
         _ = CLKey(INVALID_ERA_KEY)

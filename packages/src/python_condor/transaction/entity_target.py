@@ -1,5 +1,5 @@
 """
-Entity Target module for handling CasperLabs entity targets.
+Entity Target module for handling Casper entity targets.
 
 This module provides functionality for creating and managing entity targets in transactions.
 Entity targets are used for:
@@ -27,7 +27,7 @@ JSONNAME = JsonName()
 
 class EntityTarget:
     """
-    Represents an entity target in a CasperLabs transaction.
+    Represents an entity target in a Casper transaction.
 
     An entity target is used to reference a contract by its hash.
     It supports:

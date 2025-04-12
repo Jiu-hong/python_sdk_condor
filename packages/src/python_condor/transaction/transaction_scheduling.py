@@ -1,5 +1,5 @@
 """
-Transaction Scheduling module for handling CasperLabs transaction scheduling.
+Transaction Scheduling module for handling Casper transaction scheduling.
 
 This module provides functionality for managing how transactions are scheduled in the Casper network.
 Currently, it supports:

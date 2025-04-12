@@ -1,5 +1,5 @@
 """
-Transaction Entry Point module for handling CasperLabs transaction entry points.
+Transaction Entry Point module for handling Casper transaction entry points.
 
 This module provides functionality for creating and managing transaction entry points in the Casper network.
 It supports various types of entry points:

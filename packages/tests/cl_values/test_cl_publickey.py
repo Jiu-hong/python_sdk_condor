@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) public key functionality.
+"""Tests for CL (Casper) public key functionality.
 
 This module contains test cases for the CLPublicKey class, which handles public keys
 in the Casper network. It tests both ED25519 and SECP256K1 public key formats,

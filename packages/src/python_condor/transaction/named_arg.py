@@ -1,5 +1,5 @@
 """
-Named Argument module for handling CasperLabs named arguments.
+Named Argument module for handling Casper named arguments.
 
 This module provides functionality for managing named arguments in transactions.
 Named arguments are used for:
@@ -20,7 +20,7 @@ from ..utils import serialize_string
 
 class NamedArg:
     """
-    Represents a named argument in a CasperLabs transaction.
+    Represents a named argument in a Casper transaction.
 
     A named argument pairs a name with a CL value, allowing for structured
     parameter passing in transactions.

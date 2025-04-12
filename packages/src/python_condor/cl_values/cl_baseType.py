@@ -1,6 +1,6 @@
 """CL base type module.
 
-This module provides base classes for CL (CasperLabs) value types used in the Casper network.
+This module provides base classes for CL (Casper) value types used in the Casper network.
 These base classes define the common interface for all CL value types.
 """
 

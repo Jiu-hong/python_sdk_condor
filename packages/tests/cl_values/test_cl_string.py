@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) string functionality.
+"""Tests for CL (Casper) string functionality.
 
 This module contains test cases for the CLString class, which represents string
 values in the Casper network. The tests cover three scenarios:

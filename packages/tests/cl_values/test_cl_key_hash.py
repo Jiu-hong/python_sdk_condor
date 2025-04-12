@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) hash key functionality.
+"""Tests for CL (Casper) hash key functionality.
 
 This module contains test cases for the CLKey class when handling hash keys,
 which represent generic hashes in the Casper network. It tests:

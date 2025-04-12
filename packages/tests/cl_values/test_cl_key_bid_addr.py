@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) bid address key functionality.
+"""Tests for CL (Casper) bid address key functionality.
 
 This module contains test cases for the CLKey class when handling bid address keys,
 which represent bid addresses in the Casper network. It tests two variants:

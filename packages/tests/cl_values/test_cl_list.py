@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) list functionality.
+"""Tests for CL (Casper) list functionality.
 
 This module contains test cases for the CLList class, which represents lists of
 CL values in the Casper network. The tests cover four scenarios:

@@ -1,8 +1,8 @@
 """
-Transaction module for the CasperLabs Python SDK.
+Transaction module for the Casper Python SDK.
 
 This module provides a comprehensive set of classes for creating and managing
-transactions on the CasperLabs blockchain. It includes:
+transactions on the Casper blockchain. It includes:
 
 Core Transaction Components:
 - TransactionV1: Base transaction class

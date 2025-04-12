@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) unbond key functionality.
+"""Tests for CL (Casper) unbond key functionality.
 
 This module contains test cases for the CLKey class when handling unbond keys,
 which represent unbonding hashes in the Casper network. It tests:

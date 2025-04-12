@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) URef key functionality.
+"""Tests for CL (Casper) URef key functionality.
 
 This module contains test cases for the CLKey class when handling URef (Unforgeable Reference) keys,
 which represent unique references in the Casper network. It tests:

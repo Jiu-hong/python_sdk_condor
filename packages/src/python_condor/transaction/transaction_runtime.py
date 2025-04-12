@@ -1,9 +1,9 @@
 """
-Transaction Runtime module for handling CasperLabs runtime environments.
+Transaction Runtime module for handling Casper runtime environments.
 
 This module provides functionality for managing runtime environments in transactions.
 Currently, it supports:
-- Casper VM V1: The standard runtime environment for CasperLabs transactions
+- Casper VM V1: The standard runtime environment for Casper transactions
 
 The module supports:
 - Runtime environment validation
@@ -27,7 +27,7 @@ VALID_ALLOWED_RUNTIME = (CONST.VMCASPERV1)
 
 class TransactionRuntime:
     """
-    Represents a runtime environment in a CasperLabs transaction.
+    Represents a runtime environment in a Casper transaction.
 
     The runtime environment determines how the transaction code will be executed.
     Currently, only Casper VM V1 is supported.

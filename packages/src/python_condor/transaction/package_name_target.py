@@ -1,5 +1,5 @@
 """
-Package Name Target module for handling CasperLabs package name targets.
+Package Name Target module for handling Casper package name targets.
 
 This module provides functionality for creating and managing package name targets in transactions.
 Package name targets are used for:
@@ -27,7 +27,7 @@ JSONNAME = JsonName()
 
 class PackageNameTarget:
     """
-    Represents a package name target in a CasperLabs transaction.
+    Represents a package name target in a Casper transaction.
 
     A package name target is used to reference a contract by its package name.
     It supports:

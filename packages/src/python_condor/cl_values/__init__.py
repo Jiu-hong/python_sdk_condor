@@ -1,4 +1,4 @@
-"""CL (CasperLabs) values module.
+"""CL (Casper) values module.
 
 This module provides implementations of various CL value types used in the Casper network.
 These types include primitive types (numbers, strings), composite types (lists, maps),

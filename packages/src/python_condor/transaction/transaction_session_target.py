@@ -1,5 +1,5 @@
 """
-Transaction Session Target module for handling CasperLabs session targets.
+Transaction Session Target module for handling Casper session targets.
 
 This module provides functionality for creating and managing session targets in transactions.
 Session targets are used for:
@@ -28,7 +28,7 @@ RUNTIME = RuntimeKind()
 
 class TransactionSessionTarget:
     """
-    Represents a session target in a CasperLabs transaction.
+    Represents a session target in a Casper transaction.
 
     A session target is used for deploying or upgrading contracts, or executing session code.
     It contains the module bytecode and configuration for how it should be executed.

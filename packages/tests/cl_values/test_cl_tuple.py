@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) tuple functionality.
+"""Tests for CL (Casper) tuple functionality.
 
 This module contains test cases for the CLTuple classes, which represent fixed-length
 tuples of CL values in the Casper network. The tests cover three tuple types:

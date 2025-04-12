@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) map functionality.
+"""Tests for CL (Casper) map functionality.
 
 This module contains test cases for the CLMap class, which represents key-value
 mappings in the Casper network. The tests verify:

@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) balance key functionality.
+"""Tests for CL (Casper) balance key functionality.
 
 This module contains test cases for the CLKey class when handling balance keys,
 which represent account balance hashes in the Casper network. It tests:

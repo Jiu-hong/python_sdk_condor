@@ -1,5 +1,5 @@
 """
-Transaction Builder module for creating CasperLabs transactions.
+Transaction Builder module for creating Casper transactions.
 
 This module provides a fluent builder interface for creating different types of transactions:
 - Native transactions
@@ -42,7 +42,7 @@ ENTRYPOINT = EntryPointKind()
 
 class TransactionBuilder:
     """
-    Base class for building CasperLabs transactions.
+    Base class for building Casper transactions.
 
     This class provides the core functionality for creating transactions:
     - Setting transaction parameters

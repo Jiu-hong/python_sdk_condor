@@ -1,6 +1,6 @@
 """CL type name constants module.
 
-This module provides constants for CL (CasperLabs) type names used in the Casper network.
+This module provides constants for CL (Casper) type names used in the Casper network.
 """
 
 from .base import constant

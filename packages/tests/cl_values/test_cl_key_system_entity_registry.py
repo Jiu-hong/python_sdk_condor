@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) system entity registry key functionality.
+"""Tests for CL (Casper) system entity registry key functionality.
 
 This module contains test cases for the CLKey class when handling system entity registry keys,
 which represent system entity registry hashes in the Casper network. It tests:

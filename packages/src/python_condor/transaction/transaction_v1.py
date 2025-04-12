@@ -1,5 +1,5 @@
 """
-Transaction V1 module for handling CasperLabs version 1 transactions.
+Transaction V1 module for handling Casper version 1 transactions.
 
 This module provides functionality for creating and managing version 1 transactions in the Casper network.
 It handles:

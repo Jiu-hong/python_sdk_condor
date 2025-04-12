@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) dictionary key functionality.
+"""Tests for CL (Casper) dictionary key functionality.
 
 This module contains test cases for the CLKey class when handling dictionary keys,
 which represent dictionary hashes in the Casper network. It tests:

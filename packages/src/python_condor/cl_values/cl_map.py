@@ -1,7 +1,7 @@
 """
-CLMap module for handling CasperLabs map values.
+CLMap module for handling Casper map values.
 
-This module provides functionality for working with CasperLabs map values, including:
+This module provides functionality for working with Casper map values, including:
 - Creating and manipulating CLMap instances
 - Serializing maps to bytes
 - Converting maps to JSON representation

@@ -1,5 +1,5 @@
 """
-Payload Fields module for handling CasperLabs transaction payload fields.
+Payload Fields module for handling Casper transaction payload fields.
 
 This module provides functionality for managing transaction payload fields.
 Payload fields include:
@@ -34,7 +34,7 @@ JSONNAME = JsonName()
 
 class PayloadFields:
     """
-    Represents the fields of a CasperLabs transaction payload.
+    Represents the fields of a Casper transaction payload.
 
     A payload contains all the necessary information for executing a transaction:
     - Runtime arguments for the transaction

@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) checksum registry key functionality.
+"""Tests for CL (Casper) checksum registry key functionality.
 
 This module contains test cases for the CLKey class when handling checksum registry keys,
 which represent checksum registry hashes in the Casper network. It tests:

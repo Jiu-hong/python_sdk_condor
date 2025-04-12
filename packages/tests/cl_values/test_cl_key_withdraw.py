@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) withdraw key functionality.
+"""Tests for CL (Casper) withdraw key functionality.
 
 This module contains test cases for the CLKey class when handling withdraw keys,
 which represent withdraw hashes in the Casper network. It tests:

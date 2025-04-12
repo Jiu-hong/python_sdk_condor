@@ -1,5 +1,5 @@
 """
-Transaction Native Target module for handling CasperLabs native targets.
+Transaction Native Target module for handling Casper native targets.
 
 This module provides functionality for creating and managing native targets in transactions.
 Native targets are used for:
@@ -25,7 +25,7 @@ RUNTIME = RuntimeKind()
 
 class TransactionNativeTarget:
     """
-    Represents a native target in a CasperLabs transaction.
+    Represents a native target in a Casper transaction.
 
     A native target is used for system-level operations and built-in contract calls.
     It does not require additional configuration as it represents the default target type.

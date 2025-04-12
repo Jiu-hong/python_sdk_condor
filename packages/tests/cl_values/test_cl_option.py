@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) option functionality.
+"""Tests for CL (Casper) option functionality.
 
 This module contains test cases for the CLOption class, which represents optional
 values in the Casper network. The tests cover four main scenarios:

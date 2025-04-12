@@ -20,7 +20,7 @@ class NoneHolder:
 
 
 class TAG(Enum):
-    """Enumeration of CL (CasperLabs) type tags.
+    """Enumeration of CL (Casper) type tags.
 
     This enum defines numeric tags used to identify different types
     in the Casper network's type system.

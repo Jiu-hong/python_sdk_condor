@@ -1,5 +1,5 @@
 """
-Pricing Mode module for handling CasperLabs transaction pricing modes.
+Pricing Mode module for handling Casper transaction pricing modes.
 
 This module provides functionality for managing transaction pricing modes.
 Pricing modes control:
@@ -30,7 +30,7 @@ JSONNAME = JsonName()
 
 class PricingMode:
     """
-    Represents a pricing mode in a CasperLabs transaction.
+    Represents a pricing mode in a Casper transaction.
 
     A pricing mode determines how the transaction payment is calculated and processed.
     It includes:

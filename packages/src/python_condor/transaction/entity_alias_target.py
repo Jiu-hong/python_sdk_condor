@@ -1,5 +1,5 @@
 """
-Entity Alias Target module for handling CasperLabs entity alias targets.
+Entity Alias Target module for handling Casper entity alias targets.
 
 This module provides functionality for creating and managing entity alias targets in transactions.
 Entity alias targets are used for:
@@ -26,7 +26,7 @@ JSONNAME = JsonName()
 
 class EntityAliasTarget:
     """
-    Represents an entity alias target in a CasperLabs transaction.
+    Represents an entity alias target in a Casper transaction.
 
     An entity alias target is used to reference a contract by its name.
     It supports:

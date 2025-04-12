@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) deploy key functionality.
+"""Tests for CL (Casper) deploy key functionality.
 
 This module contains test cases for the CLKey class when handling deploy keys,
 which represent deploy hashes in the Casper network. It tests:

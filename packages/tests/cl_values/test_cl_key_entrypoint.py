@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) entry point key functionality.
+"""Tests for CL (Casper) entry point key functionality.
 
 This module contains test cases for the CLKey class when handling entry point keys,
 which represent contract entry points in the Casper network. It tests:

@@ -1,5 +1,5 @@
 """
-Package Hash Target module for handling CasperLabs package hash targets.
+Package Hash Target module for handling Casper package hash targets.
 
 This module provides functionality for creating and managing package hash targets in transactions.
 Package hash targets are used for:
@@ -28,7 +28,7 @@ JSONNAME = JsonName()
 
 class PackageHashTarget:
     """
-    Represents a package hash target in a CasperLabs transaction.
+    Represents a package hash target in a Casper transaction.
 
     A package hash target is used to reference a contract by its package hash.
     It supports:

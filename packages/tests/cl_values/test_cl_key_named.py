@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) named key functionality.
+"""Tests for CL (Casper) named key functionality.
 
 This module contains test cases for the CLKey class when handling named keys,
 which represent named references to accounts and contracts in the Casper network.

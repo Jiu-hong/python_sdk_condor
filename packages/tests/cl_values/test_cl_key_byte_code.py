@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) byte code key functionality.
+"""Tests for CL (Casper) byte code key functionality.
 
 This module contains test cases for the CLKey class when handling byte code keys,
 which represent different versions of WASM byte code in the Casper network.

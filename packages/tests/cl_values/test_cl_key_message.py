@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) message key functionality.
+"""Tests for CL (Casper) message key functionality.
 
 This module contains test cases for the CLKey class when handling message keys,
 which represent message topics and entities in the Casper network.

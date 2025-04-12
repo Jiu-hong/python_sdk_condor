@@ -1,5 +1,5 @@
 """
-Initiator Address module for handling CasperLabs transaction initiators.
+Initiator Address module for handling Casper transaction initiators.
 
 This module provides functionality for managing transaction initiator addresses.
 Initiator addresses are used for:
@@ -21,7 +21,7 @@ from ..utils import CalltableSerialization
 
 class InitiatorAddr:
     """
-    Represents an initiator address in a CasperLabs transaction.
+    Represents an initiator address in a Casper transaction.
 
     An initiator address identifies the sender of a transaction.
     It supports:

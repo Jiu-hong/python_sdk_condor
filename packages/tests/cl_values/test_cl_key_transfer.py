@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) transfer key functionality.
+"""Tests for CL (Casper) transfer key functionality.
 
 This module contains test cases for the CLKey class when handling transfer keys,
 which represent transfer hashes in the Casper network. It tests:

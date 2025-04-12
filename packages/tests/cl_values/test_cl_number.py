@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) numeric value types.
+"""Tests for CL (Casper) numeric value types.
 
 This module contains test cases for various numeric CL value types including:
 - CLBool: Boolean values

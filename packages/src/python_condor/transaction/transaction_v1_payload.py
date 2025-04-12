@@ -1,5 +1,5 @@
 """
-Transaction V1 Payload module for handling CasperLabs version 1 transaction payloads.
+Transaction V1 Payload module for handling Casper version 1 transaction payloads.
 
 This module provides functionality for creating and managing version 1 transaction payloads in the Casper network.
 It handles:

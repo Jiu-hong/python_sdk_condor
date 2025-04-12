@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) URef functionality.
+"""Tests for CL (Casper) URef functionality.
 
 This module contains test cases for the CLURef class, which represents unforgeable
 references in the Casper network. The tests verify:

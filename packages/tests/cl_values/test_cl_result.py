@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) result functionality.
+"""Tests for CL (Casper) result functionality.
 
 This module contains test cases for the CLResult class, which represents Result
 types in the Casper network. The tests cover three main scenarios:

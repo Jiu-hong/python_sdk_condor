@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) era key functionality.
+"""Tests for CL (Casper) era key functionality.
 
 This module contains test cases for the CLKey class when handling era keys,
 which represent specific eras in the Casper network. It tests:

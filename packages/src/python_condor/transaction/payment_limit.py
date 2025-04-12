@@ -1,5 +1,5 @@
 """
-Payment Limit module for handling CasperLabs transaction payment limits.
+Payment Limit module for handling Casper transaction payment limits.
 
 This module provides functionality for managing payment limits in transactions.
 Payment limits control:
@@ -26,7 +26,7 @@ JSONNAME = JsonName()
 
 class PaymentLimited:
     """
-    Represents a payment limit in a CasperLabs transaction.
+    Represents a payment limit in a Casper transaction.
 
     A payment limit controls how much a transaction can spend and under what conditions.
     It includes:

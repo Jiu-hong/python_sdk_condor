@@ -1,4 +1,4 @@
-"""Tests for CL (CasperLabs) era summary key functionality.
+"""Tests for CL (Casper) era summary key functionality.
 
 This module contains test cases for the CLKey class when handling era summary keys,
 which represent era summary hashes in the Casper network. It tests:

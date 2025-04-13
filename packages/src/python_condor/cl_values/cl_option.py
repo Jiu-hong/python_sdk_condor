@@ -15,7 +15,7 @@ from ..constants import TAG, NoneHolder
 
 def check_non_holder(data) -> bool:
 
-    if isinstance(data, int) or isinstance(data, str):
+    if isinstance(data, int | str) or data is None:
         return False
     else:
         if isinstance(data, NoneHolder):

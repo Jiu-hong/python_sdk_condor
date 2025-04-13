@@ -1,6 +1,6 @@
 This is python sdk for casper 2.0.
 
-clvalue examples:
+### clvalue examples:
 
 
 clmap
@@ -54,3 +54,9 @@ empty_value = CLTuple3((
             CLURef(NoneHolder())
         ))
 ```
+
+### put_transaction
+[examples](./examples/put_transaction/)
+
+### put_deploy
+[examples](./examples/put_deploy/)

@@ -14,7 +14,7 @@ from .era_key import check_era_key_format, serialize_era_key
 from .message_key import check_message_key_format, serialize_message_key
 from .named_key import check_named_key_format, serialize_named_key
 
-from ..cl_basetype import CLValue
+from ..cl_base_type import CLValue
 from ...constants import TAG, Prefix, ClKeyTAG
 from ...utils import check_clkey_bid_addr_format, check_clkey_hash_format, check_purse_format
 

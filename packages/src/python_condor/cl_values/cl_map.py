@@ -8,7 +8,7 @@ This module provides functionality for working with Casper map values, including
 - Validating map types and values
 - Sorting map entries
 """
-from .cl_basetype import CLValue
+from .cl_base_type import CLValue
 from ..cl_values import CLList, CLTuple2
 from ..constants import TAG
 from ..utils import get_cl_tags

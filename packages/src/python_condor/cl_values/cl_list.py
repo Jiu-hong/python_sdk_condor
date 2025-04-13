@@ -6,7 +6,7 @@ A list is a collection of values that can be serialized and converted to JSON.
 
 from typing import List, Any
 
-from .cl_basetype import CLValue
+from .cl_base_type import CLValue
 from ..constants import TAG
 from ..utils import get_cl_tags
 

@@ -9,7 +9,9 @@ This module provides various number types for the Casper network, including:
 
 from typing import Union, Optional
 
-from .cl_basetype import CLValue
+from python_condor.cl_values.cl_base_type import CLValue
+
+
 from ..constants import NoneHolder, TAG
 
 

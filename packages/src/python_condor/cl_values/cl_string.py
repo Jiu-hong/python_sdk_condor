@@ -6,7 +6,7 @@ A string is a sequence of UTF-8 encoded characters that can be serialized and co
 
 from typing import Union
 
-from .cl_basetype import CLValue
+from .cl_base_type import CLValue
 from ..constants import NoneHolder, TAG
 
 

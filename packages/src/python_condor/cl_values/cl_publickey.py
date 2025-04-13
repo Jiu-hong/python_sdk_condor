@@ -8,7 +8,7 @@ import re
 from hashlib import blake2b
 from typing import Dict
 
-from .cl_basetype import CLValue
+from .cl_base_type import CLValue
 from ..constants import TAG
 
 

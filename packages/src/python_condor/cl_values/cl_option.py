@@ -9,7 +9,7 @@ from typing import Union
 from result import Err, Ok
 
 
-from .cl_basetype import CLValue
+from .cl_base_type import CLValue
 from ..constants import TAG, NoneHolder
 
 

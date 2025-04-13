@@ -24,4 +24,4 @@ from .cl_check_format import (
 )
 
 # Recursion utilities
-from .cl_recursion import get_cl_tags, get_deep_json, get_deep_value
+from .cl_recursion import get_cl_tags, get_deep_json, get_deep_value, check_if_holder_is_inner_of_clvalue, check_non_holder

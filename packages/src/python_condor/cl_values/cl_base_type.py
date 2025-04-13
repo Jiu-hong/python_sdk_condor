@@ -6,7 +6,7 @@ These base classes define the common interface for all CL value types.
 
 from typing import Any, Dict, Union
 
-from ..utils import get_deep_value, get_deep_json, get_cl_tags
+import python_condor.utils as utils
 
 
 class CLValue:
@@ -30,7 +30,7 @@ class CLValue:
         Returns:
             The underlying value of this CL value.
         """
-        return get_deep_value(self)
+        return utils.get_deep_value(self)
 
     def cl_value(self) -> str:
         """Convert this CL value to its hexadecimal string representation.
@@ -46,7 +46,7 @@ class CLValue:
         content = self.serialize()
         bytes_len = int(len(content)).to_bytes(4, byteorder='little')
 
-        tag = get_cl_tags(self)
+        tag = utils.get_cl_tags(self)
         return (bytes_len + content + tag).hex()
 
     def to_json(self) -> Dict[str, Any]:
@@ -55,4 +55,4 @@ class CLValue:
         Returns:
             Dictionary containing the JSON representation of this CL value.
         """
-        return get_deep_json(self)
+        return utils.get_deep_json(self)

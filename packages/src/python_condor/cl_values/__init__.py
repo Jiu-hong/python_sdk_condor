@@ -15,7 +15,6 @@ from .cl_list import CLList
 from .cl_result import CLResult
 from .cl_map import CLMap
 from .cl_key import CLKey
-
 __all__ = [
     'CLI32',
     'CLI64',

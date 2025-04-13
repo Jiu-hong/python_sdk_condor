@@ -2,7 +2,7 @@
 Tests for DeployHeader functionality.
 
 This module contains test cases for the DeployHeader class, which represents
-deploy headers in CasperLabs transactions. The tests verify:
+deploy headers in Casper transactions. The tests verify:
 - Header creation with various parameters
 - Body hash handling
 - Byte serialization and hashing

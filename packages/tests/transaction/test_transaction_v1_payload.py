@@ -2,7 +2,7 @@
 Tests for TransactionV1Payload functionality.
 
 This module contains test cases for the TransactionV1Payload class, which represents
-the payload component of version 1 transactions in the CasperLabs blockchain. The tests verify:
+the payload component of version 1 transactions in the Casper blockchain. The tests verify:
 - Payload creation and configuration
 - Argument handling
 - Target and entry point configuration

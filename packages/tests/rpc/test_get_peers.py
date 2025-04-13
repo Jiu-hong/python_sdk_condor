@@ -2,7 +2,7 @@
 Tests for GetPeers RPC functionality.
 
 This module contains test cases for the GetPeers RPC call, which retrieves
-information about connected peers from a CasperLabs node. The tests verify:
+information about connected peers from a Casper node. The tests verify:
 - Peer list retrieval
 - Response parsing and validation
 - Connection handling

@@ -2,7 +2,7 @@
 Tests for GetBlockTransfers RPC functionality.
 
 This module contains test cases for the GetBlockTransfers RPC call, which retrieves
-transfer information from blocks in a CasperLabs node. The tests verify:
+transfer information from blocks in a Casper node. The tests verify:
 - Transfer retrieval from latest block
 - Transfer retrieval from specific block by hash
 - Transfer retrieval from specific block by height

@@ -2,7 +2,7 @@
 Tests for PackageNameTarget functionality.
 
 This module contains test cases for the PackageNameTarget class, which represents
-package name targets in CasperLabs transactions. The tests verify:
+package name targets in Casper transactions. The tests verify:
 - Package name target creation with and without version
 - Byte serialization
 - JSON serialization

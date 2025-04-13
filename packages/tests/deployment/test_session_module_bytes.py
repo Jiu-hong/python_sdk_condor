@@ -2,7 +2,7 @@
 Tests for SessionModuleBytes functionality.
 
 This module contains test cases for the SessionModuleBytes class, which represents
-module bytes sessions in CasperLabs transactions. The tests verify:
+module bytes sessions in Casper transactions. The tests verify:
 - Module bytes session creation with bytes and arguments
 - Byte serialization
 - JSON serialization

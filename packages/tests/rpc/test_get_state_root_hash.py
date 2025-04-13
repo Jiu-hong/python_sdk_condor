@@ -2,7 +2,7 @@
 Tests for GetStateRootHash RPC functionality.
 
 This module contains test cases for the GetStateRootHash RPC call, which retrieves
-the state root hash from a CasperLabs node. The tests verify:
+the state root hash from a Casper node. The tests verify:
 - State root hash retrieval from latest block
 - State root hash retrieval from specific block by hash
 - State root hash retrieval from specific block by height

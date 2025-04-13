@@ -2,7 +2,7 @@
 Tests for QueryBalancePurseUrefByBlockId RPC functionality.
 
 This module contains test cases for the QueryBalancePurseUrefByBlockId RPC call, which retrieves
-purse balance information using a URef and block ID from a CasperLabs node. The tests verify:
+purse balance information using a URef and block ID from a Casper node. The tests verify:
 - Balance retrieval for valid URef and block ID
 - Error handling for invalid URef
 - Error handling for invalid block ID

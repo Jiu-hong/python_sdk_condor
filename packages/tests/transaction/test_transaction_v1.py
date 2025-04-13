@@ -2,7 +2,7 @@
 Tests for TransactionV1 functionality.
 
 This module contains test cases for the TransactionV1 class, which represents
-version 1 transactions in the CasperLabs blockchain. The tests verify:
+version 1 transactions in the Casper blockchain. The tests verify:
 - Transaction creation and configuration
 - Payload handling and signing
 - Transaction hash generation

@@ -2,7 +2,7 @@
 Tests for PricingMode functionality.
 
 This module contains test cases for the PricingMode class, which represents
-pricing configuration in CasperLabs transactions. The tests verify:
+pricing configuration in Casper transactions. The tests verify:
 - Pricing mode creation with Classic configuration
 - Byte serialization
 - JSON serialization

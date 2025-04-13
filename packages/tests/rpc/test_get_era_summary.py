@@ -2,7 +2,7 @@
 Tests for GetEraSummary RPC functionality.
 
 This module contains test cases for the GetEraSummary RPC call, which retrieves
-era summary information from a CasperLabs node. The tests verify:
+era summary information from a Casper node. The tests verify:
 - Era summary retrieval for current era
 - Era summary retrieval for specific block
 - Response parsing and validation

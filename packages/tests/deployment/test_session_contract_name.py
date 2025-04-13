@@ -2,7 +2,7 @@
 Tests for SessionContractName functionality.
 
 This module contains test cases for the SessionContractName class, which represents
-contract name sessions in CasperLabs transactions. The tests verify:
+contract name sessions in Casper transactions. The tests verify:
 - Contract name session creation with name, entrypoint, and arguments
 - Byte serialization
 - JSON serialization

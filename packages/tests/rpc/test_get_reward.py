@@ -2,7 +2,7 @@
 Tests for GetReward RPC functionality.
 
 This module contains test cases for the GetReward RPC call, which retrieves
-reward information for validators and delegators from a CasperLabs node. The tests verify:
+reward information for validators and delegators from a Casper node. The tests verify:
 - Reward retrieval for validators
 - Reward retrieval for delegators
 - Era-specific reward information

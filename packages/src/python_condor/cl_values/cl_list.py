@@ -35,6 +35,7 @@ class CLList(CLValue):
                 f"Invalid type of input: {type(data)} for CLList. Allowed value is {list}")
 
         if (inner_type != None and len(data) != 0) or (inner_type == None and len(data) == 0):
+
             raise ValueError(
                 "it should be a list without specifying type or empty list sepcifying type")
         # check type if consistent

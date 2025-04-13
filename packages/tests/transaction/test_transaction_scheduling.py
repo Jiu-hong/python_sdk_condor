@@ -2,7 +2,7 @@
 Tests for TransactionScheduling functionality.
 
 This module contains test cases for the TransactionScheduling class, which represents
-scheduling configuration in CasperLabs transactions. The tests verify:
+scheduling configuration in Casper transactions. The tests verify:
 - Scheduling creation with default (Standard) configuration
 - Byte serialization
 - JSON serialization

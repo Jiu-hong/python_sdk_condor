@@ -2,7 +2,7 @@
 Tests for SessionPackageHash functionality.
 
 This module contains test cases for the SessionPackageHash class, which represents
-package hash sessions in CasperLabs transactions. The tests verify:
+package hash sessions in Casper transactions. The tests verify:
 - Package hash session creation with hash, version, entrypoint, and arguments
 - Byte serialization
 - JSON serialization

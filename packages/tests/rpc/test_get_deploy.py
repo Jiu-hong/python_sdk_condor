@@ -2,7 +2,7 @@
 Tests for GetDeploy RPC functionality.
 
 This module contains test cases for the GetDeploy RPC call, which retrieves
-deploy information from a CasperLabs node. The tests verify:
+deploy information from a Casper node. The tests verify:
 - Deploy retrieval by valid deploy hash
 - Error handling for invalid deploy hash
 - Response parsing and validation

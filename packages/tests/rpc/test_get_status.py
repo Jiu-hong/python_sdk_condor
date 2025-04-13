@@ -2,7 +2,7 @@
 Tests for GetStatus RPC functionality.
 
 This module contains test cases for the GetStatus RPC call, which retrieves
-node status information from a CasperLabs node. The tests verify:
+node status information from a Casper node. The tests verify:
 - Node status retrieval
 - Response parsing and validation
 - Connection handling

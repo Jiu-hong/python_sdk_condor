@@ -2,7 +2,7 @@
 Tests for TransactionEntryPoint functionality.
 
 This module contains test cases for the TransactionEntryPoint class, which represents
-entry points in CasperLabs transactions. The tests verify:
+entry points in Casper transactions. The tests verify:
 - Entry point creation for all supported types
 - Byte serialization
 - JSON serialization

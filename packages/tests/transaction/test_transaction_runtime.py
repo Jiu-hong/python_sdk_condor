@@ -2,7 +2,7 @@
 Tests for TransactionRuntime functionality.
 
 This module contains test cases for the TransactionRuntime class, which represents
-runtime configuration in CasperLabs transactions. The tests verify:
+runtime configuration in Casper transactions. The tests verify:
 - Runtime creation with default (VmCasperV1) configuration
 - Byte serialization
 - JSON serialization

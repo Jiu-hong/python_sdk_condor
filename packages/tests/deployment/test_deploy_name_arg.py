@@ -2,7 +2,7 @@
 Tests for DeployNamedArg functionality.
 
 This module contains test cases for the DeployNamedArg class, which represents
-named arguments in CasperLabs transactions. The tests verify:
+named arguments in Casper transactions. The tests verify:
 - Named argument creation with various CLValue types
 - Byte serialization
 - JSON serialization

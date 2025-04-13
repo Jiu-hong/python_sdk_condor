@@ -2,7 +2,7 @@
 Tests for GetBlock RPC functionality.
 
 This module contains test cases for the GetBlock RPC call, which retrieves
-block information from a CasperLabs node. The tests verify:
+block information from a Casper node. The tests verify:
 - Block retrieval by block hash
 - Block retrieval by block height
 - Response parsing and validation

@@ -2,7 +2,7 @@
 Tests for GetAuctionInfoV2 RPC functionality.
 
 This module contains test cases for the GetAuctionInfoV2 RPC call, which retrieves
-auction information from a CasperLabs node for a specific block. The tests verify:
+auction information from a Casper node for a specific block. The tests verify:
 - Auction information retrieval for specific block
 - Error handling for invalid block ID
 - Response parsing and validation

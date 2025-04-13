@@ -2,7 +2,7 @@
 Tests for EntityTarget functionality.
 
 This module contains test cases for the EntityTarget class, which represents
-entity targets in CasperLabs transactions. The tests verify:
+entity targets in Casper transactions. The tests verify:
 - Entity target creation with contract hash
 - Byte serialization
 - JSON serialization

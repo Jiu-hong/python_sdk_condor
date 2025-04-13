@@ -2,7 +2,7 @@
 Tests for TransactionNativeTarget functionality.
 
 This module contains test cases for the TransactionNativeTarget class, which represents
-native targets in CasperLabs transactions. The tests verify:
+native targets in Casper transactions. The tests verify:
 - Native target creation
 - Byte serialization
 - JSON serialization

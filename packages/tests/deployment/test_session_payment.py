@@ -2,7 +2,7 @@
 Tests for SessionPayment functionality.
 
 This module contains test cases for the SessionPayment class, which represents
-payment sessions in CasperLabs transactions. The tests verify:
+payment sessions in Casper transactions. The tests verify:
 - Payment session creation with amount
 - Byte serialization
 - JSON serialization

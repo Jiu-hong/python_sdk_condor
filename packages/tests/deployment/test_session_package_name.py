@@ -2,7 +2,7 @@
 Tests for SessionPackageName functionality.
 
 This module contains test cases for the SessionPackageName class, which represents
-package name sessions in CasperLabs transactions. The tests verify:
+package name sessions in Casper transactions. The tests verify:
 - Package name session creation with name, version, entrypoint, and arguments
 - Byte serialization
 - JSON serialization

@@ -2,7 +2,7 @@
 Tests for GetAccountInfoByPublicKey RPC functionality.
 
 This module contains test cases for the GetAccountInfoByPublicKey RPC call, which retrieves
-account information using a public key from a CasperLabs node. The tests verify:
+account information using a public key from a Casper node. The tests verify:
 - Account information retrieval for valid public key
 - Error handling for invalid public key
 - Response parsing and validation

@@ -2,7 +2,7 @@
 Tests for GetPackage RPC functionality.
 
 This module contains test cases for the GetPackage RPC call, which retrieves
-contract package information from a CasperLabs node. The tests verify:
+contract package information from a Casper node. The tests verify:
 - Package retrieval by valid contract package hash
 - Error handling for invalid contract package hash
 - Response parsing and validation

@@ -2,7 +2,7 @@
 Tests for QueryGlobalStateByBlockId RPC functionality.
 
 This module contains test cases for the QueryGlobalStateByBlockId RPC call, which retrieves
-global state information at a specific block height from a CasperLabs node. The tests verify:
+global state information at a specific block height from a Casper node. The tests verify:
 - State key querying for different key types (hash, account-hash, uref)
 - Block ID-specific state retrieval
 - Response parsing and validation

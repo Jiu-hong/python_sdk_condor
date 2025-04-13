@@ -2,7 +2,7 @@
 Tests for QueryGlobalState RPC functionality.
 
 This module contains test cases for the QueryGlobalState RPC call, which retrieves
-global state information from a CasperLabs node. The tests verify:
+global state information from a Casper node. The tests verify:
 - State key querying for different key types (hash, account-hash, uref)
 - Response parsing and validation
 - Connection handling

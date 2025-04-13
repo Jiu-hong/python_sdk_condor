@@ -2,7 +2,7 @@
 Tests for GetTransaction RPC functionality.
 
 This module contains test cases for the GetTransaction RPC call, which retrieves
-transaction information from a CasperLabs node. The tests verify:
+transaction information from a Casper node. The tests verify:
 - Transaction retrieval by hash
 - Optional parameter handling (with and without finalized blocks)
 - Response parsing and validation

@@ -2,7 +2,7 @@
 Tests for GetAccountInfoByAccountHash RPC functionality.
 
 This module contains test cases for the GetAccountInfoByAccountHash RPC call, which retrieves
-account information using an account hash from a CasperLabs node. The tests verify:
+account information using an account hash from a Casper node. The tests verify:
 - Account information retrieval for valid account hash
 - Error handling for invalid account hash
 - Response parsing and validation

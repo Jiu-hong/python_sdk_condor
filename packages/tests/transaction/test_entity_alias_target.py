@@ -2,7 +2,7 @@
 Tests for EntityAliasTarget functionality.
 
 This module contains test cases for the EntityAliasTarget class, which represents
-entity alias targets in CasperLabs transactions. The tests verify:
+entity alias targets in Casper transactions. The tests verify:
 - Entity alias target creation
 - Byte serialization
 - JSON serialization

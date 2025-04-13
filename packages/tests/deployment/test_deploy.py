@@ -2,7 +2,7 @@
 Tests for Deploy functionality.
 
 This module contains test cases for the Deploy class, which represents
-deployments in CasperLabs transactions. The tests verify:
+deployments in Casper transactions. The tests verify:
 - Deploy creation with header, payment, and session
 - Body hash generation
 - Approval handling

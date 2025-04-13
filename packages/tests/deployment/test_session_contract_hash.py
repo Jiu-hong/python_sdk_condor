@@ -2,7 +2,7 @@
 Tests for SessionContractHash functionality.
 
 This module contains test cases for the SessionContractHash class, which represents
-contract hash sessions in CasperLabs transactions. The tests verify:
+contract hash sessions in Casper transactions. The tests verify:
 - Contract hash session creation with hash, entrypoint, and arguments
 - Byte serialization
 - JSON serialization

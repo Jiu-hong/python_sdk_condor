@@ -2,7 +2,7 @@
 Tests for TransactionSessionTarget functionality.
 
 This module contains test cases for the TransactionSessionTarget class, which represents
-session targets in CasperLabs transactions. The tests verify:
+session targets in Casper transactions. The tests verify:
 - Session target creation with install/upgrade flag
 - Byte serialization
 - JSON serialization

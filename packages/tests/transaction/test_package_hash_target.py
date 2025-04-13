@@ -2,7 +2,7 @@
 Tests for PackageHashTarget functionality.
 
 This module contains test cases for the PackageHashTarget class, which represents
-package hash targets in CasperLabs transactions. The tests verify:
+package hash targets in Casper transactions. The tests verify:
 - Package hash target creation with and without version
 - Byte serialization
 - JSON serialization
